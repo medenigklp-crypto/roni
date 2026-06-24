@@ -1,53 +1,42 @@
-const CACHE_NAME = 'derspanel-cache-v1';
+const CACHE_NAME = 'roni-cache-v1.1'; // Versiyonu güncelledik ki tarayıcı logoyu yenilesin
 
-// Önbelleğe alınacak kritik dosyalar
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
-  './logo.png?v=1.1'
+  './logo.png?v=1.1' // Logonun yeni versiyonu
 ];
 
-// 1. Kurulum (Install): Dosyaları tarayıcı hafızasına al
+// Kurulum: Dosyaları hafızaya al
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('[Service Worker] Dosyalar önbelleğe alınıyor...');
-        return cache.addAll(ASSETS_TO_CACHE);
-      })
-      .then(() => self.skipWaiting()) // Yeni versiyonun hemen aktif olmasını sağlar
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS_TO_CACHE);
+    }).then(() => self.skipWaiting())
   );
 });
 
-// 2. Aktivasyon (Activate): Eski önbellekleri temizle ve güncel tut
+// Aktivasyon: Eski logoyu ve önbelleği temizle
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
-            console.log('[Service Worker] Eski önbellek temizleniyor:', cache);
             return caches.delete(cache);
           }
         })
       );
-    }).then(() => self.clients.claim()) // Açık olan sekmeleri hemen kontrolü altına alır
+    }).then(() => self.clients.claim())
   );
 });
 
-// 3. İstekleri Yakalama (Fetch): Çevrimdışı (Offline) desteği sun
+// İstekleri Yakalama: Çevrimdışı destek sağla
 self.addEventListener('fetch', (event) => {
-  // Sadece GET isteklerini önbelleğe al (Hataları önlemek için)
   if (event.request.method !== 'GET') return;
-
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      // Eğer dosya önbellekte varsa oradan getir, yoksa internetten çek
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request);
+      return cachedResponse || fetch(event.request);
     })
   );
 });
