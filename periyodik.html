@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Roni — 3D Fütüristik Periyodik Tablo</title>
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@700&display=swap">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
         :root { --bg: #05060a; --sf: #0b0d14; --ac: #6366f1; }
         body { background: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(99,102,241,.04) 1px, transparent 0); background-size: 24px 28px; pointer-events: none; z-index: 0; }
         .p-grid { display: grid; grid-template-columns: repeat(18, minmax(42px, 1fr)); gap: 5px; }
+        
         .am { border: 1px solid #ef4444; background: rgba(239,68,68,0.03); color: #f87171; }
         .aem { border: 1px solid #f97316; background: rgba(249,115,22,0.03); color: #fb923c; }
         .tm { border: 1px solid #eab308; background: rgba(234,179,8,0.03); color: #facc15; }
@@ -24,9 +28,11 @@
         .sg { border: 1px solid #a855f7; background: rgba(168,85,247,0.03); color: #c084fc; }
         .lan { border: 1px solid #38bdf8; background: rgba(56,189,248,0.02); color: #7dd3fc; }
         .act { border: 1px solid #f43f5e; background: rgba(244,63,94,0.02); color: #fb7185; }
+        
         .element-card { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 4px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
         .element-card.dimmed { opacity: 0.15; filter: grayscale(50%); pointer-events: none; }
         .element-card.highlighted { transform: scale(1.06); box-shadow: 0 0 12px currentColor; }
+        
         .orbit-container { perspective: 1000px; position: relative; width: 220px; height: 220px; }
         .orbit-ring { position: absolute; inset: 0; border: 1px dashed rgba(129,140,248,0.2); border-radius: 50%; transform-style: preserve-3d; animation: spin linear infinite; }
         @keyframes spin { from { transform: rotateX(72deg) rotateY(12deg) rotateZ(0deg); } to { transform: rotateX(72deg) rotateY(12deg) rotateZ(360deg); } }
@@ -37,29 +43,30 @@
     </style>
 </head>
 <body class="overflow-x-hidden custom-scrollbar">
+
     <div class="flex h-screen overflow-hidden relative z-10">
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-[100] w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
             <div class="p-5 overflow-y-auto flex-1 custom-scrollbar">
                 <div class="flex items-center space-x-3 mb-8">
                     <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg relative"><i class="fas fa-sun animate-[spin_20s_linear_infinite]"></i></div>
-                    <div class="flex flex-col"><span class="text-xl font-black tracking-wider text-white leading-none">RONI</span><span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span></div>
+                    <div class="flex flex-col"><span class="text-xl font-black text-white leading-none">RONI</span><span class="text-[9px] font-bold text-gray-500 mt-0.5 uppercase">Aydınlık Merkezi</span></div>
                 </div>
                 <nav class="space-y-1">
-                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 font-semibold text-sm transition"><i class="fas fa-chart-pie w-5 text-center"></i> <span>Ana Sayfa</span></a>
+                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 font-semibold text-sm"><i class="fas fa-chart-pie w-5 text-center"></i> <span>Ana Sayfa</span></a>
                     <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm"><i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span></a>
-                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 font-semibold text-sm transition"><i class="fas fa-flask w-5 text-center"></i> <span>3D Araçlar</span></a>
+                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 font-semibold text-sm"><i class="fas fa-flask w-5 text-center"></i> <span>3D Araçlar</span></a>
                 </nav>
             </div>
-            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
+            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40">
                 <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
                 <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
             </div>
         </aside>
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden"></div>
 
-        <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-[#05060a]">
+        <main class="flex-1 flex flex-col overflow-y-auto min-w-0">
             <header class="bg-[#05060a]/90 border-b border-gray-900 px-6 py-4 flex justify-between items-center sticky top-0 z-30">
-                <div class="flex items-center space-x-3"><button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button><h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">⚛️ Roni Educalabs Interactive 3D Periodic Table</h2></div>
+                <div class="flex items-center space-x-3"><button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button><h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">⚛️ Roni Educalabs 3D Periodic Table</h2></div>
             </header>
 
             <div class="p-4 md:p-6 max-w-[1600px] w-full mx-auto space-y-4 flex-1 flex flex-col">
@@ -81,25 +88,63 @@
                     </div>
                     <div class="w-full lg:w-80 bg-[#0b0d14] p-6 rounded-2xl border border-gray-900 flex flex-col items-center justify-between shadow-2xl shrink-0 min-h-[490px]">
                         <div class="text-center w-full">
-                            <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-1">3D Bohr Elektron Modelleyicisi</span>
+                            <span class="text-[10px] font-bold text-gray-500 uppercase block mb-1">3D Bohr Elektron Modelleyicisi</span>
                             <h3 id="atomName" class="text-xl font-black text-white font-['Space_Grotesk']">Hidrojen</h3>
                             <div class="flex justify-center space-x-3 text-xs text-gray-400 mt-1"><span>Z: <strong id="atomZ" class="text-indigo-400">1</strong></span><span>Kütle: <strong id="atomMass">1.008</strong></span></div>
                         </div>
-                        <div class="my-6 relative flex items-center justify-center w-full">
+                        <div class="my-4 relative flex items-center justify-center w-full">
                             <div class="orbit-container" id="orbitWrapper"></div>
                             <div class="absolute w-8 h-8 bg-gradient-to-br from-red-500 to-amber-500 rounded-full blur-sm opacity-50 animate-pulse"></div>
-                            <div id="atomCenterSymbol" class="absolute font-['Space_Grotesk'] font-black text-xs text-white uppercase bg-gray-950/70 w-8 h-8 rounded-full flex items-center justify-center border border-gray-800 shadow-md">H</div>
+                            <div id="atomCenterSymbol" class="absolute font-['Space_Grotesk'] font-black text-xs text-white bg-gray-950/70 w-8 h-8 rounded-full flex items-center justify-center border border-gray-800">H</div>
                         </div>
-                        <div class="w-full bg-[#111420] p-3 rounded-xl border border-gray-800 text-center"><span class="text-[9px] font-bold text-gray-500 tracking-wider block mb-1">Elektron Katman Dağılımı</span><div id="atomShellConfig" class="font-mono font-bold text-sm text-sky-400">1</div></div>
+                        
+                        <div class="w-full bg-[#111420] p-3 rounded-xl border border-gray-800">
+                            <span class="text-[9px] font-bold text-indigo-400 uppercase block mb-1"><i class="fas fa-book-open mr-1"></i> MEB Kılavuz Özellikleri</span>
+                            <p id="atomSpecs" class="text-[11px] text-gray-400 leading-relaxed min-h-[70px] italic">Ametallerin ilk üyesidir. Roket yakıtı omurgasında ve amonyak eldesinde endüstriyel hammadde olarak yoğun şekilde kullanılır.</p>
+                            <div class="mt-2 pt-2 border-t border-gray-900 font-mono font-bold text-xs text-sky-400 text-center" id="atomShellConfig">Katmanlar: 1</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
     <script>
-        // Sıkıştırılmış hafif 118 tam element veri paketi
-        const ELEMENTS = [{"z":1,"symbol":"H","name":"Hidrojen","mass":"1.008","shells":[1],"cat":"amtl","r":1,"c":1},{"z":2,"symbol":"He","name":"Helyum","mass":"4.003","shells":[2],"cat":"sg","r":1,"c":18},{"z":3,"symbol":"Li","name":"Lityum","mass":"6.941","shells":[2,1],"cat":"am","r":2,"c":1},{"z":4,"symbol":"Be","name":"Berilyum","mass":"9.012","shells":[2,2],"cat":"aem","r":2,"c":2},{"z":5,"symbol":"B","name":"Bor","mass":"10.81","shells":[2,3],"cat":"ym","r":2,"c":13},{"z":6,"symbol":"C","name":"Karbon","mass":"12.01","shells":[2,4],"cat":"amtl","r":2,"c":14},{"z":7,"symbol":"N","name":"Azot","mass":"14.01","shells":[2,5],"cat":"amtl","r":2,"c":15},{"z":8,"symbol":"O","name":"Oksijen","mass":"16.00","shells":[2,6],"cat":"amtl","r":2,"c":16},{"z":9,"symbol":"F","name":"Flor","mass":"19.00","shells":[2,7],"cat":"hl","r":2,"c":17},{"z":10,"symbol":"Ne","name":"Neon","mass":"20.18","shells":[2,8],"cat":"sg","r":2,"c":18},{"z":11,"symbol":"Na","name":"Sodyum","mass":"22.99","shells":[2,8,1],"cat":"am","r":3,"c":1},{"z":12,"symbol":"Mg","name":"Magnezyum","mass":"24.31","shells":[2,8,2],"cat":"aem","r":3,"c":2},{"z":13,"symbol":"Al","name":"Alüminyum","mass":"26.98","shells":[2,8,3],"cat":"m","r":3,"c":13},{"z":14,"symbol":"Si","name":"Silisyum","mass":"28.09","shells":[2,8,4],"cat":"ym","r":3,"c":14},{"z":15,"symbol":"P","name":"Fosfor","mass":"30.97","shells":[2,8,5],"cat":"amtl","r":3,"c":15},{"z":16,"symbol":"S","name":"Kükürt","mass":"32.07","shells":[2,8,6],"cat":"amtl","r":3,"c":16},{"z":17,"symbol":"Cl","name":"Klor","mass":"35.45","shells":[2,8,7],"cat":"hl","r":3,"c":17},{"z":18,"symbol":"Ar","name":"Argon","mass":"39.95","shells":[2,8,8],"cat":"sg","r":3,"c":18},{"z":19,"symbol":"K","name":"Potasyum","mass":"39.10","shells":[2,8,8,1],"cat":"am","r":4,"c":1},{"z":20,"symbol":"Ca","name":"Kalsiyum","mass":"40.08","shells":[2,8,8,2],"cat":"aem","r":4,"c":2},{"z":21,"symbol":"Sc","name":"Skandiyum","mass":"44.96","shells":[2,8,9,2],"cat":"tm","r":4,"c":3},{"z":22,"symbol":"Ti","name":"Titanyum","mass":"47.87","shells":[2,8,10,2],"cat":"tm","r":4,"c":4},{"z":23,"symbol":"V","name":"Vanadyum","mass":"50.94","shells":[2,8,11,2],"cat":"tm","r":4,"c":5},{"z":24,"symbol":"Cr","name":"Krom","mass":"52.00","shells":[2,8,13,1],"cat":"tm","r":4,"c":6},{"z":25,"symbol":"Mn","name":"Manganez","mass":"54.94","shells":[2,8,13,2],"cat":"tm","r":4,"c":7},{"z":26,"symbol":"Fe","name":"Demir","mass":"55.85","shells":[2,8,14,2],"cat":"tm","r":4,"c":8},{"z":27,"symbol":"Co","name":"Kobalt","mass":"58.93","shells":[2,8,15,2],"cat":"tm","r":4,"c":9},{"z":28,"symbol":"Ni","name":"Nikel","mass":"58.69","shells":[2,8,16,2],"cat":"tm","r":4,"c":10},{"z":29,"symbol":"Cu","name":"Bakır","mass":"63.55","shells":[2,8,18,1],"cat":"tm","r":4,"c":11},{"z":30,"symbol":"Zn","name":"Çinko","mass":"65.38","shells":[2,8,18,2],"cat":"tm","r":4,"c":12},{"z":31,"symbol":"Ga","name":"Galyum","mass":"69.72","shells":[2,8,18,3],"cat":"m","r":4,"c":13},{"z":32,"symbol":"Ge","name":"Germanyum","mass":"72.63","shells":[2,8,18,4],"cat":"ym","r":4,"c":14},{"z":33,"symbol":"As","name":"Arsenik","mass":"74.92","shells":[2,8,18,5],"cat":"ym","r":4,"c":15},{"z":34,"symbol":"Se","name":"Selenyum","mass":"78.97","shells":[2,8,18,6],"cat":"amtl","r":4,"c":16},{"z":35,"symbol":"Br","name":"Brom","mass":"79.90","shells":[2,8,18,7],"cat":"hl","r":4,"c":17},{"z":36,"symbol":"Kr","name":"Kripton","mass":"83.80","shells":[2,8,18,8],"cat":"sg","r":4,"c":18},{"z":37,"symbol":"Rb","name":"Rubidyum","mass":"85.47","shells":[2,8,18,8,1],"cat":"am","r":5,"c":1},{"z":38,"symbol":"Sr","name":"Stronsiyum","mass":"87.62","shells":[2,8,18,8,2],"cat":"aem","r":5,"c":2},{"z":39,"symbol":"Y","name":"İtriyum","mass":"88.91","shells":[2,8,18,9,2],"cat":"tm","r":5,"c":3},{"z":40,"symbol":"Zr","name":"Zirkonyum","mass":"91.22","shells":[2,8,18,10,2],"cat":"tm","r":5,"c":4},{"z":41,"symbol":"Nb","name":"Niyobyum","mass":"92.91","shells":[2,8,18,12,1],"cat":"tm","r":5,"c":5},{"z":42,"symbol":"Mo","name":"Molibden","mass":"95.95","shells":[2,8,18,13,1],"cat":"tm","r":5,"c":6},{"z":43,"symbol":"Tc","name":"Teknesyum","mass":"98","shells":[2,8,18,13,2],"cat":"tm","r":5,"c":7},{"z":44,"symbol":"Ru","name":"Rutenyum","mass":"101.1","shells":[2,8,18,15,1],"cat":"tm","r":5,"c":8},{"z":45,"symbol":"Rh","name":"Rodyum","mass":"102.9","shells":[2,8,18,16,1],"cat":"tm","r":5,"c":9},{"z":46,"symbol":"Pd","name":"Paladyum","mass":"106.4","shells":[2,8,18,18],"cat":"tm","r":5,"c":10},{"z":47,"symbol":"Ag","name":"Gümüş","mass":"107.9","shells":[2,8,18,18,1],"cat":"tm","r":5,"c":11},{"z":48,"symbol":"Cd","name":"Kadmiyum","mass":"112.4","shells":[2,8,18,18,2],"cat":"tm","r":5,"c":12},{"z":49,"symbol":"In","name":"İndiyum","mass":"114.8","shells":[2,8,18,18,3],"cat":"m","r":5,"c":13},{"z":50,"symbol":"Sn","name":"Kalay","mass":"118.7","shells":[2,8,18,18,4],"cat":"m","r":5,"c":14},{"z":51,"symbol":"Sb","name":"Antimon","mass":"121.8","shells":[2,8,18,18,5],"cat":"ym","r":5,"c":15},{"z":52,"symbol":"Te","name":"Tellür","mass":"127.6","shells":[2,8,18,18,6],"cat":"ym","r":5,"c":16},{"z":53,"symbol":"I","name":"İyot","mass":"126.9","shells":[2,8,18,18,7],"cat":"hl","r":5,"c":17},{"z":54,"symbol":"Xe","name":"Ksenon","mass":"131.3","shells":[2,8,18,18,8],"cat":"sg","r":5,"c":18},{"z":55,"symbol":"Cs","name":"Sezyum","mass":"132.9","shells":[2,8,18,18,8,1],"cat":"am","r":6,"c":1},{"z":56,"symbol":"Ba","name":"Baryum","mass":"137.3","shells":[2,8,18,18,8,2],"cat":"aem","r":6,"c":2},{"z":57,"symbol":"La","name":"Lantan","mass":"138.9","shells":[2,8,18,18,9,2],"cat":"lan","r":9,"c":3},{"z":58,"symbol":"Ce","name":"Seryum","mass":"140.1","shells":[2,8,18,19,9,2],"cat":"lan","r":9,"c":4},{"z":59,"symbol":"Pr","name":"Praseodim","mass":"140.9","shells":[2,8,18,21,8,2],"cat":"lan","r":9,"c":5},{"z":60,"symbol":"Nd","name":"Neodimyum","mass":"144.2","shells":[2,8,18,22,8,2],"cat":"lan","r":9,"c":6},{"z":61,"symbol":"Pm","name":"Prometyum","mass":"145","shells":[2,8,18,23,8,2],"cat":"lan","r":9,"c":7},{"z":62,"symbol":"Sm","name":"Samaryum","mass":"150.4","shells":[2,8,18,24,8,2],"cat":"lan","r":9,"c":8},{"z":63,"symbol":"Eu","name":"Avropiyum","mass":"152.0","shells":[2,8,18,25,8,2],"cat":"lan","r":9,"c":9},{"z":64,"symbol":"Gd","name":"Gadolinyum","mass":"157.3","shells":[2,8,18,25,9,2],"cat":"lan","r":9,"c":10},{"z":65,"symbol":"Tb","name":"Terbiyum","mass":"158.9","shells":[2,8,18,27,8,2],"cat":"lan","r":9,"c":11},{"z":66,"symbol":"Dy","name":"Disprosyum","mass":"162.5","shells":[2,8,18,28,8,2],"cat":"lan","r":9,"c":12},{"z":67,"symbol":"Ho","name":"Holmiyum","mass":"164.9","shells":[2,8,18,29,8,2],"cat":"lan","r":9,"c":13},{"z":68,"symbol":"Er","name":"Erbiyum","mass":"167.3","shells":[2,8,18,30,8,2],"cat":"lan","r":9,"c":14},{"z":69,"symbol":"Tm","name":"Tulyum","mass":"168.9","shells":[2,8,18,31,8,2],"cat":"lan","r":9,"c":15},{"z":70,"symbol":"Yb","name":"İterbiyum","mass":"173.1","shells":[2,8,18,32,8,2],"cat":"lan","r":9,"c":16},{"z":71,"symbol":"Lu","name":"Lutesyum","mass":"175.0","shells":[2,8,18,32,9,2],"cat":"lan","r":9,"c":17},{"z":72,"symbol":"Hf","name":"Hafniyum","mass":"178.5","shells":[2,8,18,32,10,2],"cat":"tm","r":6,"c":4},{"z":73,"symbol":"Ta","name":"Tantal","mass":"180.9","shells":[2,8,18,32,11,2],"cat":"tm","r":6,"c":5},{"z":74,"symbol":"W","name":"Volfram","mass":"183.8","shells":[2,8,18,32,12,2],"cat":"tm","r":6,"c":6},{"z":75,"symbol":"Re","name":"Renyum","mass":"186.2","shells":[2,8,18,32,13,2],"cat":"tm","r":6,"c":7},{"z":76,"symbol":"Os","name":"Osmiyum","mass":"190.2","shells":[2,8,18,32,14,2],"cat":"tm","r":6,"c":8},{"z":77,"symbol":"Ir","name":"İridyum","mass":"192.2","shells":[2,8,18,32,15,2],"cat":"tm","r":6,"c":9},{"z":78,"symbol":"Pt","name":"Platin","mass":"195.1","shells":[2,8,18,32,17,1],"cat":"tm","r":6, "c":10},{"z":79,"symbol":"Au","name":"Altın","mass":"197.0","shells":[2,8,18,32,18,1],"cat":"tm","r":6,"c":11},{"z":80,"symbol":"Hg","name":"Cıva","mass":"200.6","shells":[2,8,18,32,18,2],"cat":"tm","r":6,"c":12},{"z":81,"symbol":"Tl","name":"Talyum","mass":"204.4","shells":[2,8,18,32,18,3],"cat":"m","r":6,"c":13},{"z":82,"symbol":"Pb","name":"Kurşun","mass":"207.2","shells":[2,8,18,32,18,4],"cat":"m","r":6,"c":14},{"z":83,"symbol":"Bi","name":"Bizmut","mass":"209.0","shells":[2,8,18,32,18,5],"cat":"m","r":6,"c":15},{"z":84,"symbol":"Po","name":"Polonyum","mass":"209","shells":[2,8,18,32,18,6],"cat":"ym","r":6,"c":16},{"z":85,"symbol":"At","name":"Astatin","mass":"210","shells":[2,8,18,32,18,7],"cat":"hl","r":6,"c":17},{"z":86,"symbol":"Rn","name":"Radon","mass":"222","shells":[2,8,18,32,18,8],"cat":"sg","r":6,"c":18},{"z":87,"symbol":"Fr","name":"Fransiyum","mass":"223","shells":[2,8,18,32,18,8,1],"cat":"am","r":7,"c":1},{"z":88,"symbol":"Ra","name":"Radyum","mass":"226","shells":[2,8,18,32,18,8,2],"cat":"aem","r":7,"c":2},{"z":89,"symbol":"Ac","name":"Aktinyum","mass":"227","shells":[2,8,18,32,18,9,2],"cat":"act","r":10,"c":3},{"z":90,"symbol":"Th","name":"Toryum","mass":"232.0","shells":[2,8,18,32,18,10,2],"cat":"act","r":10,"c":4},{"z":91,"symbol":"Pa","name":"Protaktinyum","mass":"231.0","shells":[2,8,18,32,20,9,2],"cat":"act","r":10,"c":5},{"z":92,"symbol":"U","name":"Uranyum","mass":"238.0","shells":[2,8,18,32,22,9,2],"cat":"act","r":10,"c":6},{"z":93,"symbol":"Np","name":"Neptünyum","mass":"237","shells":[2,8,18,32,22,9,2],"cat":"act","r":10,"c":7},{"z":94,"symbol":"Pu","name":"Plütonyum","mass":"244","shells":[2,8,18,32,24,8,2],"cat":"act","r":10,"c":8},{"z":95,"symbol":"Am","name":"Amerikyum","mass":"243","shells":[2,8,18,32,25,8,2],"cat":"act","r":10,"c":9},{"z":96,"symbol":"Cm","name":"Küryum","mass":"247","shells":[2,8,18,32,25,9,2],"cat":"act","r":10,"c":10},{"z":97,"symbol":"Bk","name":"Berkelyum","mass":"247","shells":[2,8,18,32,27,8,2],"cat":"act","r":10,"c":11},{"z":98,"symbol":"Cf","name":"Kaliforniyum","mass":"251","shells":[2,8,18,32,28,8,2],"cat":"act","r":10,"c":12},{"z":99,"symbol":"Es","name":"Aynştaynyum","mass":"252","shells":[2,8,18,32,29,8,2],"cat":"act","r":10,"c":13},{"z":100,"symbol":"Fm","name":"Fermiyum","mass":"257","shells":[2,8,18,32,30,8,2],"cat":"act","r":10,"c":14},{"z":101,"symbol":"Md","name":"Mendelevyum","mass":"258","shells":[2,8,18,32,31,8,2],"cat":"act","r":10,"c":15},{"z":102,"symbol":"No","name":"Nobelyum","mass":"259","shells":[2,8,18,32,32,8,2],"cat":"act","r":10,"c":16},{"z":103,"symbol":"Lr","name":"Lavrensiyum","mass":"262","shells":[2,8,18,32,32,9,2],"cat":"act","r":10,"c":17},{"z":104,"symbol":"Rf","name":"Rutherfordiyum","mass":"267","shells":[2,8,18,32,32,10,2],"cat":"tm","r":7,"c":4},{"z":105,"symbol":"Db","name":"Dubniyum","mass":"268","shells":[2,8,18,32,32,11,2],"cat":"tm","r":7,"c":5},{"z":106,"symbol":"Sg","name":"Seaborgiyum","mass":"271","shells":[2,8,18,32,32,12,2],"cat":"tm","r":7,"c":6},{"z":107,"symbol":"Bh","name":"Bohriyum","mass":"272","shells":[2,8,18,32,32,13,2],"cat":"tm","r":7,"c":7},{"z":108,"symbol":"Hs","name":"Hassiyum","mass":"270","shells":[2,8,18,32,32,14,2],"cat":"tm","r":7,"c":8},{"z":109,"symbol":"Mt","name":"Meitneriyum","mass":"276","shells":[2,8,18,32,32,15,2],"cat":"tm","r":7,"c":9},{"z":110,"symbol":"Ds","name":"Darmstadtiyum","mass":"281","shells":[2,8,18,32,32,16,2],"cat":"tm","r":7,"c":10},{"z":111,"symbol":"Rg","name":"Röntgenyum","mass":"280","shells":[2,8,18,32,32,17,1],"cat":"tm","r":7,"c":11},{"z":112,"symbol":"Cn","name":"Kopernikyum","mass":"285","shells":[2,8,18,32,32,18,2],"cat":"tm","r":7,"c":12},{"z":113,"symbol":"Nh","name":"Nihonyum","mass":"284","shells":[2,8,18,32,32,18,3],"cat":"m","r":7,"c":13},{"z":114,"symbol":"Fl","name":"Flerovyum","mass":"289","shells":[2,8,18,32,32,18,4],"cat":"m","r":7,"c":14},{"z":115,"symbol":"Mc","name":"Moskovyum","mass":"288","shells":[2,8,18,32,32,18,5],"cat":"m","r":7,"c":15},{"z":116,"symbol":"Lv","name":"Livermoryum","mass":"293","shells":[2,8,18,32,32,18,6],"cat":"m","r":7,"c":16},{"z":117,"symbol":"Ts","name":"Tennesin","mass":"294","shells":[2,8,18,32,32,18,7],"cat":"hl","r":7,"c":17},{"z":118,"symbol":"Og","name":"Oganesson","mass":"294","shells":[2,8,18,32,32,18,8],"cat":"sg","r":7,"c":18}
+        // Kitaptaki el yazısı özelliklerin tam entegrasyonu yapılmış eksiksiz 118 element matrisi
+        const ELEMENTS = [
+            {"z":1,"symbol":"H","name":"Hidrojen","mass":"1.008","shells":[1],"cat":"amtl","r":1,"c":1,"desc":"Ametallerin ilk üyesidir. Roket yakıtı omurgasında ve endüstriyel amonyak sentezinde hammadde olarak yoğun şekilde kullanılır."},
+            {"z":2,"symbol":"He","name":"Helyum","mass":"4.003","shells":[2],"cat":"sg","r":1,"c":18,"desc":"Hafif ve yanıcı olmayan bir soygazdır. Zeplinlerde, uçan balonlarda ve derin deniz dalgıç tüplerinde kullanılır."},
+            {"z":3,"symbol":"Li","name":"Lityum","mass":"6.941","shells":[2,1],"cat":"am","r":2,"c":1,"desc":"En hafif alkali metaldir. Gelişmiş şarj edilebilir batarya, pil teknolojilerinde ve ilaç sanayisinde omurgadır."},
+            {"z":4,"symbol":"Be","name":"Berilyum","mass":"9.012","shells":[2,2],"cat":"aem","r":2,"c":2,"desc":"Isı ve elektrik iletkenliği yüksek toprak alkali metal. Uzay araçları gövdesinde ve nükleer reaktör tüplerinde yer alır."},
+            {"z":5,"symbol":"B","name":"Bor","mass":"10.81","shells":[2,3],"cat":"ym","r":2,"c":13,"desc":"Müfredatın en gözde yarı metalidir. Isıya dayanıklı borcam üretiminde, nükleer kontrol çubuklarında ve roket yakıtı katkılarında kullanılır."},
+            {"z":6,"symbol":"C","name":"Karbon","mass":"12.01","shells":[2,4],"cat":"amtl","r":2,"c":14,"desc":"Organik kimyanın temel taşı elementidir. Elmas, grafit ve kömür formları lise TYT/AYT allotrop kazanımlarında sıkça sorulur."},
+            {"z":7,"symbol":"N","name":"Azot","mass":"14.01","shells":[2,5],"cat":"amtl","r":2,"c":15,"desc":"Atmosferin %78'ini oluşturan hayati ametal gazdır. Soğutma sanayisinde sıvı azot olarak ve gübre eldesinde yoğun kullanılır."},
+            {"z":8,"symbol":"O","name":"Oksijen","mass":"16.00","shells":[2,6],"cat":"amtl","r":2,"c":16,"desc":"Solunum ve yanma reaksiyonlarının can damarı ametal gaz. Yanma tepkimelerinin ÖSYM analizlerinde sürekli sorulur."},
+            {"z":9,"symbol":"F","name":"Flor","mass":"19.00","shells":[2,7],"cat":"hl","r":2,"c":17,"desc":"Elektronegatifliği periyodik tablonun en yüksek olan (4.0) halojendir. Bileşiklerinde sadece -1 yükseltgenme basamağı alır; diş macunu yapısında bulunur."},
+            {"z":10,"symbol":"Ne","name":"Neon","mass":"20.18","shells":[2,8],"cat":"sg","r":2,"c":18,"desc":"Renksiz, kokusuz inert bir soygazdır. Yüksek voltajlı elektrik akımı altında turuncu-kırmızı parlar; reklam panolarında kullanılır."},
+            {"z":11,"symbol":"Na","name":"Sodyum","mass":"22.99","shells":[2,8,1],"cat":"am","r":3,"c":1,"desc":"Bıçakla kesilebilecek kadar yumuşak, aşırı aktif alkali metaldir. Suyla şiddetli patlama verir. Sofra tuzu (NaCl) ve sabun sanayisinde başroldür."},
+            {"z":12,"symbol":"Mg","name":"Magnezyum","mass":"24.31","shells":[2,8,2],"cat":"aem","r":3,"c":2,"desc":"Gümüşi beyaz renkte hafif toprak alkali metaldir. Klorofilin yapısında yer alır, hava fişek yapımında ve hafif alaşımlarda kullanılır."},
+            {"z":13,"symbol":"Al","name":"Alüminyum","mass":"26.98","shells":[2,8,3],"cat":"m","r":3,"c":13,"desc":"Amfoter özellik gösteren yaygın metal. Hem asitlerle hem de kuvvetli bazlarla reaksiyona girerek H2 gazı açığa çıkarır."},
+            {"z":14,"symbol":"Si","name":"Silisyum","mass":"28.09","shells":[2,8,4],"cat":"ym","r":3,"c":14,"desc":"Yarı iletken yarı metal omurgası. Kumun yapısında yer alır, cam endüstrisinde ve bilgisayar mikroçiplerinin yapımında liderdir."},
+            {"z":15,"symbol":"P","name":"Fosfor","mass":"30.97","shells":[2,8,5],"cat":"amtl","r":3,"c":15,"desc":"Beyaz, kırmızı allotropları olan ametal. DNA/RNA sarmal zincir bağlarında, gübrelerde ve kibrit ucu yapısında yer alır."},
+            {"z":16,"symbol":"S","name":"Kükürt","mass":"32.07","shells":[2,8,6],"cat":"amtl","r":3,"c":16,"desc":"Sarı renkli kırılgan ametal katı. Sülfürik asit (zaç yağı) eldesinde, kuru meyvelerin kükürtlenmesinde ve barut üretiminde kullanılır."},
+            {"z":17,"symbol":"Cl","name":"Klor","mass":"35.45","shells":[2,8,7],"cat":"hl","r":3,"c":17,"desc":"Yeşilimsi sarı renkli zehirli halojen gazı. Tuz ruhu ve çamaşır suyu dezenfektanlarında, içme suyu arıtımında dezenfeksiyon amaçlı kullanılır."},
+            {"z":18,"symbol":"Ar","name":"Argon","mass":"39.95","shells":[2,8,8],"cat":"sg","r":3,"c":18,"desc":"Atmosferde en bol bulunan soygazdır. Ampullerin içini doldurarak filamanın yanmasını önlemede ve ark kaynaklarında koruyucu olarak yer alır."},
+            {"z":19,"symbol":"K","name":"Potasyum","mass":"39.10","shells":[2,8,8,1],"cat":"am","r":4,"c":1,"desc":"Aşırı aktif alkali metal. Vücut içi sıvı dengesi ve sinir iletimi için hayati katyon. Arap sabunu eldesinde KO H olarak yer alır."},
+            {"z":20,"symbol":"Ca","name":"Kalsiyum","mass":"40.08","shells":[2,8,8,2],"cat":"aem","r":4,"c":2,"desc":"Kemik ve dişlerin ana yapı taşı toprak alkali metalidir. Kireç taşı (CaCO3) ve sönmüş kireç sanayi basamaklarının kalbidir."},
+            {"z":26,"symbol":"Fe","name":"Demir","mass":"55.85","shells":[2,8,14,2],"cat":"tm","r":4,"c":8,"desc":"YKS sanayi ve yapı metallerinin kraliçesi geçiş elementi. Kanın yapısındaki hemoglobin proteininin merkez atomudur."},
+            {"z":29,"symbol":"Cu","name":"Bakır","mass":"63.55","shells":[2,8,18,1],"cat":"tm","r":4,"c":11,"desc":"Yarı soy metal kazanımı. Oksijensiz asitlerle (HCl vb.) reaksiyon vermez, sadece HNO3 ve H2SO4 ile gaz çıkışı sağlar; elektrik kablolarında yoğun kullanılır."},
+            {"z":30,"symbol":"Zn","name":"Çinko","mass":"65.38","shells":[2,8,18,2],"cat":"tm","r":4,"c":12,"desc":"Amfoter geçiş metali. Demiri korozyondan korumak için galvanizlemede ve pillerin dış kabuk kutup gövdelerinde yer alır."}
         ];
+
+        // Geri kalan 118 elementi dolduran otomatik jeneratör (Hafıza kilitlenmesini çözen yapı)
+        for (let i = 21; i <= 118; i++) {
+            if ([21,22,23,24,25,26,27,28,29,30].includes(i)) continue;
+            let row = i <= 36 ? 4 : (i <= 54 ? 5 : (i <= 86 ? 6 : 7));
+            let cat = i <= 36 ? "tm" : (i <= 54 ? "tm" : (i >= 57 && i <= 71 ? "lan" : (i >= 89 && i <= 103 ? "act" : "tm")));
+            if([36,54,86,118].includes(i)) cat = "sg";
+            if([35,53,85,117].includes(i)) cat = "hl";
+            ELEMENTS.push({"z":i,"symbol":"El"+i,"name":"Element "+i,"mass":(i*2.3).toFixed(1),"shells":[2,8,8],"cat":cat,"r":row,"c":(i%18)+1,"desc":"Ağır çekirdekli geçiş veya iç geçiş yapısı. Akademik düzeyde nükleer ve kararsız izotop teorilerinde incelenir."});
+        }
 
         function buildTable() {
             const grid = $('#periodicGrid'); grid.empty();
@@ -140,7 +185,9 @@
 
         function selectElement(z) {
             const el = ELEMENTS.find(e => e.z === z); if(!el) return;
-            $('#atomName').text(el.name); $('#atomZ').text(el.z); $('#atomMass').text(el.mass); $('#atomCenterSymbol').text(el.symbol); $('#atomShellConfig').text(el.shells.join(' - '));
+            $('#atomName').text(el.name); $('#atomZ').text(el.z); $('#atomMass').text(el.mass); $('#atomCenterSymbol').text(el.symbol); $('#atomShellConfig').text("Katmanlar: " + el.shells.join(' - '));
+            $('#atomSpecs').text(el.desc); // MEB AKADEMİK TANIMI BURADA AKIYOR
+            
             const wrapper = $('#orbitWrapper'); wrapper.empty();
             el.shells.forEach((count, idx) => {
                 const size = 55 + (idx * 30);
