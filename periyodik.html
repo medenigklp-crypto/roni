@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni - Periyodik Tablo</title>
     
+    <!-- iPHONE ANA EKRAN İKONU VE TAM EKRAN (PWA) AYARLARI -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="RONI">
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluid/512/sun.png">
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluid/512/sun.png">
 
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
@@ -44,10 +47,12 @@
 
     <div class="flex h-screen overflow-hidden relative">
         
+        <!-- SIDEBAR MENÜ PANELİ -->
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
             <div class="p-5">
                 <div class="flex items-center justify-between mb-8">
                     
+                    <!-- PARLAYAN GÜNEŞ LOGOLU BRANDING -->
                     <div class="flex items-center space-x-3">
                         <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
                             <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
@@ -92,6 +97,7 @@
 
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
 
+        <!-- ANA İÇERİK ALANI -->
         <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-slate-900/20">
             <header class="bg-gray-950/85 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
@@ -102,6 +108,7 @@
 
             <div class="p-4 md:p-8 max-w-7xl w-full mx-auto space-y-6">
                 
+                <!-- Üst Arama Çubuğu ve Filtreler -->
                 <div class="bg-gray-950 p-4 rounded-xl border border-gray-900 flex flex-col md:flex-row gap-4 items-center justify-between shadow-lg">
                     <div class="relative w-full md:w-80">
                         <i class="fas fa-search absolute left-3.5 top-3.5 text-gray-600 text-xs"></i>
@@ -116,10 +123,12 @@
                     </div>
                 </div>
 
+                <!-- 118 Elementlik Eksiksiz Matris Kutusu -->
                 <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 overflow-x-auto custom-scrollbar shadow-inner">
                     <div class="periodic-grid min-w-[1020px]" id="periodic-matrix"></div>
                 </div>
 
+                <!-- AKADEMİK DETAY PANELİ -->
                 <div id="elementProfileContainer" class="bg-gray-950 rounded-xl border border-gray-900 p-5 md:p-8 space-y-6 shadow-2xl">
                     <p class="text-xs text-gray-500 font-mono text-center py-4">Derinlemesine YKS inceleme kartını yüklemek için periyodik tablodan bir elemente dokunun.</p>
                 </div>
@@ -127,24 +136,24 @@
         </main>
     </div>
 
+    <!-- SCRIPT VE ELEMENT ENGINE VERİLERİ -->
     <script>
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
 
-        // --- 118 ELEMENT MATRİS MODELİ VE KAZANIM VERİ TABANI ---
         const elementsData = [
-            { num: 1, sym: "H", name: "Hidrojen", cat: "nonmetal", row: 1, col: 1, mass: "1.008", config: "1s¹", shells: "1", uses: ["Roket yakıt sistemleri", "Haber-Bosch amonyak eldesi prosesi"], biological: "Su (H₂O) ve tüm organik bileşiklerin ana yapı taşıdır.", compounds: [{formula:"H₂O", name:"Su", desc:"Evrensel çözücü"}], history: "1766'da Henry Cavendish tarafından keşfedildi.", facts: ["Evrenin kütlece %75'ini oluşturan en temel maddedir."], notes: ["1A grubunda bulunmasına karşın metal değil, ametaldir."] },
-            { num: 2, sym: "He", name: "Helyum", cat: "noble", row: 1, col: 18, mass: "4.002", config: "1s²", shells: "2", uses: ["Süper soğutma (MRI cihazları)", "Meteoroloji balonları"], biological: "Kimyasal olarak inerttir, biyolojik rolü yoktur.", compounds: [], history: "Güneş spektrum çizgilerinden keşfedilmiştir.", facts: ["Evrendeki en bol ikinci elementtir."], notes: ["Değerlik elektron sayısı 2'dir ancak kararlılığından ötürü 8A grubundadır."] },
-            { num: 3, sym: "Li", name: "Lityum", cat: "alkali", row: 2, col: 1, mass: "6.94", config: "[He] 2s¹", shells: "2|1", uses: ["Pil batarya üretimi"], biological: "Nörolojik ilaç yapımı.", compounds: [], history: "Taş mineralinde bulundu.", facts: ["En hafif katı metaldir."], notes: ["Suyla aktif reaksiyon verir."] },
+            { num: 1, sym: "H", name: "Hidrojen", cat: "nonmetal", row: 1, col: 1, mass: "1.008", config: "1s¹", shells: "1", uses: ["Roket yakıt sistemleri", "Amonyak eldesi prosesi"], biological: "Su (H₂O) ve tüm organik bileşiklerin ana yapı taşıdır.", compounds: [{formula:"H₂O", name:"Su", desc:"Evrensel çözücü"}], history: "1766'da Henry Cavendish tarafından keşfedildi.", facts: ["Evrenin kütlece %75'ini oluşturan en temel maddedir."], notes: ["1A grubunda bulunmasına karşın metal değil, ametaldir."] },
+            { num: 2, sym: "He", name: "Helyum", cat: "noble", row: 1, col: 18, mass: "4.002", config: "1s²", shells: "2", uses: ["Süper soğutma (MRI cihazları)", "Meteoroloji balonları"], biological: "Kimyasal olarak inerttir.", compounds: [], history: "Güneş atmosferinde keşfedilmiştir.", facts: ["Evrendeki en bol ikinci elementtir."], notes: ["Değerlik elektron sayısı 2'dir ancak 8A grubundadır."] },
+            { num: 3, sym: "Li", name: "Lityum", cat: "alkali", row: 2, col: 1, mass: "6.94", config: "[He] 2s¹", shells: "2|1", uses: ["Pil batarya üretimi"], biological: "Nörolojik lityum karbonat ilaçları.", compounds: [], history: "Taş mineralinde bulundu.", facts: ["En hafif katı metaldir."], notes: ["Suyla aktif reaksiyon verir."] },
             { num: 4, sym: "Be", name: "Berilyum", cat: "alkaline", row: 2, col: 2, mass: "9.01", config: "[He] 2s²", shells: "2|2", uses: ["Teleskop aynaları"], biological: "Berilyoz akciğer hastalığı riski.", compounds: [], history: "Zümrüt cevherinde bulundu.", facts: ["X-Işınını emmez geçirir."], notes: ["2A grubu üyesidir."] },
             { num: 5, sym: "B", name: "Bor", cat: "metalloid", row: 2, col: 13, mass: "10.81", config: "[He] 2s² 2p¹", shells: "2|3", uses: ["Isıya dayanıklı borcam camı"], biological: "Bitki gelişimi kofaktörü.", compounds: [], history: "Boraks cevherinden indirgendi.", facts: ["Rezerv lideri Türkiye'dir."], notes: ["3A grubundaki yarı metaldir."] },
-            { num: 6, sym: "C", name: "Karbon", cat: "nonmetal", row: 2, col: 14, mass: "12.01", config: "[He] 2s² 2p²", shells: "2|4", uses: ["Çelik karbon ayarı", "Fosil yakıtlar ve polimer sanayi"], biological: "Canlı organizmaların ve organik kimyanın omurgasıdır.", compounds: [{formula:"CO₂", name:"Karbondioksit", desc:"Sera gazı bileşeni"}], history: "Antik çağlardan beri kömür ve elmas olarak bilinir.", facts: ["Grafen, elmas ve nanotüp gibi çok önemli allotropları vardır."], notes: ["4A grubundadır. 4 kovalent bağ yapar."] },
-            { num: 7, sym: "N", name: "Azot", cat: "nonmetal", row: 2, col: 15, mass: "14.01", config: "[He] 2s² 2p³", shells: "2|5", uses: ["Kriyojenik soğutma", "Gübre sanayisi"], biological: "Protein ve DNA yapısında yer alır.", compounds: [], history: "1772'de Daniel Rutherford tarafından bulundu.", facts: ["Atmosferin %78'ini oluşturur."], notes: ["5A azot grubunun ilk üyesidir."] },
-            { num: 8, sym: "O", name: "Oksijen", cat: "nonmetal", row: 2, col: 16, mass: "16.00", config: "[He] 2s² 2p⁴", shells: "2|6", uses: ["Solunum tüpleri", "Çelik eritme ocakları"], biological: "Aerobik solunumun ve ATP sentezinin temelidir.", compounds: [], history: "Priestley tarafından izole edildi.", facts: ["Yerkabuğunun en bol elementidir."], notes: ["6A kalkojen grubundadır."] },
-            { num: 9, sym: "F", name: "Flor", cat: "halogen", row: 2, col: 17, mass: "19.00", config: "[He] 2s² 2p⁵", shells: "2|7", uses: ["Teflon kaplamalar", "Diş macunu koruyucuları"], biological: "Kemik ve diş minesini sağlamlaştırır.", compounds: [], history: "Moissan tarafından elektrolizle elde edildi.", facts: ["Elektronegatifliği en yüksek olan elementtir."], notes: ["Bileşiklerinde SADECE -1 yükseltgenme basamağı alır."] },
-            { num: 10, sym: "Ne", name: "Neon", cat: "noble", row: 2, col: 18, mass: "20.18", config: "[He] 2s² 2p⁶", shells: "2|8", uses: ["Aydınlatma tüpleri"], biological: "İnerttir.", compounds: [], history: "Sıvı havadan damıtıldı.", facts: ["Elektrik altında turuncu ışık verir."], notes: ["8A soygaz grubundadır."] },
+            { num: 6, sym: "C", name: "Karbon", cat: "nonmetal", row: 2, col: 14, mass: "12.01", config: "[He] 2s² 2p²", shells: "2|4", uses: ["Çelik karbon ayarı", "Polimer sanayi"], biological: "Canlı organizmaların ve organik kimyanın omurgasıdır.", compounds: [{formula:"CO₂", name:"Karbondioksit", desc:"Sera gazı"}], history: "Kömür ve elmas olarak antik çağlardan beri bilinir.", facts: ["Grafen, elmas ve nanotüp allotroplarıdır."], notes: ["4A grubundadır. 4 kovalent bağ yapar."] },
+            { num: 7, sym: "N", name: "Azot", cat: "nonmetal", row: 2, col: 15, mass: "14.01", config: "[He] 2s² 2p³", shells: "2|5", uses: ["Kriyojenik dondurma", "Gübre sanayisi"], biological: "Protein ve DNA yapısında yer alır.", compounds: [], history: "1772'de Daniel Rutherford tarafından bulundu.", facts: ["Atmosferin %78'ini oluşturur."], notes: ["5A azot grubunun ilk üyesidir."] },
+            { num: 8, sym: "O", name: "Oksijen", cat: "nonmetal", row: 2, col: 16, mass: "16.00", config: "[He] 2s² 2p⁴", shells: "2|6", uses: ["Solunum tüpleri", "Çelik eritme ocakları"], biological: "Solunumun ve ATP sentezinin temelidir.", compounds: [], history: "Priestley tarafından izole edildi.", facts: ["Yerkabuğunun en bol elementidir."], notes: ["6A kalkojen grubundadır."] },
+            { num: 9, sym: "F", name: "Flor", cat: "halogen", row: 2, col: 17, mass: "19.00", config: "[He] 2s² 2p⁵", shells: "2|7", uses: ["Teflon kaplamalar", "Diş macunu koruyucuları"], biological: "Kemik ve diş minesini sağlamlaştırır.", compounds: [], history: "Moissan tarafından elektrolizle elde edildi.", facts: ["Elektronegatifliği en yüksek olan elementtir."], notes: ["Bileşiklerinde SADECE -1 alır."] },
+            { num: 10, sym: "Ne", name: "Neon", cat: "noble", row: 2, col: 18, mass: "20.18", config: "[He] 2s² 2p⁶", shells: "2|8", uses: ["Aydınlatma tüpleri"], biological: "İnert gazdır.", compounds: [], history: "Sıvı havadan damıtıldı.", facts: ["Elektrik altında turuncu ışık verir."], notes: ["8A soygaz grubundadır."] },
             
             { num: 11, sym: "Na", name: "Sodyum", cat: "alkali", row: 3, col: 1, mass: "22.99", config: "[Ne] 3s¹", shells: "2|8|1", uses: ["Sokak lambaları", "Nükleer soğutma"], biological: "Hücre dışı sıvı dengesini ayarlar.", compounds: [], history: "Davy tarafından izole edildi.", facts: ["Yumuşak gümüşi aktif metaldir."], notes: ["1A grubu üyesidir."] },
-            { num: 12, sym: "Mg", name: "Magnezyum", cat: "alkaline", row: 3, col: 2, mass: "24.31", config: "[Ne] 3s²", shells: "2|8|2", uses: ["Hafif alaşımlar"], biological: "Klorofil merkez katyonudur.", compounds: [], history: "Joseph Black tarafından tanımlandı.", facts: ["Göz alıcı beyaz bir alevle yanır."], notes: ["2A toprak alkali metalidir."] },
+            { num: 12, sym: "Mg", name: "Magnezyum", cat: "alkaline", row: 3, col: 2, mass: "24.31", config: "[Ne] 3s²", shells: "2|8|2", uses: ["Hafif alaşımlar"], biological: "Klorofil merkez katyonudur.", compounds: [], history: "Joseph Black tarafından tanımlandı.", facts: ["Göz alıcı beyaz bir alevle yanar."], notes: ["2A toprak alkali metalidir."] },
             { num: 13, sym: "Al", name: "Alüminyum", cat: "post-transition", row: 3, col: 13, mass: "26.98", config: "[Ne] 3s² 3p¹", shells: "2|8|3", uses: ["Mutfak folyoları, havacılık gövdeleri"], biological: "Belirgin rolü yoktur.", compounds: [], history: "1825'te Ørsted tarafından elde edildi.", facts: ["Yerkabuğunun en bol metalidir."], notes: ["AMFOTER özellik gösterir (Asit ve bazla tepkime verir)."] },
             { num: 14, sym: "Si", name: "Silisyum", cat: "metalloid", row: 3, col: 14, mass: "28.09", config: "[Ne] 3s² 3p²", shells: "2|8|4", uses: ["Yarı iletken mikroçipler"], biological: "Dokularda esneklik sağlar.", compounds: [], history: "Berzelius tarafından bulundu.", facts: ["Kum ve kayaçların ana malzemesidir."], notes: ["4A grubundaki yarı metaldir."] },
 
@@ -153,10 +162,10 @@
             
             // GEÇİŞ METALLERİ (TAM STRATEJİK YKS GRUBU)
             { num: 21, sym: "Sc", name: "Skandiyum", cat: "transition", row: 4, col: 3, mass: "44.96", config: "[Ar] 3d¹ 4s²", uses: ["Stadyum aydınlatması lambaları"], biological: "Fonksiyonu yoktur.", compounds: [], history: "Nilson tarafından 1879'da bulundu.", facts: ["İlk d-bloku elementidir."], notes: ["Bileşiklerinde sadece +3 yükseltgenme basamağı alır."] },
-            { num: 22, sym: "Ti", name: "Titanyum", cat: "transition", row: 4, col: 4, mass: "47.87", config: "[Ar] 3d² 4s²", uses: ["Havacılık, uzay araçları, implant üretimi"], biological: "Vücut dokularıyla kusursuz biyo-uyumludur.", compounds: [], history: "Klaproth tarafından adlandırıldı.", facts: ["Çelik kadar güçlü ama %45 daha hafiftir."], notes: ["Değişken +2, +3, +4 değerliklerini alabilir."] },
+            { num: 22, sym: "Ti", name: "Titanyum", cat: "transition", row: 4, col: 4, mass: "47.87", config: "[Ar] 3d² 4s²", uses: ["Havacılık, uzay araçları, implant üretimi"], biological: "Vücut dokularıyla kusursuz biyo-uyumludur.", compounds: [], history: "Klaproth tarafından adlandırıldı.", facts: ["Çelik kadar güçlü ama %45 daha hafiftir."], notes: ["Değerlik +2, +3, +4 alabilir."] },
             { num: 23, sym: "V", name: "Vanadyum", cat: "transition", row: 4, col: 5, mass: "50.94", config: "[Ar] 3d³ 4s²", uses: ["Yüksek mukavemetli makine çelik alaşımları"], biological: "Bazı deniz canlılarında birikir.", compounds: [], history: "Sefström tarafından keşfedildi.", facts: ["Bileşikleri çok renkli çözeltiler oluşturur."], notes: ["Geçiş metalidir."] },
             { num: 24, sym: "Cr", name: "Krom", cat: "transition", row: 4, col: 6, mass: "51.99", config: "[Ar] 3d⁵ 4s¹", shells: "2|8|13|1", uses: ["Paslanmaz çelik zırh alaşımları imalatı", "Korozyon önleyici kaplamalar"], biological: "Glikoz metabolizmasında insülin kofaktörü olarak rol oynar.", compounds: [{formula:"Cr₂O₃", name:"Krom III Oksit", desc:"Yeşil seramik boyası"}], history: "1797'de Vauquelin tarafından izole edilmiştir.", facts: ["Paslanmaya karşı olağanüstü dirençli, çok sert bir metaldir."], notes: ["Küresel simetri kararlılığından dolayı temel hal elektron dizilimi 3d⁵ 4s¹ biter. (ÖSYM çok sever)."] },
-            { num: 25, sym: "Mn", name: "Manganez", cat: "transition", row: 4, col: 7, mass: "54.94", config: "[Ar] 3d⁵ 4s²", uses: ["Raylı sistem aşınma alaşımları"], biological: "Metabolik enzim kofaktörüdür.", compounds: [], history: "Gahn tarafından izole edildi.", facts: ["Cam imalatında renk gidermek için kullanılır."], notes: ["+2 ile +7 arasında çok geniş yükseltgenme basamakları alabilir (KMnO₄ klasiği)."] },
+            { num: 25, sym: "Mn", name: "Manganez", cat: "transition", row: 4, col: 7, mass: "54.94", config: "[Ar] 3d⁵ 4s²", uses: ["Raylı sistem alaşımları"], biological: "Metabolik enzim kofaktörüdür.", compounds: [], history: "Gahn tarafından izole edildi.", facts: ["Cam imalatında renk gidermek için kullanılır."], notes: ["+2 ile +7 arasında çok geniş yükseltgenme basamakları alabilir."] },
             { num: 26, sym: "Fe", name: "Demir", cat: "transition", row: 4, col: 8, mass: "55.84", config: "[Ar] 3d⁶ 4s²", shells: "2|8|14|2", uses: ["İnşaat demiri, çelik konstrüksiyon, demiryolu hatları", "Ağır sanayi makine döküm gövdeleri"], biological: "Kan plazmasındaki hemoglobin protein merkez atomudur. Oksijen taşır.", compounds: [{formula:"Fe₂O₃", name:"Demir III Oksit", desc:"Pas / Hematit cevheri"}], history: "İnsanlığın medeniyet çağlarına yön veren antik metal.", facts: ["Dünya çekirdeğinin ana maddesidir ve ferromanyetiktir."], notes: ["Bileşiklerinde değişken +2 ve +3 yükseltgenme basamakları alabilir."] },
             { num: 27, sym: "Co", name: "Kobalt", cat: "transition", row: 4, col: 9, mass: "58.93", config: "[Ar] 3d⁷ 4s²", uses: ["Mıknatıslar, kesici elmas el aletleri"], biological: "B12 vitamininin merkez atomudur.", compounds: [], history: "Brandt tarafından 1735'te izole edildi.", facts: ["Çok şık kobalt mavisi renk pigmenti üretir."], notes: ["YKS geçiş metalidir."] },
             { num: 28, sym: "Ni", name: "Nikel", cat: "transition", row: 4, col: 10, mass: "58.69", config: "[Ar] 3d⁸ 4s²", uses: ["Bozuk para alaşımları, paslanmaz kaplamalar"], biological: "Eser miktarda gereklidir.", compounds: [], history: "Cronstedt tarafından keşfedildi.", facts: ["Ferromanyetiktir (Mıknatıs çeker)."], notes: ["Geçiş metalidir."] },
