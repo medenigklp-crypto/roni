@@ -4,26 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni - 3D Laboratuvar</title>
+    
+    <!-- iPHONE ANA EKRAN İKONU VE TAM EKRAN (PWA) AYARLARI -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RONI">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/fluid/512/sun.png">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluid/512/sun.png">
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://3dmol.org/build/3Dmol-min.js"></script>
-    <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #374151; border-radius: 4px; }
-    </style>
 </head>
 <body class="bg-[#030712] text-gray-100 font-sans antialiased">
 
     <div class="flex h-screen overflow-hidden relative">
         
+        <!-- SIDEBAR MENÜ PANELİ -->
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
             <div class="p-5">
                 <div class="flex items-center justify-between mb-8">
+                    
+                    <!-- PARLAYAN GÜNEŞ LOGOLU YENİ ALAN -->
                     <div class="flex items-center space-x-3">
-                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl">Ro</div>
-                        <span class="text-2xl font-black tracking-tight text-indigo-400">RONI</span>
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
+                            <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
+                            <i class="fas fa-sun relative z-10 animate-[spin_20s_linear_infinite]"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 leading-none">RONI</span>
+                            <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
+                        </div>
                     </div>
+                    
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
                 
@@ -49,7 +65,7 @@
                 </nav>
             </div>
             
-            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40">
+            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
                 <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
                 <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
             </div>
@@ -67,14 +83,13 @@
 
             <div class="p-4 md:p-8 max-w-7xl w-full mx-auto">
                 <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 min-h-[540px] flex flex-col justify-between shadow-2xl">
-                    
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-900 pb-4 gap-4">
                         <div>
                             <h3 class="font-bold text-base text-white tracking-tight">Molekül Geometrisi ve Kristal İstif Motoru</h3>
                             <p class="text-xs text-gray-500 mt-0.5">YKS müfredatında yer alan kovalent ve iyonik örgü yapılarının tamamı aktif edilmiştir.</p>
                         </div>
                         <div class="w-full md:w-72">
-                            <select id="moleculeSelector" onchange="handleMoleculeChange(this.value)" class="w-full bg-gray-900 text-xs font-bold rounded-xl border border-gray-800 p-3 text-indigo-400 focus:outline-none focus:border-indigo-500">
+                            <select id="moleculeSelector" onchange="handleMoleculeChange(this.value)" class="w-full bg-gray-900 text-xs font-bold rounded-xl border border-gray-800 p-3 text-indigo-400 focus:outline-none">
                                 <optgroup label="İyonik Kristal Yapılar">
                                     <option value="crystal:nacl">NaCl (Kübik Birim Hücre Örgüsü)</option>
                                 </optgroup>
@@ -104,11 +119,10 @@
                     <div class="flex-1 w-full bg-[#020617] rounded-xl border border-gray-900 relative mt-4 overflow-hidden" style="min-height: 400px;">
                         <div id="molecule-viewer" class="w-full h-full absolute inset-0"></div>
                         <div class="absolute bottom-4 left-4 bg-gray-950/90 backdrop-blur border border-gray-800 px-4 py-2 rounded-xl z-10 shadow-lg">
-                            <span class="text-[10px] text-gray-500 font-mono block">Aktif Yapı Model Çıktısı:</span>
-                            <span id="molecule-name" class="font-black text-indigo-400 text-sm">NaCl (Kübik Birim Hücre Örgüsü)</span>
+                            <span class="text-[10px] text-gray-500 font-mono block">Laboratuvardaki Model:</span>
+                            <span id="molecule-name" class="font-black text-indigo-400 text-sm">NaCl (Kristal Örgü)</span>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </main>
@@ -116,67 +130,35 @@
 
     <script>
         let viewer = null;
-
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
 
-        // Molekül ve Kristal Yönetim Motoru
         function handleMoleculeChange(val, customName = null) {
-            if (!viewer) return;
-            viewer.clear();
-
+            if (!viewer) return; viewer.clear();
             if(val.startsWith("crystal:")) {
-                // NaCl Kübik İyonik Kristal Örgü Matematiksel Dizilim Algoritması
-                let name = customName || "NaCl (Kübik Birim Hücre Örgüsü)";
-                $('#molecule-name').text(name);
-                
-                // 3x3x3 boyutunda elektrostatik Na+ ve Cl- istifleme simülasyonu
+                $('#molecule-name').text(customName || "NaCl (Kübik Birim Hücre Örgüsü)");
                 for(let x=-1; x<=1; x++) {
                     for(let y=-1; y<=1; y++) {
                         for(let z=-1; z<=1; z++) {
                             let isNa = (x + y + z) % 2 === 0;
-                            viewer.addSphere({
-                                center: {x: x*2.3, y: y*2.2, z: z*2.3},
-                                radius: isNa ? 0.48 : 0.68,
-                                color: isNa ? '#3b82f6' : '#10b981' // Na+ Mavi, Cl- Yeşil Küreler
-                            });
+                            viewer.addSphere({ center: {x: x*2.3, y: y*2.2, z: z*2.3}, radius: isNa ? 0.48 : 0.68, color: isNa ? '#3b82f6' : '#10b981' });
                         }
                     }
                 }
                 viewer.render(); viewer.zoomTo();
             } else {
-                // Kovalent Molekülleri PubChem Üzerinden Canlı Koordinat İndirme İşlemi
                 let cid = val.replace("cid:", "");
                 let textName = customName || $('#moleculeSelector option:selected').text();
                 $('#molecule-name').text(textName);
-
-                $3Dmol.download("cid:" + cid, viewer, {
-                    style: {
-                        stick: { radius: 0.16 },
-                        sphere: { scale: 0.26 }
-                    }
-                }, function() {
-                    viewer.render(); viewer.zoomTo();
-                });
+                $3Dmol.download("cid:" + cid, viewer, { style: { stick: { radius: 0.16 }, sphere: { scale: 0.26 } } }, function() { viewer.render(); viewer.zoomTo(); });
             }
         }
 
         $(document).ready(function() {
-            // 3Dmol Görüntüleyici Kurulumu
             viewer = $3Dmol.createViewer($('#molecule-viewer'), { backgroundColor: '#020617' });
-
-            // PERiYODiK TABLODAN GELEN PARAMETRE KONTROLÜ (Dinamik Entegrasyon)
             const urlParams = new URLSearchParams(window.location.search);
-            const passedCid = urlParams.get('cid');
-            const passedName = urlParams.get('name');
-
-            if (passedCid) {
-                // Dropdown menüsünde seçimi "Özel Element" durumuna eşitle
-                $('#moleculeSelector').append(`<option value="cid:${passedCid}" selected>${passedName}</option>`);
-                handleMoleculeChange("cid:" + passedCid, passedName);
-            } else {
-                // Parametre yoksa varsayılan olarak iyonik örgüyü yükle
-                handleMoleculeChange("crystal:nacl");
-            }
+            const passedCid = urlParams.get('cid'); const passedName = urlParams.get('name');
+            if (passedCid) { $('#moleculeSelector').append(`<option value="cid:${passedCid}" selected>${passedName}</option>`); handleMoleculeChange("cid:" + passedCid, passedName); }
+            else { handleMoleculeChange("crystal:nacl"); }
         });
     </script>
 </body>
