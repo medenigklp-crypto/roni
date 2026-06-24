@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni - Periyodik Tablo</title>
     
-    <!-- iPHONE ANA EKRAN İKONU VE TAM EKRAN (PWA) AYARLARI -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="RONI">
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluid/512/sun.png">
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluid/512/sun.png">
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
@@ -47,12 +44,10 @@
 
     <div class="flex h-screen overflow-hidden relative">
         
-        <!-- SIDEBAR MENÜ PANELİ -->
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
             <div class="p-5">
                 <div class="flex items-center justify-between mb-8">
                     
-                    <!-- PARLAYAN GÜNEŞ LOGOLU BRANDING -->
                     <div class="flex items-center space-x-3">
                         <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
                             <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
@@ -97,7 +92,6 @@
 
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
 
-        <!-- ANA İÇERİK ALANI -->
         <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-slate-900/20">
             <header class="bg-gray-950/85 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
@@ -108,7 +102,6 @@
 
             <div class="p-4 md:p-8 max-w-7xl w-full mx-auto space-y-6">
                 
-                <!-- Üst Arama Çubuğu ve Filtreler -->
                 <div class="bg-gray-950 p-4 rounded-xl border border-gray-900 flex flex-col md:flex-row gap-4 items-center justify-between shadow-lg">
                     <div class="relative w-full md:w-80">
                         <i class="fas fa-search absolute left-3.5 top-3.5 text-gray-600 text-xs"></i>
@@ -123,12 +116,10 @@
                     </div>
                 </div>
 
-                <!-- 118 Elementlik Eksiksiz Matris Kutusu -->
                 <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 overflow-x-auto custom-scrollbar shadow-inner">
                     <div class="periodic-grid min-w-[1020px]" id="periodic-matrix"></div>
                 </div>
 
-                <!-- AKADEMİK DETAY PANELİ -->
                 <div id="elementProfileContainer" class="bg-gray-950 rounded-xl border border-gray-900 p-5 md:p-8 space-y-6 shadow-2xl">
                     <p class="text-xs text-gray-500 font-mono text-center py-4">Derinlemesine YKS inceleme kartını yüklemek için periyodik tablodan bir elemente dokunun.</p>
                 </div>
@@ -136,7 +127,6 @@
         </main>
     </div>
 
-    <!-- SCRIPT VE ELEMENT ENGINE VERİLERİ -->
     <script>
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
 
@@ -168,7 +158,7 @@
             { num: 25, sym: "Mn", name: "Manganez", cat: "transition", row: 4, col: 7, mass: "54.94", config: "[Ar] 3d⁵ 4s²", uses: ["Raylı sistem alaşımları"], biological: "Metabolik enzim kofaktörüdür.", compounds: [], history: "Gahn tarafından izole edildi.", facts: ["Cam imalatında renk gidermek için kullanılır."], notes: ["+2 ile +7 arasında çok geniş yükseltgenme basamakları alabilir."] },
             { num: 26, sym: "Fe", name: "Demir", cat: "transition", row: 4, col: 8, mass: "55.84", config: "[Ar] 3d⁶ 4s²", shells: "2|8|14|2", uses: ["İnşaat demiri, çelik konstrüksiyon, demiryolu hatları", "Ağır sanayi makine döküm gövdeleri"], biological: "Kan plazmasındaki hemoglobin protein merkez atomudur. Oksijen taşır.", compounds: [{formula:"Fe₂O₃", name:"Demir III Oksit", desc:"Pas / Hematit cevheri"}], history: "İnsanlığın medeniyet çağlarına yön veren antik metal.", facts: ["Dünya çekirdeğinin ana maddesidir ve ferromanyetiktir."], notes: ["Bileşiklerinde değişken +2 ve +3 yükseltgenme basamakları alabilir."] },
             { num: 27, sym: "Co", name: "Kobalt", cat: "transition", row: 4, col: 9, mass: "58.93", config: "[Ar] 3d⁷ 4s²", uses: ["Mıknatıslar, kesici elmas el aletleri"], biological: "B12 vitamininin merkez atomudur.", compounds: [], history: "Brandt tarafından 1735'te izole edildi.", facts: ["Çok şık kobalt mavisi renk pigmenti üretir."], notes: ["YKS geçiş metalidir."] },
-            { num: 28, sym: "Ni", name: "Nikel", cat: "transition", row: 4, col: 10, mass: "58.69", config: "[Ar] 3d⁸ 4s²", uses: ["Bozuk para alaşımları, paslanmaz kaplamalar"], biological: "Eser miktarda gereklidir.", compounds: [], history: "Cronstedt tarafından keşfedildi.", facts: ["Ferromanyetiktir (Mıknatıs çeker)."], notes: ["Geçiş metalidir."] },
+            { num: 28, sym: "Ni", name: "Nikel", cat: "transition", row: 4, col: 10, mass: "58.69", config: "[Ar] 3d⁸ 4s²", uses: ["Bozuk coin alaşımları, paslanmaz kaplamalar"], biological: "Eser miktarda gereklidir.", compounds: [], history: "Cronstedt tarafından keşfedildi.", facts: ["Ferromanyetiktir (Mıknatıs çeker)."], notes: ["Geçiş metalidir."] },
             { num: 29, sym: "Cu", name: "Bakır", cat: "transition", row: 4, col: 11, mass: "63.54", config: "[Ar] 3d¹⁰ 4s¹", shells: "2|8|18|1", uses: ["Elektrik elektronik kablo hatları iletimi", "Bronz, pirinç gibi metalürjik alaşımlar"], biological: "Bazı solunum ve redoks enzim yapılarında kofaktördür.", compounds: [{formula:"CuSO₄", name:"Bakır Sülfat / Göztaşı", desc:"Tarım mantar ilacı"}], history: "Taş devrinden sonra insanlığın eritmeyi öğrendiği ilk metal.", facts: ["Gümüşten sonra elektrik akımını en iyi ileten elementtir."], notes: ["3d⁹ 4s² yerine küresel simetri eğilimiyle kendiliğinden 3d¹⁰ 4s¹ dizilimindedir (YKS istisnası)."] },
             { num: 30, sym: "Zn", name: "Çinko", cat: "transition", row: 4, col: 12, mass: "65.38", config: "[Ar] 3d¹⁰ 4s²", shells: "2|8|18|2", uses: ["Demir yüzeylerin korozyona karşı galvaniz kaplanması", "Pil gövdeleri imalatı"], biological: "DNA polimeraz enzimi koruyucu bariyer sistemlerinde kofaktördür.", compounds: [{formula:"ZnO", name:"Çinko Oksit", desc:"Güneş kremi pudra bazı"}], history: "Antik çağlardan beri pirinç alaşımlarında erimiş halde kullanılmıştır.", facts: ["Mavi-beyaz parlaklıkta kırılgan bir geçiş metalidir."], notes: ["AMFOTER metaldir; hem asitlerle hem kuvvetli bazlarla reaksiyona girip H₂ gazı açığa çıkarır. Bileşiklerinde SADECE +2 alır."] }
         ];
@@ -294,7 +284,22 @@
         }
 
         function searchElement(val) { let query = val.toLowerCase().trim(); $('.element-card').each(function() { let sym = $(this).attr('data-symbol'); let name = $(this).attr('data-name'); $(this).toggle(sym.includes(query) || name.includes(query)); }); }
-        function filterCategory(c) { $('.element-card').each(function() { let match = $(this).attr('data-category') === c; $(this).addClass(match?'highlight':'dimmed').removeClass(match?'dimmed':'highlight'); }); }
+        
+        // AMETALLER FİLTRELEMESİNDE HALOJENLERİ DE KAPSAYAN YENİ GÜVENLİ FONKSİYON
+        function filterCategory(c) { 
+            $('.element-card').each(function() { 
+                let cat = $(this).attr('data-category');
+                let match = (cat === c); 
+                
+                // Eğer "Ametaller" (nonmetal) sorgulanıyorsa halojenleri de (halogen) dahil et
+                if (c === 'nonmetal') {
+                    match = (cat === 'nonmetal' || cat === 'halogen');
+                }
+                
+                $(this).addClass(match ? 'highlight' : 'dimmed').removeClass(match ? 'dimmed' : 'highlight'); 
+            }); 
+        }
+        
         function clearFilter() { $('.element-card').removeClass('highlight dimmed'); }
 
         $(document).ready(function() { renderMatrixTable(); renderElementProfile(20); });
