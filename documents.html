@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roni - Öğretmen Belgeleri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-[#030712] text-gray-100 font-sans antialiased">
+
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-indigo-600 text-white px-5 py-3 rounded-xl shadow-2xl opacity-0 transition-all duration-300 pointer-events-none text-xs font-bold"></div>
+
+    <div class="flex h-screen overflow-hidden relative">
+        
+        <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
+            <div class="p-5">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl">Ro</div>
+                        <span class="text-2xl font-black tracking-tight text-indigo-400">RONI</span>
+                    </div>
+                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                
+                <nav class="space-y-1.5">
+                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-chart-pie w-5 text-center"></i> <span>Genel Bakış</span>
+                    </a>
+                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span>
+                    </a>
+                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-flask w-5 text-center"></i> <span>3D Laboratuvar</span>
+                    </a>
+                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-laptop-code w-5 text-center"></i> <span>Sanal Simülasyonlar</span>
+                    </a>
+                    <a href="documents.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
+                        <i class="fas fa-folder-open w-5 text-center"></i> <span>Öğretmen Belgeleri</span>
+                    </a>
+                    <a href="camp.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-graduation-cap w-5 text-center"></i> <span>YKS Kampı</span>
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
+                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
+                <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
+            </div>
+        </aside>
+
+        <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
+
+        <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-slate-900/20">
+            <header class="bg-gray-950/85 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30">
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">Öğretmen Belgeleri Arşivi</h2>
+                </div>
+            </header>
+
+            <div class="p-4 md:p-8 max-w-7xl w-full mx-auto">
+                <div class="bg-gray-950 p-6 rounded-xl border border-gray-900 shadow-2xl space-y-6">
+                    <div class="border-b border-gray-900 pb-3">
+                        <h3 class="font-extrabold text-base text-white tracking-tight">Müfredat Planları ve İdari Evrak Şablonları</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">MEB Türkiye Yüzyılı Maarif Modeli ile tam uyumlu, indirilebilir boş Word şablon arşiv paneli.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 flex justify-between items-center hover:border-gray-700 transition-all">
+                            <div class="flex items-center space-x-3 truncate">
+                                <i class="far fa-file-word text-blue-500 text-2xl shrink-0"></i>
+                                <div class="truncate">
+                                    <h4 class="font-bold text-xs md:text-sm text-gray-200 truncate">9. Sınıf Kimya Maarif Yıllık Planı</h4>
+                                    <p class="text-[11px] text-gray-500 truncate">Haftalık kazanım ve deney dağılımlı Word dökümanı</p>
+                                </div>
+                            </div>
+                            <button onclick="triggerDownload('9. Sınıf Yıllık Planı')" class="bg-gray-950 hover:bg-gray-800 p-2.5 rounded-lg border border-gray-800 text-indigo-400 text-xs shadow"><i class="fas fa-download"></i></button>
+                        </div>
+
+                        <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 flex justify-between items-center hover:border-gray-700 transition-all">
+                            <div class="flex items-center space-x-3 truncate">
+                                <i class="far fa-file-word text-blue-500 text-2xl shrink-0"></i>
+                                <div class="truncate">
+                                    <h4 class="font-bold text-xs md:text-sm text-gray-200 truncate">Sene Başı Zümre Toplantı Tutanağı</h4>
+                                    <p class="text-[11px] text-gray-500 truncate">Kimya zümre kurul kararları hazır boş evrak şablonu</p>
+                                </div>
+                            </div>
+                            <button onclick="triggerDownload('Zümre Toplantı Tutanağı')" class="bg-gray-950 hover:bg-gray-800 p-2.5 rounded-lg border border-gray-800 text-indigo-400 text-xs shadow"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
+        function triggerDownload(name) {
+            $('#toast').text(name + " şablonu Word formatında indirildi.").removeClass('opacity-0').addClass('opacity-100');
+            setTimeout(() => { $('#toast').removeClass('opacity-100').addClass('opacity-0'); }, 2500);
+        }
+    </script>
+</body>
+</html>
