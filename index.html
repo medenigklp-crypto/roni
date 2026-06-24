@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ronya — YKS Kimya Platformu</title>
+    <title>Roni — YKS Kimya Platformu</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="RONYA">
+    <meta name="apple-mobile-web-app-title" content="RONI">
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png">
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png">
 
@@ -18,40 +18,32 @@
 
     <style>
         :root {
-            --bg: #08090f; --sf: #0f1117; --sf2: #161922; --sf3: #1c2030;
-            --br: #1e2535; --br2: #252d40; --ac: #6366f1; --ac2: #818cf8;
-            --gr: #22c55e; --rd: #ef4444; --yw: #f59e0b; --cy: #06b6d4;
-            --tx: #f1f5f9; --tx2: #94a3b8; --tx3: #475569;
+            --bg: #08090f; --sf: #0f1117; --sf2: #161922; --br: #1e2535; --ac: #6366f1; --ac2: #818cf8;
         }
-        body { background: var(--bg); color: var(--tx); font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
         body::before {
             content: ''; position: fixed; inset: 0;
             background-image: radial-gradient(circle at 1px 1px, rgba(99,102,241,.06) 1px, transparent 0);
             background-size: 28px 28px; pointer-events: none; z-index: 0;
         }
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: var(--br2); border-radius: 3px; }
     </style>
 </head>
-<body class="overflow-x-hidden custom-scrollbar">
+<body class="overflow-x-hidden">
 
     <div class="flex h-screen overflow-hidden relative z-10">
         
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
-            <div class="p-5 overflow-y-auto flex-1 custom-scrollbar">
+            <div class="p-5 overflow-y-auto flex-1">
                 <div class="flex items-center justify-between mb-8">
-                    
                     <div class="flex items-center space-x-3">
-                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
-                            <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
-                            <i class="fas fa-sun relative z-10 animate-[spin_20s_linear_infinite]"></i>
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg relative">
+                            <i class="fas fa-sun animate-[spin_20s_linear_infinite]"></i>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 leading-none">RONYA</span>
+                            <span class="text-xl font-black tracking-wider text-white leading-none">RONI</span>
                             <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
                         </div>
                     </div>
-                    
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
                 
@@ -73,8 +65,7 @@
                     </a>
                 </nav>
             </div>
-            
-            <div class="p-5 border-t border-gray-900 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
+            <div class="p-5 border-t border-gray-900 flex items-center space-x-3 bg-gray-950/40">
                 <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
                 <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
             </div>
@@ -86,127 +77,48 @@
             <header class="bg-[#08090f]/90 backdrop-blur border-b border-gray-900 px-6 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
                     <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
-                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">Müfredat Ana Yönetim Merkezi</h2>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">RONI Kimya Yönetim Paneli</h2>
                 </div>
             </header>
 
-            <div class="p-4 md:p-8 max-w-7xl w-full mx-auto space-y-8 flex-1">
-                
-                <div class="text-center max-w-2xl mx-auto space-y-4 py-6">
-                    <span class="bg-indigo-500/10 text-indigo-400 text-[11px] font-bold px-3 py-1 rounded-full border border-indigo-500/20 uppercase tracking-wider">⚗️ YKS TYT · AYT · KPSS — Türkçe</span>
+            <div class="p-4 md:p-8 max-w-7xl w-full mx-auto space-y-6 flex-1">
+                <div class="text-center max-w-2xl mx-auto space-y-3 py-4">
+                    <span class="bg-indigo-500/10 text-indigo-400 text-[11px] font-bold px-3 py-1 rounded-full border border-indigo-500/20 uppercase tracking-wider">⚗️ YKS Hazırlık Altyapısı</span>
                     <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white font-['Space_Grotesk']">Kimya İçin <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Her Şey</span> Tek Yerde.</h1>
-                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">Çoklu sayfa mimarisi ile hafifletilmiş, donmayan, yüksek performanslı dijital kimya platformu.</p>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="periyodik.html" class="bg-[#0f1117] border border-gray-900 p-5 rounded-2xl hover:border-indigo-500 transition-all group">
-                        <div class="text-2xl mb-2">🔬</div>
-                        <h4 class="font-bold text-xs md:text-sm text-gray-200 group-hover:text-indigo-400 transition-colors">Periyodik Tablo</h4>
-                        <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">118 element ve detaylı akademik YKS notları.</p>
-                    </a>
-                    <a href="laboratuvar.html" class="bg-[#0f1117] border border-gray-900 p-5 rounded-2xl hover:border-indigo-500 transition-all group">
-                        <div class="text-2xl mb-2">🧬</div>
-                        <h4 class="font-bold text-xs md:text-sm text-gray-200 group-hover:text-indigo-400 transition-colors">3D Araçlar & Lab</h4>
-                        <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">Moleküller, amino asitler ve laboratuvar araçları.</p>
-                    </a>
-                    <a href="simulasyon.html" class="bg-[#0f1117] border border-gray-900 p-5 rounded-2xl hover:border-indigo-500 transition-all group">
-                        <div class="text-2xl mb-2">🔭</div>
-                        <h4 class="font-bold text-xs md:text-sm text-gray-200 group-hover:text-indigo-400 transition-colors">Sanal Deneyler</h4>
-                        <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">Maarif müfredatına tam uyumlu 17 kimya motoru.</p>
-                    </a>
-                    <a href="atlas.html" class="bg-[#0f1117] border border-gray-900 p-5 rounded-2xl hover:border-indigo-500 transition-all group">
-                        <div class="text-2xl mb-2">🎓</div>
-                        <h4 class="font-bold text-xs md:text-sm text-gray-200 group-hover:text-indigo-400 transition-colors">YÖK Atlas</h4>
-                        <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">Üniversite başarı sıralamaları ve taban puanlar filtreleme.</p>
-                    </a>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
-                    <div class="bg-[#0f1117] p-5 rounded-2xl border border-gray-900 space-y-4">
-                        <div class="flex justify-between items-center border-b border-gray-900 pb-2">
-                            <h3 class="font-bold text-xs uppercase text-indigo-400 tracking-wider font-['Space_Grotesk']"><i class="fas fa-clock mr-2"></i>YKS Geri Sayım Sayacı</h3>
-                            <select id="examSelector" onchange="setExam(this.value)" class="bg-[#161922] text-[11px] rounded p-1 border border-gray-800 text-gray-300">
-                                <option value="0">TYT 2026</option>
-                                <option value="1">AYT 2026</option>
-                                <option value="2">TYT 2027</option>
-                            </select>
-                        </div>
+                    <div class="bg-[#0f1117] p-5 rounded-2xl border border-gray-900 space-y-4 shadow-xl">
+                        <h3 class="font-bold text-xs uppercase text-indigo-400 tracking-wider font-['Space_Grotesk']"><i class="fas fa-clock mr-2"></i>Canlı YKS Geri Sayım</h3>
                         <div class="grid grid-cols-4 gap-2 text-center">
-                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cdg" class="text-xl font-black text-white font-['Space_Grotesk']">00</div><div class="text-[9px] text-gray-500 uppercase">Gün</div></div>
-                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cds" class="text-xl font-black text-white font-['Space_Grotesk']">00</div><div class="text-[9px] text-gray-500 uppercase">Saat</div></div>
-                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cdd" class="text-xl font-black text-white font-['Space_Grotesk']">00</div><div class="text-[9px] text-gray-500 uppercase">Dk</div></div>
-                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cdsn" class="text-xl font-black text-white font-['Space_Grotesk']">00</div><div class="text-[9px] text-gray-500 uppercase">Sn</div></div>
-                        </div>
-                        <p id="exinfo" class="text-[11px] text-gray-500 leading-relaxed italic text-center"></p>
-                    </div>
-
-                    <div class="bg-[#0f1117] p-5 rounded-2xl border border-gray-900 flex flex-col justify-between">
-                        <h3 class="font-bold text-xs uppercase text-amber-400 tracking-wider border-b border-gray-900 pb-2 mb-2"><i class="fas fa-brain mr-2"></i>Odaklanma Zümresi (Pomodoro)</h3>
-                        <div class="flex justify-around items-center py-2">
-                            <div class="text-center">
-                                <span id="pomml" class="text-[10px] font-bold text-gray-500 uppercase block">Çalışma</span>
-                                <span id="pomtm" class="text-4xl font-black text-white font-['Space_Grotesk']">25:00</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="pomToggle()" id="pomstbtn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition-all shadow">Başlat</button>
-                                <button onclick="pomReset()" class="bg-gray-900 hover:bg-gray-800 text-xs px-3 py-2 rounded-lg border border-gray-800 text-gray-400">↺</button>
-                            </div>
+                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cdg" class="text-xl font-black text-white">00</div><div class="text-[9px] text-gray-500 uppercase">Gün</div></div>
+                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cds" class="text-xl font-black text-white">00</div><div class="text-[9px] text-gray-500 uppercase">Saat</div></div>
+                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cdd" class="text-xl font-black text-white">00</div><div class="text-[9px] text-gray-500 uppercase">Dk</div></div>
+                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cdsn" class="text-xl font-black text-white">00</div><div class="text-[9px] text-gray-500 uppercase">Sn</div></div>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="bg-[#0f1117] p-6 rounded-2xl border border-gray-900 space-y-4">
-                    <h3 class="font-bold text-xs uppercase text-emerald-400 tracking-wider border-b border-gray-900 pb-2"><i class="fas fa-calculator mr-2"></i>YKS Ham Puan Hesaplama Motoru</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-                        <div><label class="text-[10px] text-gray-500 block mb-1">TYT Türkçe D (40):</label><input type="number" id="tyt-td" value="0" class="w-full bg-[#161922] p-2 rounded border border-gray-800 text-white"></div>
-                        <div><label class="text-[10px] text-gray-500 block mb-1">TYT Sosyal D (20):</label><input type="number" id="tyt-sd" value="0" class="w-full bg-[#161922] p-2 rounded border border-gray-800 text-white"></div>
-                        <div><label class="text-[10px] text-gray-500 block mb-1">TYT Mat D (40):</label><input type="number" id="tyt-md" value="0" class="w-full bg-[#161922] p-2 rounded border border-gray-800 text-white"></div>
-                        <div><label class="text-[10px] text-gray-500 block mb-1">TYT Fen D (20):</label><input type="number" id="tyt-fd" value="0" class="w-full bg-[#161922] p-2 rounded border border-gray-800 text-white"></div>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-                        <div><label class="text-[10px] text-gray-500 block mb-1">AYT Mat D (40):</label><input type="number" id="ayt-md" value="0" class="w-full bg-[#161922] p-2 rounded border border-gray-800 text-white"></div>
-                        <div><label class="text-[10px] text-gray-500 block mb-1">AYT Fizik D (14):</label><input type="number" id="ayt-fzd" value="0" class="w-full bg-[#161922] p-2 rounded border border-gray-800 text-white"></div>
-                        <div><label class="text-[10px] text-gray-500 block mb-1">AYT Kimya D (13):</label><input type="number" id="ayt-kd" value="0" class="w-full bg-[#161922] p-2 rounded border border-gray-800 text-white"></div>
-                        <div><label class="text-[10px] text-gray-500 block mb-1">AYT Biyoloji D (13):</label><input type="number" id="ayt-bd" value="0" class="w-full bg-[#161922] p-2 rounded border border-gray-800 text-white"></div>
-                    </div>
-                    <button onclick="calcYKSHamPuan()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition-all shadow">Ham Puan Değerlerini Hesapla</button>
-                    
-                    <div id="yksResArea" class="hidden grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
-                        <div class="bg-[#161922] p-3 rounded-xl border border-gray-800 text-center"><span class="text-[9px] text-gray-500 block">SAYAL HAM</span><span id="p-say" class="text-xl font-black text-white">100.00</span></div>
-                        <div class="bg-[#161922] p-3 rounded-xl border border-gray-800 text-center"><span class="text-[9px] text-gray-500 block">EŞİT AĞIRLIK</span><span id="p-ea" class="text-xl font-black text-white">100.00</span></div>
-                        <div class="bg-[#161922] p-3 rounded-xl border border-gray-800 text-center"><span class="text-[9px] text-gray-500 block">SÖZEL HAM</span><span id="p-soz" class="text-xl font-black text-white">100.00</span></div>
-                        <div class="bg-[#161922] p-3 rounded-xl border border-gray-800 text-center"><span class="text-[9px] text-gray-500 block">YABANCI DİL</span><span id="p-dil" class="text-xl font-black text-white">100.00</span></div>
+                    <div class="bg-[#0f1117] p-5 rounded-2xl border border-gray-900 flex flex-col justify-between shadow-xl">
+                        <h3 class="font-bold text-xs uppercase text-amber-400 tracking-wider mb-2"><i class="fas fa-brain mr-2"></i>Odaklanma Zamanlayıcısı</h3>
+                        <div class="flex justify-around items-center">
+                            <span id="pomtm" class="text-3xl font-black text-white font-['Space_Grotesk']">25:00</span>
+                            <button onclick="pomToggle()" id="pomstbtn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition-all shadow">Başlat</button>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
 
     <script>
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
-
-        // --- COUNTDOWN SYSTEM ---
-        const EXAMS = [
-            { name: 'TYT 2026', date: '2026-06-14T09:30:00', info: 'TYT: 14 Haziran 2026 · Türkçe(40) + Sosyal(20) + Matematik(40) + Fen(20) = 120 soru, 135 dk' },
-            { name: 'AYT 2026', date: '2026-06-15T09:30:00', info: 'AYT: 15 Haziran 2026 · Matematik(40) + Fen(40) + Edebiyat(24) = 160 soru, 180 dk' },
-            { name: 'TYT 2027', date: '2027-06-19T09:30:00', info: 'TYT 2027: Tahminen 19 Haziran 2027 · Yeni müfredat döküm entegrasyonlu.' }
-        ];
-        let cdEx = 0;
-        function setExam(idx) { cdEx = parseInt(idx); tickCD(); }
         function tickCD() {
-            const ex = EXAMS[cdEx]; $('#exinfo').text(ex.info);
-            const diff = new Date(ex.date) - new Date();
-            if(diff <= 0) { $('#cdg, #cds, #cdd, #cdsn').text('00'); return; }
+            const diff = new Date('2026-06-14T09:30:00') - new Date();
+            if(diff <= 0) return;
             const g = Math.floor(diff/86400000), s = Math.floor((diff%86400000)/3600000), d = Math.floor((diff%3600000)/60000), sn = Math.floor((diff%60000)/1000);
             $('#cdg').text(String(g).padStart(2,'0')); $('#cds').text(String(s).padStart(2,'0')); $('#cdd').text(String(d).padStart(2,'0')); $('#cdsn').text(String(sn).padStart(2,'0'));
         }
         setInterval(tickCD, 1000);
-
-        // --- POMODORO MOTORU ---
-        let pom = { run: false, rem: 25*60, tot: 25*60 }; let pomInt = null;
+        let pom = { run: false, rem: 25*60 }; let pomInt = null;
         function pomToggle() {
             if(pom.run) { clearInterval(pomInt); pom.run = false; $('#pomstbtn').text('Devam Et'); }
             else { pom.run = true; $('#pomstbtn').text('Durdur'); pomInt = setInterval(pomTick, 1000); }
@@ -215,20 +127,7 @@
             pom.rem--; if(pom.rem <= 0) { clearInterval(pomInt); pom.run = false; pom.rem = 25*60; $('#pomstbtn').text('Başlat'); }
             const m = Math.floor(pom.rem/60), s = pom.rem%60; $('#pomtm').text(String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'));
         }
-        function pomReset() { clearInterval(pomInt); pom.run = false; pom.rem = 25*60; $('#pomtm').text('25:00'); $('#pomstbtn').text('Başlat'); }
-
-        // --- YKS HAM PUAN HESAPLAYICI ---
-        function calcYKSHamPuan() {
-            const tytNet = parseFloat($('#tyt-td').val() || 0) + parseFloat($('#tyt-sd').val() || 0) + parseFloat($('#tyt-md').val() || 0) + parseFloat($('#tyt-fd').val() || 0);
-            const aytMat = parseFloat($('#ayt-md').val() || 0), aytFiz = parseFloat($('#ayt-fzd').val() || 0), aytKim = parseFloat($('#ayt-kd').val() || 0), aytBio = parseFloat($('#ayt-bd').val() || 0);
-            
-            const SAY = 100 + (tytNet * 0.3) + (aytMat * 1.06) + (aytFiz * 0.85) + (aytKim * 0.85) + (aytBio * 0.85);
-            const EA = 100 + (tytNet * 0.3) + (aytMat * 0.53);
-            
-            $('#p-say').text(SAY.toFixed(2)); $('#p-ea').text(EA.toFixed(2)); $('#yksResArea').removeClass('hidden');
-        }
-
-        $(document).ready(function() { setExam(0); });
+        $(document).ready(function() { tickCD(); });
     </script>
 </body>
 </html>
