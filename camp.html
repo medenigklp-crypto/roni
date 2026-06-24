@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni - YKS Kampı</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RONI">
+    <link class="apple-touch-icon" rel="apple-touch-icon" href="https://img.icons8.com/fluid/512/sun.png">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluid/512/sun.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #374151; border-radius: 4px; }
+    </style>
 </head>
 <body class="bg-[#030712] text-gray-100 font-sans antialiased">
 
@@ -15,10 +26,18 @@
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
             <div class="p-5">
                 <div class="flex items-center justify-between mb-8">
+                    
                     <div class="flex items-center space-x-3">
-                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl">Ro</div>
-                        <span class="text-2xl font-black tracking-tight text-indigo-400">RONI</span>
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
+                            <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
+                            <i class="fas fa-sun relative z-10 animate-[spin_20s_linear_infinite]"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 leading-none">RONI</span>
+                            <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
+                        </div>
                     </div>
+                    
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
                 
@@ -56,7 +75,7 @@
             <header class="bg-gray-950/85 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
                     <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
-                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">YKS Müfredat Kampı Takip Kartı</h2>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">YKS İlerleme Takip Kartı</h2>
                 </div>
             </header>
 
@@ -65,8 +84,7 @@
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-800 pb-3 gap-3">
                         <h3 class="font-bold text-sm text-gray-200 uppercase tracking-wider"><i class="fas fa-user-graduate mr-2 text-indigo-400"></i>Bireysel Öğrenci Konu Listesi</h3>
                         <div>
-                            <select id="campStudentSelector" onchange="loadStudentProgress(this.value)" class="bg-gray-900 text-xs font-bold rounded-lg border border-gray-800 p-2.5 text-indigo-400 focus:outline-none w-56">
-                                </select>
+                            <select id="campStudentSelector" onchange="loadStudentProgress(this.value)" class="bg-gray-900 text-xs font-bold rounded-lg border border-gray-800 p-2.5 text-indigo-400 focus:outline-none w-56"></select>
                         </div>
                     </div>
 
@@ -81,84 +99,76 @@
 
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
 
-        // Müfredattaki tüm resmi TYT ve AYT Kimya üniteleri listesi
-        const tytTopics = [
-            { key: "tyt_1", name: "Kimya Bilimi & Laboratuvar Güvenliği" },
-            { key: "tyt_2", name: "Atom ve Periyodik Sistem" },
-            { key: "tyt_3", name: "Kimyasal Türler Arası Etkileşimler" },
-            { key: "tyt_4", name: "Maddenin Halleri & Gazlara Giriş" },
-            { key: "tyt_5", name: "Kimyanın Temel Kanunları ve Mol Kavramı" },
-            { key: "tyt_6", name: "Karışımlar ve Ayrıştırma Teknikleri" },
-            { key: "tyt_7", name: "Asitler, Bazlar ve Tuzlar Reaksiyonları" }
-        ];
-
-        const aytTopics = [
-            { key: "ayt_1", name: "Modern Atom Teorisi ve Kuantum Sayıları" },
-            { key: "ayt_2", name: "Gazlar (Kinetik Teori ve Gaz Karışımları)" },
-            { key: "ayt_3", name: "Sıvı Çözeltiler ve Koligatif Özellikler" },
-            { key: "ayt_4", name: "Kimyasal Tepkimelerde Enerji ve Entalpi" },
-            { key: "ayt_5", name: "Kimyasal Tepkimelerde Hız ve Ea Bariyeri" },
-            { key: "ayt_6", name: "Kimyasal Denge ve Le Chatelier İlkesi" },
-            { key: "ayt_7", name: "Sulu Çözelti Dengeleri (Asit-Base ve KÇÇ)" },
-            { key: "ayt_8", name: "Kimya ve Elektrik (Redoks, Piller ve Elektroliz)" },
-            { key: "ayt_9", name: "Karbon Kimyasına Giriş ve Hibritleşme" },
-            { id: "ayt_10", key: "ayt_10", name: "Organik Kimya (Fonksiyonel Gruplar)" }
+        // Müfredatta bulunan 17 interaktif konunun eksiksiz listesi
+        const simulationsTopics = [
+            { id: 1, grade: "9. Sınıf", title: "Güvenlik Sembolleri ve Lab Ekipmanları" },
+            { id: 2, grade: "9. Sınıf", title: "Dalton, Thomson, Rutherford Atom Modelleri" },
+            { id: 3, grade: "9. Sınıf", title: "Periyodik Özelliklerin Değişimi" },
+            { id: 4, grade: "9. Sınıf", title: "İyonik Bileşiklerin Kristal Örgü Yapısı" },
+            { id: 5, grade: "9. Sınıf", title: "Kovalent Bağ Oluşumu ve Lewis Yapıları" },
+            { id: 6, grade: "9. Sınıf", title: "Zayıf Etkileşimler ve Moleküller Arası Bağlar" },
+            { id: 7, grade: "11. Sınıf", title: "Boyle Gaz Yasası (P-V İlişkisi)" },
+            { id: 8, grade: "11. Sınıf", title: "Çözünme Süreci ve Tanecikli Etkileşimler" },
+            { id: 9, grade: "11. Sınıf", title: "Kolorimetre ve Derişim Takibi" },
+            { id: 10, grade: "11. Sınıf", title: "Kimyasal Tepkimelerde Tepkime Isısı" },
+            { id: 11, grade: "11. Sınıf", title: "Tepkime Hızına Etki Eden Faktörler" },
+            { id: 12, grade: "11. Sınıf", title: "Kimyasal Denge ve Le Chatelier İlkesi" },
+            { id: 13, grade: "11. Sınıf", title: "Asit-Baz Titrasyonu ve Nötrleşme Eğrisi" },
+            { id: 14, grade: "11. Sınıf", title: "Suyun Otoiyonizasyonu ve pH/pOH" },
+            { id: 15, grade: "11. Sınıf", title: "Çözünürlük Dengesi (KÇÇ)" },
+            { id: 16, grade: "12. Sınıf", title: "Redoks Tepkimeleri ve Galvanik Piller" },
+            { id: 17, grade: "12. Sınıf", title: "Elektroliz ve Faraday Kanunları" }
         ];
 
         function initCampPage() {
-            const selector = $('#campStudentSelector');
-            selector.empty();
+            const selector = $('#campStudentSelector'); selector.empty();
 
             if (students.length === 0) {
                 selector.append('<option value="">Öğrenci Yok</option>');
                 $('#campMainContentArea').html(`
                     <div class="text-center py-12 bg-gray-900/20 rounded-xl border border-dashed border-gray-800 p-6">
-                        <i class="fas fa-user-slash text-4xl text-gray-650 mb-3 block"></i>
+                        <i class="fas fa-user-slash text-4xl text-gray-700 mb-3 block"></i>
                         <p class="text-sm font-semibold text-gray-400">YKS Kamp İlerleme Tablosu Şu An Boş</p>
                         <p class="text-xs text-gray-500 mt-1">Takibi başlatabilmek için lütfen önce Genel Bakış ana panelinden öğrenci kaydı oluşturun.</p>
                     </div>
                 `);
             } else {
                 selector.append('<option value="">--- Bir Öğrenci Seçin ---</option>');
-                students.forEach((st, idx) => {
-                    selector.append(`<option value="${idx}">${st.name}</option>`);
-                });
+                students.forEach((st, idx) => { selector.append(`<option value="${idx}">${st.name}</option>`); });
                 $('#campMainContentArea').html('<p class="text-xs text-gray-500 italic text-center py-8">Kazanım çizelgesini yüklemek için yukarıdan bir öğrenci seçimi yapın.</p>');
             }
         }
 
         function loadStudentProgress(idx) {
-            if (!idx) {
-                initCampPage();
-                return;
-            }
+            if (!idx) { initCampPage(); return; }
             const st = students[idx];
-            // Eğer öğrencinin progress alt nesnesi henüz yoksa ilklendir
             if (!st.progress) st.progress = {};
 
-            let tytHtml = tytTopics.map(t => `
+            // 9. Sınıf Konu Yapılandırması
+            let t9Html = simulationsTopics.filter(t => t.grade.includes("9")).map(t => `
                 <label class="flex items-center space-x-3 p-3 bg-gray-950 rounded-xl border border-gray-900 cursor-pointer hover:bg-gray-900/60 transition">
-                    <input type="checkbox" ${st.progress[t.key] ? 'checked' : ''} onchange="toggleTopic(${idx}, '${t.key}')" class="w-4 h-4 accent-indigo-500 rounded">
-                    <span class="text-xs text-gray-300 font-medium">${t.name}</span>
+                    <input type="checkbox" ${st.progress['sim_'+t.id] ? 'checked' : ''} onchange="toggleTopic(${idx}, 'sim_${t.id}')" class="w-4 h-4 accent-indigo-500 rounded">
+                    <span class="text-xs text-gray-300 font-medium">${t.title}</span>
                 </label>
             `).join('');
 
-            let aytHtml = aytTopics.map(t => `
+            // 11. ve 12. Sınıf LYS/AYT Grubu
+            let tAytHtml = simulationsTopics.filter(t => !t.grade.includes("9")).map(t => `
                 <label class="flex items-center space-x-3 p-3 bg-gray-950 rounded-xl border border-gray-900 cursor-pointer hover:bg-gray-900/60 transition">
-                    <input type="checkbox" ${st.progress[t.key] ? 'checked' : ''} onchange="toggleTopic(${idx}, '${t.key}')" class="w-4 h-4 accent-emerald-500 rounded">
-                    <span class="text-xs text-gray-300 font-medium">${t.name}</span>
+                    <input type="checkbox" ${st.progress['sim_'+t.id] ? 'checked' : ''} onchange="toggleTopic(${idx}, 'sim_${t.id}')" class="w-4 h-4 accent-emerald-500 rounded">
+                    <span class="text-xs text-gray-300 font-medium"><span class="text-[9px] text-gray-500 mr-1 font-mono">${t.grade}</span>${t.title}</span>
                 </label>
             `).join('');
 
             $('#campMainContentArea').html(`
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                     <div class="space-y-2 bg-gray-900/20 p-4 rounded-xl border border-gray-900">
-                        <h4 class="text-xs font-black text-indigo-400 uppercase tracking-wider mb-3"><i class="fas fa-book-open mr-1.5"></i> TYT Kimya Müfredatı</h4>
-                        <div class="space-y-2">${tytHtml}</div>
+                        <h4 class="text-xs font-black text-indigo-400 uppercase tracking-wider mb-3"><i class="fas fa-book-open mr-1.5"></i> TYT Kimya Grubu</h4>
+                        <div class="space-y-2">${t9Html}</div>
                     </div>
                     <div class="space-y-2 bg-gray-900/20 p-4 rounded-xl border border-gray-900">
-                        <h4 class="text-xs font-black text-emerald-400 uppercase tracking-wider mb-3"><i class="fas fa-brain mr-1.5"></i> AYT Kimya Müfredatı</h4>
-                        <div class="space-y-2">${aytHtml}</div>
+                        <h4 class="text-xs font-black text-emerald-400 uppercase tracking-wider mb-3"><i class="fas fa-brain mr-1.5"></i> AYT Kimya Grubu</h4>
+                        <div class="space-y-2">${tAytHtml}</div>
                     </div>
                 </div>
             `);
