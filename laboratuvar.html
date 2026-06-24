@@ -19,22 +19,12 @@
     <script src="https://3dmol.org/build/3Dmol-min.js"></script>
 
     <style>
-        :root {
-            --bg: #08090f; --sf: #0f1117; --sf2: #161922; --sf3: #1c2030;
-            --br: #1e2535; --br2: #252d40; --ac: #6366f1; --ac2: #818cf8;
-            --gr: #22c55e; --rd: #ef4444; --yw: #f59e0b; --cy: #06b6d4;
-            --tx: #f1f5f9; --tx2: #94a3b8; --tx3: #475569;
-        }
-        body { background: var(--bg); color: var(--tx); font-family: 'Inter', sans-serif; }
-        body::before {
-            content: ''; position: fixed; inset: 0;
-            background-image: radial-gradient(circle at 1px 1px, rgba(99,102,241,.06) 1px, transparent 0);
-            background-size: 28px 28px; pointer-events: none; z-index: 0;
-        }
+        :root { --bg: #08090f; --sf: #0f1117; --sf2: #161922; --br: #1e2535; --ac: #6366f1; --ac2: #818cf8; }
+        body { background: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: var(--br2); border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: var(--br); border-radius: 3px; }
         .tab-btn.active { background: var(--ac); color: white; }
-        .style-btn.active { border-color: var(--ac); color: var(--ac2); background: rgba(99,102,241,0.08); }
+        .style-btn.active { border-color: var(--ac); color: var(--ac2); background: rgba(99,102,241,0.12); }
     </style>
 </head>
 <body class="overflow-x-hidden custom-scrollbar">
@@ -45,40 +35,23 @@
             <div class="p-5 overflow-y-auto flex-1 custom-scrollbar">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center space-x-3">
-                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
-                            <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
-                            <i class="fas fa-sun relative z-10 animate-[spin_20s_linear_infinite]"></i>
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg relative">
+                            <i class="fas fa-sun animate-[spin_20s_linear_infinite]"></i>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 leading-none">RONI</span>
+                            <span class="text-xl font-black tracking-wider text-white leading-none">RONI</span>
                             <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
                         </div>
                     </div>
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
-                
                 <nav class="space-y-1">
-                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
-                        <i class="fas fa-chart-pie w-5 text-center"></i> <span>Ana Sayfa</span>
-                    </a>
-                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
-                        <i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span>
-                    </a>
-                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
-                        <i class="fas fa-flask w-5 text-center"></i> <span>3D Araçlar</span>
-                    </a>
-                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
-                        <i class="fas fa-laptop-code w-5 text-center"></i> <span>Simülasyonlar</span>
-                    </a>
-                    <a href="atlas.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
-                        <i class="fas fa-graduation-cap w-5 text-center"></i> <span>YÖK Atlas</span>
-                    </a>
+                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400">Ana Sayfa</a>
+                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400">Periyodik Tablo</a>
+                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">3D Araçlar</a>
+                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400">Simülasyonlar</a>
+                    <a href="atlas.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400">YÖK Atlas</a>
                 </nav>
-            </div>
-            
-            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
-                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
-                <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
             </div>
         </aside>
 
@@ -88,16 +61,14 @@
             <header class="bg-[#08090f]/90 backdrop-blur border-b border-gray-900 px-6 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
                     <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
-                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">🧬 Roni 3D Kimya Laboratuvarı</h2>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">Roni 3D Laboratuvarı</h2>
                 </div>
             </header>
 
             <div class="p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6 flex-1">
-                
                 <div class="flex bg-[#0f1117] p-1 rounded-xl border border-gray-900">
                     <button onclick="switchSubTab(0)" class="tab-btn active flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all">🔬 3D Molekül Motoru</button>
-                    <button onclick="switchSubTab(1)" class="tab-btn flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all text-gray-500 hover:text-gray-300">🧬 Amino Asit Kataloğu</button>
-                    <button onclick="switchSubTab(2)" class="tab-btn flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all text-gray-500 hover:text-gray-300">🧪 Laboratuvar Ekipmanları</button>
+                    <button onclick="switchSubTab(1)" class="tab-btn flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all text-gray-500">🧬 Amino Asitler</button>
                 </div>
 
                 <div id="subTabPanels">
@@ -105,76 +76,48 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div class="md:col-span-1 bg-[#0f1117] p-4 rounded-xl border border-gray-900 space-y-4">
                                 <div>
-                                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Müfredat Yapısı Seçimi:</label>
+                                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Model Seçimi:</label>
                                     <select id="molSelector" onchange="handleMoleculeChange(this.value)" class="w-full bg-[#161922] p-2.5 text-xs font-bold rounded-xl border border-gray-800 text-indigo-400 focus:outline-none">
-                                        <optgroup label="İyonik Kristal Yapılar">
-                                            <option value="crystal:nacl">NaCl (Kübik Birim Hücre Örgüsü)</option>
-                                        </optgroup>
-                                        <optgroup label="Temel Kovalent Moleküller">
-                                            <option value="cid:962">H₂O (Su)</option>
-                                            <option value="cid:280">CO₂ (Karbondioksit)</option>
-                                            <option value="cid:291">CH₄ (Metan)</option>
-                                            <option value="cid:222">NH₃ (Amonyak)</option>
-                                            <option value="cid:24784">BeH₂ (Berilyum Hidrür)</option>
-                                            <option value="cid:5462312">BH₃ (Bor Trihidrür)</option>
-                                            <option value="cid:14917">HF (Hidrojen Florür)</option>
-                                            <option value="cid:783">H₂ (Hidrojen Gazı)</option>
-                                            <option value="cid:977">O₂ (Oksijen Gazı)</option>
-                                            <option value="cid:947">N₂ (Azot Gazı)</option>
-                                            <option value="cid:768">HCN (Hidrojen Siyanür)</option>
-                                            <option value="cid:6324">C₂H₆ (Etan)</option>
-                                            <option value="cid:6325">C₂H₄ (Eten / Etilen)</option>
-                                            <option value="cid:6326">C₂H₂ (Etin / Asetilen)</option>
-                                            <option value="cid:241">C₆H₆ (Benzen Halkası)</option>
-                                        </optgroup>
+                                        <option value="crystal:nacl">NaCl (İyonik Kristal Örgüsü)</option>
+                                        <option value="cid:962">H₂O (Su Molekülü)</option>
+                                        <option value="cid:280">CO₂ (Karbondioksit)</option>
+                                        <option value="cid:291">CH₄ (Metan)</option>
+                                        <option value="cid:947">N₂ (Azot Gazı - Üçlü Bağ)</option>
                                     </select>
                                 </div>
-                                <div class="grid grid-cols-3 gap-2" id="styleGroup">
-                                    <button onclick="setRenderStyle('ball', this)" class="style-btn active bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800 transition-all">Top-Çubuk</button>
-                                    <button onclick="setRenderStyle('space', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800 transition-all">Uzay Dolgu</button>
-                                    <button onclick="setRenderStyle('line', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800 transition-all">Tel Kafes</button>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button onclick="setRenderStyle('ball', this)" class="style-btn active bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800">Top-Çubuk</button>
+                                    <button onclick="setRenderStyle('space', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800">Uzay Dolgu</button>
+                                    <button onclick="setRenderStyle('line', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800">Tel Kafes</button>
                                 </div>
                             </div>
                             
-                            <div class="md:col-span-2 bg-[#020617] rounded-xl border border-gray-900 relative min-h-[440px] flex flex-col justify-between overflow-hidden">
+                            <div class="md:col-span-2 bg-[#020617] rounded-xl border border-gray-900 relative min-h-[440px] overflow-hidden">
                                 <div id="molecule-viewer" class="w-full h-full absolute inset-0"></div>
-                                <div class="absolute bottom-14 left-4 bg-gray-950/80 px-3 py-1 rounded-full text-xs font-bold text-white shadow-md z-10">
-                                    <span id="mol3d-label">NaCl (Kristal Örgü)</span>
+                                <div class="absolute bottom-4 left-4 right-4 bg-gray-950/80 p-3 rounded-xl border border-gray-800/40 z-10 text-xs text-gray-400">
+                                    <span id="mol3d-label" class="font-bold text-white block text-sm mb-1">NaCl (Kristal Örgü)</span>
+                                    <p id="mol3d-info">İyonik kristal kafes birim hücre modeli. Katyon ve anyonların elektrostatik çekim istifidir.</p>
                                 </div>
-                                <div id="mol3d-info" class="absolute bottom-3 left-4 right-4 bg-gray-950/80 p-2.5 rounded-xl text-[11px] text-gray-400 leading-relaxed border border-gray-900/40 z-10"></div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="sub-panel hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="amino-grid"></div>
-
-                    <div class="sub-panel hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="lab-grid"></div>
+                    <div class="sub-panel hidden grid grid-cols-1 md:grid-cols-3 gap-4" id="amino-grid"></div>
                 </div>
-
             </div>
         </main>
     </div>
 
     <script>
-        let viewer = null;
-        let currentStyle = 'ball';
-
-        function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
+        let viewer = null; let currentStyle = 'ball';
+        function switchSubTab(idx) { $('.tab-btn').removeClass('active bg-indigo-600 text-white').addClass('text-gray-500'); $('.tab-btn').eq(idx).addClass('active bg-indigo-600 text-white'); $('.sub-panel').addClass('hidden').eq(idx).removeClass('hidden'); }
         
-        function switchSubTab(idx) {
-            $('.tab-btn').removeClass('active bg-indigo-600 text-white').addClass('text-gray-500 hover:text-gray-300');
-            $('.tab-btn').eq(idx).addClass('active bg-indigo-600 text-white').removeClass('text-gray-500');
-            $('.sub-panel').addClass('hidden').eq(idx).removeClass('hidden');
-        }
-
-        // Kristal yapılar için dinamik XYZ üretecine dönüştürme (Stil hatası çözümü)
         function generateNaClXYZ() {
-            let s = "27\nNaCl Crystal Lattice\n";
+            let s = "27\nNaCl Lattice\n";
             for(let x=-1; x<=1; x++) {
                 for(let y=-1; y<=1; y++) {
                     for(let z=-1; z<=1; z++) {
                         let isNa = (x + y + z) % 2 === 0;
-                        s += `${isNa ? 'Na' : 'Cl'} ${x*3.2} ${y*3.2} ${z*3.2}\n`;
+                        s += `${isNa ? 'Na' : 'Cl'} ${x*3.0} ${y*3.0} ${z*3.0}\n`;
                     }
                 }
             }
@@ -182,74 +125,34 @@
         }
 
         function handleMoleculeChange(val) {
-            if (!viewer) return;
-            viewer.clear();
-            
+            if (!viewer) return; viewer.clear();
             if (val === "crystal:nacl") {
                 $('#mol3d-label').text("NaCl (Kübik Birim Hücre Örgüsü)");
-                $('#mol3d-info').html("⚠️ <strong>ÖSYM Kritik Notu:</strong> NaCl molekül DEĞİLDİR, iyonik örgü yapısındadır. Gösterilen model elektrostatik katyon-anyon birim hücre istifidir.");
-                
-                viewer.addModel(generateNaClXYZ(), "xyz");
-                applyRenderStyle();
+                $('#mol3d-info').html("⚠️ <strong>ÖSYM Notu:</strong> İyonik yapılar molekül oluşturmaz, kristal kafes yapısındadır.");
+                viewer.addModel(generateNaClXYZ(), "xyz"); applyRenderStyle();
             } else {
                 let cid = val.replace("cid:", "");
-                let textName = $('#molSelector option:selected').text();
-                $('#mol3d-label').text(textName);
-                $('#mol3d-info').html("<strong>Kovalent Bağ Yapısı:</strong> Ametal atomlarının elektron ortaklaşması ile kurulan kararlı molekül geometrisidir.");
-                
-                $3Dmol.download("cid:" + cid, viewer, {}, function() {
-                    applyRenderStyle();
-                });
+                $('#mol3d-label').text($('#molSelector option:selected').text());
+                $('#mol3d-info').text("Kovalent bağ yapısı. Orbitallerin elektron ortaklaşması ile kurulan molekül geometrisidir.");
+                $3Dmol.download("cid:" + cid, viewer, {}, function() { applyRenderStyle(); });
             }
         }
 
-        function setRenderStyle(styleName, btn) {
-            $('.style-btn').removeClass('active border-indigo-500 text-indigo-400 bg-indigo-500/10');
-            $(btn).addClass('active border-indigo-500 text-indigo-400 bg-indigo-500/10');
-            currentStyle = styleName;
-            applyRenderStyle();
-        }
-
+        function setRenderStyle(styleName, btn) { $('.style-btn').removeClass('active border-indigo-500 text-indigo-400 bg-indigo-500/10'); $(btn).addClass('active border-indigo-500 text-indigo-400 bg-indigo-500/10'); currentStyle = styleName; applyRenderStyle(); }
+        
         function applyRenderStyle() {
-            if (!viewer) return;
-            let styleConfig = {};
-            
-            if (currentStyle === 'ball') {
-                styleConfig = { stick: { radius: 0.15 }, sphere: { scale: 0.28 } };
-            } else if (currentStyle === 'space') {
-                styleConfig = { sphere: { scale: 0.9 } };
-            } else if (currentStyle === 'line') {
-                styleConfig = { line: { radius: 0.05 } };
-            }
-
-            viewer.setStyle({}, styleConfig);
-            viewer.render();
-            viewer.zoomTo();
+            if (!viewer) return; let styleConfig = {};
+            if (currentStyle === 'ball') styleConfig = { stick: { radius: 0.15 }, sphere: { scale: 0.25 } };
+            else if (currentStyle === 'space') styleConfig = { sphere: { scale: 0.8 } };
+            else if (currentStyle === 'line') styleConfig = { line: {} };
+            viewer.setStyle({}, styleConfig); viewer.render(); viewer.zoomTo();
         }
-
-        // Data Kataloğu
-        const AMINO=[
-            {sym:'Gly',name:'Glisin',formula:'C₂H₅NO₂',polar:'Apolar',charge:'Yüksüz',desc:'En basit amino asit yapısıdır. Radikal grubu sadece tek bir Hidrojen atomundan ibarettir.'},
-            {sym:'Ala',name:'Alanin',formula:'C₃H₇NO₂',polar:'Apolar',charge:'Yüksüz',desc:'R grubu metil (-CH₃) olan hidrofobik ve kararlı amino asit türü.'},
-            {sym:'Cys',name:'Sistein',formula:'C₃H₇NO₂S',polar:'Polar',charge:'Yüksüz',desc:'Kükürt içerir, sülfhidril (-SH) grubu ile protein katlanmalarında disülfit köprüleri kurar.'}
-        ];
-        const LABS=[
-            {name:'Erlenmayer',icon:'⚗️',use:'Çözelti çalkalama, saklama ve titrasyon prosesleri.',safety:'Kırılgan temperli cam yapı.'},
-            {name:'Büret',icon:'🧪',use:'Titrasyon deneylerinde asit ya da bazın hassas hacimsel damlatılması.',safety:'Musluk sızdırmazlığı ve kalibrasyon çizgileri kontrol edilmelidir.'}
-        ];
 
         $(document).ready(function() {
             viewer = $3Dmol.createViewer($('#molecule-viewer'), { backgroundColor: '#020617' });
-            
-            // Veri listelerini doldur
-            AMINO.forEach(aa => {
-                $('#amino-grid').append(`<div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900"><div class="text-xl font-black text-indigo-400 font-['Space_Grotesk']">${aa.sym}</div><div class="text-xs font-bold text-gray-200 mt-1">${aa.name} (${aa.formula})</div><p class="text-[11px] text-gray-500 mt-1 leading-relaxed">${aa.desc}</p></div>`);
-            });
-            LABS.forEach(l => {
-                $('#lab-grid').append(`<div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900"><div class="text-2xl">${l.icon}</div><div class="text-xs font-black text-gray-200 mt-1">${l.name}</div><div class="text-[11px] text-gray-400 mt-1">Kullanım: ${l.use}</div></div>`);
-            });
-
             handleMoleculeChange("crystal:nacl");
+            const AMINO=['Glisin (C₂H₅NO₂)','Alanin (C₃H₇NO₂)','Sistein (C₃H₇NO₂S)'];
+            AMINO.forEach(a => { $('#amino-grid').append(`<div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900 text-xs font-bold text-indigo-400">${a}</div>`); });
         });
     </script>
 </body>
