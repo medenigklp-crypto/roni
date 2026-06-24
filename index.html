@@ -7,290 +7,101 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://3dmol.org/build/3Dmol-min.js"></script>
-    <style>
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .periodic-grid {
-            display: grid;
-            grid-template-columns: repeat(18, minmax(0, 1fr));
-            gap: 5px;
-        }
-        /* Element Kategorileri Renk Kodları */
-        .cat-nonmetal { background-color: rgba(16, 185, 129, 0.12); border: 1px solid #10b981; color: #34d399; }
-        .cat-noble { background-color: rgba(168, 85, 247, 0.12); border: 1px solid #a855f7; color: #c084fc; }
-        .cat-alkali { background-color: rgba(239, 68, 68, 0.12); border: 1px solid #ef4444; color: #f87171; }
-        .cat-alkaline { background-color: rgba(245, 158, 11, 0.12); border: 1px solid #f59e0b; color: #fbbf24; }
-        .cat-metalloid { background-color: rgba(20, 184, 166, 0.12); border: 1px solid #14b8a6; color: #2dd4bf; }
-        .cat-halogen { background-color: rgba(236, 72, 153, 0.12); border: 1px solid #ec4899; color: #f472b6; }
-        .cat-post-transition { background-color: rgba(6, 182, 212, 0.12); border: 1px solid #06b6d4; color: #22d3ee; }
-        .cat-transition { background-color: rgba(59, 130, 246, 0.15); border: 1px solid #3b82f6; color: #60a5fa; }
-        .cat-lanthanide { background-color: rgba(139, 92, 246, 0.12); border: 1px solid #8b5cf6; color: #a78bfa; }
-        .cat-actinide { background-color: rgba(219, 39, 119, 0.12); border: 1px solid #db2777; color: #f472b6; }
-        
-        .element-card { transition: all 0.15s ease; }
-        .element-card:hover { transform: scale(1.1); z-index: 30; cursor: pointer; filter: brightness(1.25); box-shadow: 0 0 10px currentColor; }
-        .highlight { filter: brightness(1.3); box-shadow: 0 0 12px currentColor; z-index: 20; }
-        .dimmed { opacity: 0.15; }
-        .sim-item.active { background-color: #4f46e5; color: white; border-color: #6366f1; }
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #374151; border-radius: 4px; }
-    </style>
 </head>
-<body class="bg-[#030712] text-gray-100 font-sans antialiased">
-
-    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-indigo-600 text-white px-5 py-3 rounded-xl shadow-2xl opacity-0 transition-all duration-300 pointer-events-none text-xs font-bold"></div>
+<body class="bg-slate-950 text-gray-100 font-sans antialiased">
 
     <div class="flex h-screen overflow-hidden relative">
         
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
-            <div class="p-5 overflow-y-auto flex-1 custom-scrollbar">
+            <div class="p-5">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center space-x-3">
-                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl tracking-wider shadow-lg shadow-indigo-500/30">Ro</div>
+                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl">Ro</div>
                         <span class="text-2xl font-black tracking-tight text-indigo-400">RONI</span>
                     </div>
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
                 
-                <nav class="space-y-1">
-                    <button onclick="switchTab('dashboard')" id="btn-dashboard" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold transition text-sm">
+                <nav class="space-y-1.5">
+                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
                         <i class="fas fa-chart-pie w-5 text-center"></i> <span>Genel Bakış</span>
-                    </button>
-                    <button onclick="switchTab('periodic-table')" id="btn-periodic-table" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold transition text-sm">
+                    </a>
+                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
                         <i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span>
-                    </button>
-                    <button onclick="switchTab('lab')" id="btn-lab" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold transition text-sm">
+                    </a>
+                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
                         <i class="fas fa-flask w-5 text-center"></i> <span>3D Laboratuvar</span>
-                    </button>
-                    <button onclick="switchTab('simulations')" id="btn-simulations" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold transition text-sm">
+                    </a>
+                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
                         <i class="fas fa-laptop-code w-5 text-center"></i> <span>Sanal Simülasyonlar</span>
-                    </button>
-                    <button onclick="switchTab('documents')" id="btn-documents" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold transition text-sm">
+                    </a>
+                    <a href="documents.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
                         <i class="fas fa-folder-open w-5 text-center"></i> <span>Öğretmen Belgeleri</span>
-                    </button>
-                    <button onclick="switchTab('camp')" id="btn-camp" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold transition text-sm">
+                    </a>
+                    <a href="camp.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
                         <i class="fas fa-graduation-cap w-5 text-center"></i> <span>YKS Kampı</span>
-                    </button>
+                    </a>
                 </nav>
             </div>
             
-            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
-                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400 border border-indigo-900/40">M</div>
-                <div>
-                    <h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4>
-                    <span class="text-xs text-gray-500 font-medium">Kimya Öğretmeni</span>
-                </div>
+            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40">
+                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
+                <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
             </div>
         </aside>
 
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
 
-        <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-slate-950/10">
-            
-            <header class="bg-gray-950/80 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30 flex-shrink-0">
+        <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-slate-900/20">
+            <header class="bg-gray-950/85 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
                     <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
-                    <h2 id="page-title" class="text-lg md:text-xl font-extrabold text-white tracking-tight">Genel Bakış</h2>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">Genel Bakış & Yönetim</h2>
                 </div>
             </header>
 
-            <div class="p-4 md:p-8 max-w-7xl w-full mx-auto flex-1">
-                
-                <div id="dashboard" class="tab-content active space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                        <div class="bg-gray-950 p-6 rounded-xl border border-gray-900 shadow-xl flex items-center space-x-4">
-                            <div class="p-3.5 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-400"><i class="fas fa-users text-xl"></i></div>
-                            <div>
-                                <h3 class="text-gray-500 text-[11px] font-bold uppercase tracking-wider">Toplam Aktif Öğrenci</h3>
-                                <p id="dashStudentCount" class="text-2xl font-black text-white mt-0.5">0</p>
-                            </div>
-                        </div>
-                        <div class="bg-gray-950 p-6 rounded-xl border border-gray-900 shadow-xl flex items-center space-x-4">
-                            <div class="p-3.5 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400"><i class="fas fa-laptop-code text-xl"></i></div>
-                            <div><h3 class="text-gray-500 text-[11px] font-bold uppercase tracking-wider">Maarif Simülasyonu</h3><p class="text-2xl font-black text-white mt-0.5">17 Aktif Modül</p></div>
-                        </div>
-                        <div class="bg-gray-950 p-6 rounded-xl border border-gray-900 shadow-xl flex items-center space-x-4">
-                            <div class="p-3.5 bg-amber-500/10 rounded-xl border border-amber-500/20 text-amber-400"><i class="fas fa-folder-open text-xl"></i></div>
-                            <div><h3 class="text-gray-500 text-[11px] font-bold uppercase tracking-wider">Plan & Evrak</h3><p class="text-2xl font-black text-white mt-0.5">342 Belge</p></div>
+            <div class="p-4 md:p-8 max-w-7xl w-full mx-auto space-y-6">
+                <div class="bg-gradient-to-r from-indigo-950 via-slate-950 to-indigo-950/30 p-6 rounded-2xl border border-indigo-900/40 shadow-2xl">
+                    <h3 class="text-xl md:text-2xl font-black text-white">Roni Dijital Kimya Sistemine Hoş Geldiniz!</h3>
+                    <p class="text-indigo-200/80 text-xs md:text-sm mt-2">Bu ana panel üzerinden öğrenci ekleyebilir ve diğer branş sayfalarına hızlıca geçiş yapabilirsiniz.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 shadow-xl flex items-center space-x-4">
+                        <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400"><i class="fas fa-users text-xl"></i></div>
+                        <div>
+                            <h3 class="text-gray-500 text-[10px] font-bold uppercase tracking-wider">Aktif Öğrenci Sayısı</h3>
+                            <p id="dashStudentCount" class="text-2xl font-black text-white">0</p>
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="md:col-span-1 bg-gray-950 p-5 rounded-xl border border-gray-900 space-y-4 shadow-xl">
-                            <h3 class="text-sm font-black text-white uppercase border-b border-gray-900 pb-2"><i class="fas fa-user-plus mr-2 text-indigo-400"></i>Yeni Öğrenci Kaydı</h3>
-                            <div class="space-y-3">
-                                <div>
-                                    <label class="text-[11px] text-gray-400 block mb-1">Öğrenci Adı Soyadı:</label>
-                                    <input type="text" id="studentNameInput" placeholder="Örn: Ahmet Yılmaz" class="w-full bg-gray-900 text-xs rounded-lg p-2.5 border border-gray-800 focus:outline-none focus:border-indigo-500 text-gray-200">
-                                </div>
-                                <button onclick="addNewStudent()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-2.5 rounded-lg transition-all shadow">Kayıt Oluştur</button>
-                            </div>
-                        </div>
-                        <div class="md:col-span-2 bg-gray-950 p-5 rounded-xl border border-gray-900 space-y-3 shadow-xl">
-                            <h3 class="text-sm font-black text-white uppercase border-b border-gray-900 pb-2"><i class="fas fa-list-ul mr-2 text-indigo-400"></i>Kayıtlı Öğrenci Listesi</h3>
-                            <div id="studentListContainer" class="text-xs text-gray-400 space-y-1.5 max-h-[160px] overflow-y-auto custom-scrollbar">
-                                </div>
+                    <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 shadow-xl flex items-center space-x-4">
+                        <div class="p-3 bg-emerald-500/10 rounded-xl text-emerald-400"><i class="fas fa-check-circle text-xl"></i></div>
+                        <div>
+                            <h3 class="text-gray-500 text-[10px] font-bold uppercase tracking-wider">Sistem Altyapısı</h3>
+                            <p class="text-sm font-bold text-emerald-400 mt-1">Çoklu Sayfa Modeli Aktif</p>
                         </div>
                     </div>
                 </div>
 
-                <div id="periodic-table" class="tab-content space-y-6">
-                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-900 flex flex-col md:flex-row gap-4 items-center justify-between shadow-lg">
-                        <div class="relative w-full md:w-80">
-                            <i class="fas fa-search absolute left-3.5 top-3.5 text-gray-600 text-xs"></i>
-                            <input type="text" id="elSearchInput" oninput="searchElement(this.value)" placeholder="Element ismi veya sembolü ara (Örn: Demir)..." class="w-full bg-gray-900 text-xs rounded-xl pl-10 pr-4 py-3 border border-gray-800 focus:outline-none focus:border-indigo-500 text-gray-200 font-medium">
-                        </div>
-                        <div class="flex flex-wrap gap-1.5 justify-center text-[10px] md:text-xs">
-                            <button onmouseover="filterCategory('alkali')" onmouseout="clearFilter()" class="px-2.5 py-1.5 rounded-md font-bold border border-red-500/30 text-red-400">Alkali</button>
-                            <button onmouseover="filterCategory('alkaline')" onmouseout="clearFilter()" class="px-2.5 py-1.5 rounded-md font-bold border border-amber-500/30 text-amber-400">Toprak Alkali</button>
-                            <button onmouseover="filterCategory('transition')" onmouseout="clearFilter()" class="px-2.5 py-1.5 rounded-md font-bold border border-blue-500/30 text-blue-400">Geçiş Metalleri</button>
-                            <button onmouseover="filterCategory('nonmetal')" onmouseout="clearFilter()" class="px-2.5 py-1.5 rounded-md font-bold border border-emerald-500/30 text-emerald-400">Ametaller</button>
-                            <button onmouseover="filterCategory('noble')" onmouseout="clearFilter()" class="px-2.5 py-1.5 rounded-md font-bold border border-purple-500/30 text-purple-400">Soygazlar</button>
-                        </div>
-                    </div>
-
-                    <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 overflow-x-auto custom-scrollbar shadow-inner">
-                        <div class="periodic-grid min-w-[1020px]" id="periodic-matrix"></div>
-                    </div>
-
-                    <div id="elementProfileContainer" class="bg-gray-950 rounded-xl border border-gray-900 p-5 md:p-8 space-y-8 shadow-2xl">
-                        <p class="text-xs text-gray-500 font-mono text-center">Ayrıntılı akademik analiz kartını açmak için yukarıdaki periyodik tablodan bir element seçin.</p>
-                    </div>
-                </div>
-
-                <div id="lab" class="tab-content space-y-6">
-                    <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 min-h-[520px] flex flex-col justify-between shadow-2xl">
-                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-900 pb-4 gap-4">
-                            <div>
-                                <h3 class="font-bold text-lg text-white tracking-tight">Roni 3D Kimyasal Model Kütüphanesi</h3>
-                                <p class="text-xs text-gray-500">Aşağıdaki menüden Maarif müfredatındaki tüm kritik molekülleri ve kristal örgü formlarını seçebilirsiniz.</p>
-                            </div>
-                            <div>
-                                <select id="moleculeSelectSelector" onchange="handleMoleculeChange(this.value)" class="bg-gray-900 text-xs font-bold rounded-xl border border-gray-800 p-3 text-indigo-400 focus:outline-none focus:border-indigo-500 w-full md:w-64">
-                                    <optgroup label="İyonik Kristal Örgü Yapıları">
-                                        <option value="crystal:nacl">NaCl (Kübik Birim Hücre Örgüsü)</option>
-                                    </optgroup>
-                                    <optgroup label="YKS Müfredat Covalent Moleküller">
-                                        <option value="cid:24784">BeH2 (Berilyum Hidrür)</option>
-                                        <option value="cid:5462312">BH3 (Bor Trihidrür)</option>
-                                        <option value="cid:291">CH4 (Metan)</option>
-                                        <option value="cid:222">NH3 (Amonyak)</option>
-                                        <option value="cid:962">H2O (Su)</option>
-                                        <option value="cid:14917">HF (Hidrojen Florür)</option>
-                                        <option value="cid:783">H2 (Hidrojen Gazı)</option>
-                                        <option value="cid:977">O2 (Oksijen Gazı)</option>
-                                        <option value="cid:947">N2 (Azot Gazı)</option>
-                                        <option value="cid:768">HCN (Hidrojen Siyanür)</option>
-                                        <option value="cid:280">CO2 (Karbondioksit)</option>
-                                        <option value="cid:6324">C2H6 (Etan)</option>
-                                        <option value="cid:6325">C2H4 (Eten / Etilen)</option>
-                                        <option value="cid:6326">C2H2 (Etin / Asetilen)</option>
-                                        <option value="cid:241">C6H6 (Benzen Halkası)</option>
-                                        <option value="cid:702">C2H5OH (Etanol / Etil Alkol)</option>
-                                        <option value="cid:176">CH3COOH (Asetik Asit / Sirke Asidi)</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="flex-1 w-full bg-slate-950 rounded-xl border border-gray-900 relative mt-4 overflow-hidden" style="min-height: 380px;">
-                            <div id="molecule-viewer" class="w-full h-full absolute inset-0"></div>
-                            <div class="absolute bottom-4 left-4 bg-gray-950/90 backdrop-blur border border-gray-800 px-4 py-2 rounded-xl z-10 shadow-lg">
-                                <span class="text-[10px] text-gray-500 font-mono block">Laboratuvardaki Model:</span>
-                                <span id="molecule-name" class="font-black text-indigo-400 text-sm">NaCl (Kristal Örgü)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="simulations" class="tab-content space-y-6">
-                    <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
-                        <div class="xl:col-span-1 bg-gray-950 p-4 rounded-xl border border-gray-900 space-y-2 max-h-[380px] xl:max-h-[640px] overflow-y-auto pr-2 custom-scrollbar shadow-inner">
-                            <h3 class="text-[10px] font-black tracking-widest text-gray-500 uppercase px-1 mb-2">Simülasyon Listesi</h3>
-                            <div id="sim-menu-container" class="space-y-1"></div>
-                        </div>
-
-                        <div class="xl:col-span-3 space-y-6">
-                            <div id="engine-gas-law" class="hidden bg-gray-950 p-5 rounded-xl border border-gray-900 shadow-xl">
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <div class="space-y-4 bg-gray-900 p-4 rounded-xl border border-gray-800">
-                                        <h4 class="font-bold text-white text-xs tracking-wider uppercase border-b border-gray-800 pb-2">Hacim Pistonu</h4>
-                                        <input type="range" id="gas-slider" min="20" max="100" value="100" class="w-full accent-sky-500 cursor-pointer" oninput="updateGasVolume(this.value)">
-                                        <div class="text-xs text-sky-400 font-mono text-center font-bold" id="gas-slider-val">100.0 L</div>
-                                    </div>
-                                    <div class="flex items-center justify-center bg-gray-900 p-4 rounded-xl border border-gray-800"><canvas id="gasCanvas" width="160" height="180" class="bg-gray-950 rounded-xl border border-gray-800"></canvas></div>
-                                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 flex flex-col justify-between">
-                                        <div class="text-center">
-                                            <span class="text-[10px] text-gray-500 block font-mono uppercase tracking-wider">Manometre</span>
-                                            <div id="press-box" class="text-3xl font-black text-amber-500 font-mono mt-2 bg-amber-500/10 py-3 border border-amber-500/20 rounded-xl">1.00 <span class="text-xs">atm</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="engine-matrix-lab" class="bg-gray-950 p-6 rounded-xl border border-gray-900 space-y-5 shadow-xl">
-                                <div class="border-b border-gray-900 pb-3">
-                                    <span id="mat-badge" class="bg-indigo-600/20 text-indigo-400 text-[9px] font-bold px-2.5 py-0.5 rounded-full border border-indigo-500/30 uppercase">9. Sınıf</span>
-                                    <h3 id="mat-title" class="font-extrabold text-lg text-white mt-1">Yükleniyor</h3>
-                                    <p id="mat-desc" class="text-xs text-gray-500 mt-0.5"></p>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 space-y-3">
-                                        <label id="mat-slider-label" class="text-xs font-bold text-gray-400 block">Parametre Ayarı:</label>
-                                        <input type="range" id="mat-slider" min="1" max="10" value="5" class="w-full accent-indigo-500 cursor-pointer" oninput="runMatrixSimulation(this.value)">
-                                        <div class="text-center text-xs font-mono text-indigo-400 font-black" id="mat-slider-val">Kademe: 5</div>
-                                    </div>
-                                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 flex flex-col items-center justify-center min-h-[140px] relative">
-                                        <div id="mat-visual-container" class="text-center z-10 space-y-1"></div>
-                                        <div class="absolute inset-0 bg-indigo-500/5 opacity-20"></div>
-                                    </div>
-                                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 font-mono text-xs flex flex-col justify-center space-y-2">
-                                        <div class="flex justify-between"><span>Değişken Faktör:</span><span id="mat-res-p1" class="text-white font-bold">-</span></div>
-                                        <div class="flex justify-between"><span>Hesaplanan Çıktı:</span><span id="mat-res-p2" class="text-emerald-400 font-black">-</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="documents" class="tab-content space-y-6">
-                    <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 shadow-xl">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 flex justify-between items-center">
-                                <div class="flex items-center space-x-3 truncate"><i class="far fa-file-word text-blue-500 text-2xl shrink-0"></i><div class="truncate"><h4 class="font-bold text-xs md:text-sm text-gray-200 truncate">9. Sınıf Kimya Maarif Yıllık Planı</h4></div></div>
-                                <button onclick="triggerDownload('9. Sınıf Yıllık Planı')" class="bg-gray-950 hover:bg-gray-800 p-2.5 rounded-lg border border-gray-800 text-indigo-400 text-xs shadow"><i class="fas fa-download"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="camp" class="tab-content space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 space-y-4 shadow-xl">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-900 pb-3 gap-3">
-                            <h3 class="font-black text-md text-white"><i class="fas fa-graduation-cap mr-2 text-indigo-400"></i>YKS Bireysel İlerleme Takip Kartı</h3>
-                            <div>
-                                <select id="campStudentSelector" onchange="loadStudentCampProgress(this.value)" class="bg-gray-900 text-xs font-bold rounded-lg border border-gray-800 p-2 text-indigo-400 focus:outline-none w-56">
-                                    </select>
-                            </div>
-                        </div>
-
-                        <div id="campMainContentArea">
-                            <div class="text-center py-12 bg-gray-900/30 rounded-xl border border-dashed border-gray-800 p-6">
-                                <i class="fas fa-user-slash text-4xl text-gray-600 mb-3"></i>
-                                <p class="text-sm font-semibold text-gray-400">Takip edilecek hiç öğrenci bulunamadı.</p>
-                                <p class="text-xs text-gray-500 mt-1">YKS Kampı takibini başlatmak için lütfen önce Genel Bakış panelinden öğrenci kaydı oluşturun.</p>
-                            </div>
+                        <h3 class="text-xs font-black text-white uppercase border-b border-gray-900 pb-2"><i class="fas fa-user-plus mr-1.5 text-indigo-400"></i>Öğrenci Ekle</h3>
+                        <div class="space-y-3">
+                            <input type="text" id="studentNameInput" placeholder="Öğrenci Adı Soyadı..." class="w-full bg-gray-900 text-xs rounded-lg p-3 border border-gray-800 focus:outline-none focus:border-indigo-500 text-gray-200">
+                            <button onclick="addNewStudent()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-2.5 rounded-lg transition-all">Kayıt Oluştur</button>
                         </div>
                     </div>
+                    <div class="md:col-span-2 bg-gray-950 p-5 rounded-xl border border-gray-900 space-y-3 shadow-xl">
+                        <h3 class="text-xs font-black text-white uppercase border-b border-gray-900 pb-2"><i class="fas fa-list mr-1.5 text-indigo-400"></i>Mevcut Öğrencileriniz</h3>
+                        <div id="studentListContainer" class="text-xs space-y-2 max-h-[220px] overflow-y-auto custom-scrollbar">
+                            </div>
+                    </div>
                 </div>
-
             </div>
         </main>
     </div>
 
     <script>
-        let viewer = null;
         let students = JSON.parse(localStorage.getItem('roni_students')) || [];
 
         function toggleSidebar() {
@@ -298,48 +109,22 @@
             $('#sidebarOverlay').toggleClass('hidden');
         }
 
-        function triggerDownload(name) {
-            $('#toast').text(name + " indirildi.").removeClass('opacity-0').addClass('opacity-100');
-            setTimeout(() => { $('#toast').removeClass('opacity-100').addClass('opacity-0'); }, 2000);
-        }
-
-        // --- 1. ÖĞRENCİ YÖNETİM SİSTEMİ (LocalStorage) ---
         function updateStudentSystem() {
             localStorage.setItem('roni_students', JSON.stringify(students));
             $('#dashStudentCount').text(students.length);
+            const container = $('#studentListContainer');
+            container.empty();
             
-            // Genel bakış listesini güncelle
-            const listContainer = $('#studentListContainer');
-            listContainer.empty();
             if(students.length === 0) {
-                listContainer.append('<p class="text-gray-600 italic">Henüz öğrenci kaydı yapılmadı.</p>');
+                container.append('<p class="text-gray-600 italic">Henüz hiçbir öğrenci kaydı yapılmadı.</p>');
             } else {
                 students.forEach((st, idx) => {
-                    listContainer.append(`
-                        <div class="flex justify-between items-center bg-gray-900/60 p-2 rounded-lg border border-gray-900">
-                            <span class="text-gray-300 font-medium">${st.name}</span>
-                            <button onclick="deleteStudent(${idx})" class="text-red-400 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
+                    container.append(`
+                        <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded-lg border border-gray-900">
+                            <span class="text-gray-300 font-semibold">${st.name}</span>
+                            <button onclick="deleteStudent(${idx})" class="text-red-500 hover:text-red-400 p-1"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     `);
-                });
-            }
-
-            // YKS Kampı Seçim Menüsünü Güncelle
-            const campSelector = $('#campStudentSelector');
-            campSelector.empty();
-            if(students.length === 0) {
-                campSelector.append('<option value="">Öğrenci Yok</option>');
-                $('#campMainContentArea').html(`
-                    <div class="text-center py-12 bg-gray-900/30 rounded-xl border border-dashed border-gray-800 p-6">
-                        <i class="fas fa-user-slash text-4xl text-gray-600 mb-3"></i>
-                        <p class="text-sm font-semibold text-gray-400">Takip edilecek hiç öğrenci bulunamadı.</p>
-                        <p class="text-xs text-gray-500 mt-1">YKS Kampı takibini başlatmak için lütfen önce Genel Bakış panelinden öğrenci kaydı oluşturun.</p>
-                    </div>
-                `);
-            } else {
-                campSelector.append('<option value="">--- Öğrenci Seçin ---</option>');
-                students.forEach((st, idx) => {
-                    campSelector.append(`<option value="${idx}">${st.name}</option>`);
                 });
             }
         }
@@ -347,14 +132,9 @@
         function addNewStudent() {
             const name = $('#studentNameInput').val().trim();
             if(!name) return;
-            students.push({
-                name: name,
-                progress: { tyt1: false, tyt2: false, ayt1: false, ayt2: false }
-            });
+            students.push({ name: name, progress: {} });
             $('#studentNameInput').val('');
             updateStudentSystem();
-            $('#toast').text(name + " başarıyla sisteme eklendi.").removeClass('opacity-0').addClass('opacity-100');
-            setTimeout(() => { $('#toast').removeClass('opacity-100').addClass('opacity-0'); }, 2000);
         }
 
         function deleteStudent(idx) {
@@ -362,258 +142,7 @@
             updateStudentSystem();
         }
 
-        function loadStudentCampProgress(idx) {
-            if(!idx) {
-                $('#campMainContentArea').html('<p class="text-xs text-gray-500 italic text-center py-6">Detaylı konu listesini görmek için lütfen üst kısımdan bir öğrenci seçin.</p>');
-                return;
-            }
-            const st = students[idx];
-            $('#campMainContentArea').html(`
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 space-y-3">
-                        <h4 class="font-bold text-xs uppercase tracking-wider text-indigo-400">TYT Kimya Kazanımları</h4>
-                        <label class="flex items-center space-x-3 p-2 bg-gray-950 rounded cursor-pointer"><input type="checkbox" ${st.progress.tyt1?'checked':''} onchange="toggleProgress(${idx}, 'tyt1')" class="accent-indigo-500"> <span class="text-xs text-gray-300">Kimya Bilimi ve Lab Güvenliği</span></label>
-                        <label class="flex items-center space-x-3 p-2 bg-gray-950 rounded cursor-pointer"><input type="checkbox" ${st.progress.tyt2?'checked':''} onchange="toggleProgress(${idx}, 'tyt2')" class="accent-indigo-500"> <span class="text-xs text-gray-300">Atom ve Periyodik Sistem</span></label>
-                    </div>
-                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 space-y-3">
-                        <h4 class="font-bold text-xs uppercase tracking-wider text-emerald-400">AYT Kimya Kazanımları</h4>
-                        <label class="flex items-center space-x-3 p-2 bg-gray-950 rounded cursor-pointer"><input type="checkbox" ${st.progress.ayt1?'checked':''} onchange="toggleProgress(${idx}, 'ayt1')" class="accent-emerald-500"> <span class="text-xs text-gray-300">Modern Atom Teorisi ve Orbitaller</span></label>
-                        <label class="flex items-center space-x-3 p-2 bg-gray-950 rounded cursor-pointer"><input type="checkbox" ${st.progress.ayt2?'checked':''} onchange="toggleProgress(${idx}, 'ayt2')" class="accent-emerald-500"> <span class="text-xs text-gray-300">Gazlar ve Kinetik Teori</span></label>
-                    </div>
-                </div>
-            `);
-        }
-
-        function toggleProgress(studentIdx, key) {
-            students[studentIdx].progress[key] = !students[studentIdx].progress[key];
-            localStorage.setItem('roni_students', JSON.stringify(students));
-        }
-
-
-        // --- 2. 118 ELEMENT VE AKADEMİK GEÇİŞ METALLERİ VERİ MODELİ ---
-        const elementsData = [
-            { num: 1, sym: "H", name: "Hidrojen", cat: "nonmetal", col: 1, row: 1, mass: "1.008", config: "1s¹", shells: "1", uses: ["Roket yakıtı formülü", "Amonyak sentezi"], biological: "Su ve hücre iskelet bileşeni.", compounds: [{formula:"H₂O", name:"Su", desc:"Hayati sıvı"}], history: "1766'da Henry Cavendish tarafından izole edildi.", facts: ["Evrenin en bol elementidir."], notes: ["1A grubundaki tek ametal istisnasıdır."] },
-            { num: 2, sym: "He", name: "Helyum", cat: "noble", col: 18, row: 1, mass: "4.002", config: "1s²", shells: "2", uses: ["Kriyojenik MRI soğutma", "Meteoroloji balonları"], biological: "İnert gazdır.", compounds: [], history: "Güneş tutulmasında çizgisel olarak keşfedildi.", facts: ["Evrenin en hafif 2. gazıdır."], notes: ["Değerlik elektronu 2'dir ama 8A'dadır."] },
-            { num: 3, sym: "Li", name: "Lityum", cat: "alkali", col: 1, row: 2, mass: "6.94", config: "[He] 2s¹", shells: "2|1", uses: ["Pil batarya üretimi"], biological: "Nörolojik ilaç yapımı.", compounds: [], history: "Taş mineralinde bulundu.", facts: ["En hafif katı metaldir."], notes: ["Suyla reaksiyona girer."] },
-            { num: 4, sym: "Be", name: "Berilyum", cat: "alkaline", col: 2, row: 2, mass: "9.01", config: "[He] 2s²", shells: "2|2", uses: ["Teleskop aynaları"], biological: "Berilyoz akciğer hastalığı riski.", compounds: [], history: "Zümrüt cevherinde bulundu.", facts: ["X-Işınını emmez geçirir."], notes: ["2A grubu üyesidir."] },
-            { num: 5, sym: "B", name: "Bor", cat: "metalloid", col: 13, row: 2, mass: "10.81", config: "[He] 2s² 2p¹", shells: "2|3", uses: ["Isıya dayanıklı borcam camı"], biological: "Bitki gelişimi kofaktörü.", compounds: [], history: "Boraks cevherinden indirgendi.", facts: ["Rezerv lideri Türkiye'dir."], notes: ["3A grubundaki yarı metaldir."] },
-            { num: 6, sym: "C", name: "Karbon", cat: "nonmetal", col: 14, row: 2, mass: "12.01", config: "[He] 2s² 2p²", shells: "2|4", uses: ["Çelik karbon ayarı", "Fosil yakıtlar"], biological: "Organik moleküllerin temel omurgası.", compounds: [{formula:"CO₂", name:"Karbondioksit", desc:"Sera gazı"}], history: "Kömür formunda antik çağlardan beri bilinir.", facts: ["Elmas ve grafit allotroplarıdır."], notes: ["YKS Organik kimya temelidir."] },
-            
-            // GEÇİŞ METALLERİ (3B - 2B BLOK KAZANIMLARI - ÖSYM ODAKLI)
-            { num: 24, sym: "Cr", name: "Krom", cat: "transition", col: 6, row: 4, mass: "51.99", config: "[Ar] 3d⁵ 4s¹", shells: "2|8|13|1", uses: ["Paslanmaz çelik zırh kaplama alaşımları", "Korozyon önleyici kaplamalar"], biological: "Glukoz tolerans faktörü metabolizmasında eser miktarda rol oynar.", compounds: [{formula:"Cr₂O₃", name:"Krom Oksit", desc:"Yeşil seramik pigmenti"}], history: "1797'de Vauquelin Sibirya kırmızı kurşun cevherinde keşfetti.", facts: ["Sertlik derecesi en yüksek olan geçiş metallerindendir."], notes: ["Küresel simetriden dolayı [Ar] 3d⁴ 4s² yerine uyarılmadan direkt 3d⁵ 4s¹ dizilimine sahiptir (YKS Kuralı)."] },
-            { num: 26, sym: "Fe", name: "Demir", cat: "transition", col: 8, row: 4, mass: "55.84", config: "[Ar] 3d⁶ 4s²", shells: "2|8|14|2", uses: ["İnşaat inşa demiri çelik ray üretimi", "Otomotiv sanayi döküm gövdeleri"], biological: "Hemoglobin molekülünün merkez atomudur, oksijen taşır. Eksikliği anemi yapar.", compounds: [{formula:"Fe₂O₃", name:"Pas / Hematit", desc:"Demir oksit cevheri"}], history: "Eski çağlardan beri dövülerek silah ve araç yapımında kullanılır.", facts: ["Dünya çekirdeğinin ana bileşenidir; ferromanyetiktir."], notes: ["Bileşiklerinde değişken +2 ve +3 yükseltgenme basamakları alabilir."] },
-            { num: 29, sym: "Cu", name: "Bakır", cat: "transition", col: 11, row: 4, mass: "63.54", config: "[Ar] 3d¹⁰ 4s¹", shells: "2|8|18|1", uses: ["Elektrik kabloları güç hatları iletimi", "Mutfak kapları pirinç ve bronz alaşımları"], biological: "Bazı solunum enzimlerinin yapısında eser element olarak bulunur.", compounds: [{formula:"CuSO₄", name:"Göztaşı / Bakır Sülfat", desc:"Tarım ilacı ve mantar önleyici"}], history: "İnsanlığın taş devrinden sonra işlemeyi öğrendiği ilk metaldir.", facts: ["Gümüşten sonra elektriği en iyi ileten ikinci metaldir."], notes: ["3d⁹ 4s² yerine küresel simetri kararlılığıyla kendiliğinden 3d¹⁰ 4s¹ dizilimindedir (YKS istisnası)."] },
-            { num: 30, sym: "Zn", name: "Çinko", cat: "transition", col: 12, row: 4, mass: "65.38", config: "[Ar] 3d¹⁰ 4s²", shells: "2|8|18|2", uses: ["Demir yüzeylerin paslanmaya karşı galvaniz kaplanması", "Alman gümüşü alaşımı yapımı"], biological: "Bağışıklık hücrelerinde ve DNA polimeraz enzim kofaktöründe zorunludur.", compounds: [{formula:"ZnO", name:"Çinko Oksit", desc:"Güneş kremleri beyaz koruyucu tabaka bazı"}], history: "Antik çağlardan beri pirinç alaşımı içinde gizli kalmış, son çağlarda izole edilmiştir.", facts: ["AMFOTER özellik gösterir; hem asitlerle hem de kuvvetli bazlarla reaksiyona girip H₂ gazı üretir."], notes: ["Bileşiklerinde d orbitali tam dolu olduğu için SADECE +2 yükseltgenme basamağı alır."] }
-        ];
-
-        function buildPeriodicTable() {
-            const container = $('#periodic-matrix'); container.empty();
-            // Basitleştirilmiş tam 4 satırlık YKS alanı yerleşimi
-            const layout = [
-                [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-                [3,4,0,0,0,0,0,0,0,0,0,0,5,6,0,0,0,0],
-                [11,12,0,0,0,0,0,0,0,0,0,0,13,14,0,0,0,0],
-                [19,20,0,0,0,24,0,26,0,0,29,30,0,0,0,0,0,0]
-            ];
-
-            layout.forEach(rowArr => {
-                rowArr.forEach(num => {
-                    if (num > 0) {
-                        const el = elementsData.find(item => item.num === num);
-                        container.append(`
-                            <div class="element-card p-1.5 rounded-lg text-center transition flex flex-col justify-between cat-${el.cat} shadow-sm" data-name="${el.name.toLowerCase()}" data-category="${el.cat}" onclick="renderElementProfile(${el.num})">
-                                <span class="text-[8px] text-left opacity-60 font-mono block">${el.num}</span>
-                                <span class="text-sm font-black block">${el.sym}</span>
-                                <span class="text-[8px] truncate block opacity-75">${el.name}</span>
-                            </div>
-                        `);
-                    } else container.append('<div></div>');
-                });
-            });
-        }
-
-        function renderElementProfile(num) {
-            const el = elementsData.find(item => item.num === num); if (!el) return;
-            selectedPubChemCID = el.cid || 2244;
-            let usesHtml = el.uses.map(u => `<li>• ${u}</li>`).join('');
-            let compoundsHtml = el.compounds.map(c => `<div class="bg-gray-900 p-3 rounded-lg border border-gray-800 font-medium"><span class="text-indigo-400 font-mono text-[10px] block">${c.formula}</span><h5 class="text-gray-200 font-bold text-xs">${c.name}</h5><p class="text-[11px] text-gray-400">${c.desc}</p></div>`).join('');
-
-            $('#elementProfileContainer').html(`
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-900 pb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-14 h-16 rounded-xl border-2 border-amber-500/40 bg-amber-500/10 flex flex-col justify-center items-center shadow-lg"><span class="text-[10px] text-gray-500 font-mono">${el.num}</span><span class="text-2xl font-black text-white">${el.sym}</span></div>
-                        <div><h3 class="text-md font-black text-white">${el.name} Element Analiz Raporu</h3><p class="text-[10px] text-indigo-400 font-bold uppercase">${el.cat} | Grup: ${el.col}A | Periyot: ${el.row}</p></div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-                    <div class="bg-gray-900/30 p-3 rounded-xl border border-gray-900 shadow-inner"><span class="text-gray-500 block text-[9px] uppercase font-mono">Kütle</span><span class="font-bold text-gray-200">${el.mass} g/mol</span></div>
-                    <div class="bg-gray-900/30 p-3 rounded-xl border border-gray-900 shadow-inner"><span class="text-gray-500 block text-[9px] uppercase font-mono">Dizilim</span><span class="font-bold text-indigo-400 font-mono">${el.config}</span></div>
-                    <div class="bg-gray-900/30 p-3 rounded-xl border border-gray-900 shadow-inner"><span class="text-gray-500 block text-[9px] uppercase font-mono">Kabuklar</span><span class="font-bold text-gray-200 font-mono">${el.shells}</span></div>
-                    <div class="bg-gray-900/30 p-3 rounded-xl border border-gray-900 shadow-inner"><span class="text-gray-500 block text-[9px] uppercase font-mono">Sıcaklık Durumu</span><span class="font-bold text-emerald-400">25°C Katı</span></div>
-                </div>
-                <div class="text-xs space-y-2"><h4 class="font-bold text-orange-400 uppercase tracking-wider"><i class="fas fa-history mr-1"></i> Tarihçe ve Keşif</h4><p class="text-gray-300 leading-relaxed bg-gray-900/20 p-4 rounded-xl border border-gray-900 shadow-inner">${el.history}</p></div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><div class="space-y-2 bg-gray-900/10 p-4 rounded-xl border border-gray-900"><h4 class="font-bold text-orange-400 uppercase tracking-wider">Kullanım Alanları</h4><ul class="space-y-1">${usesHtml}</ul></div><div class="space-y-2 bg-emerald-950/10 p-4 rounded-xl border border-emerald-900/20"><h4 class="font-bold text-emerald-400 uppercase tracking-wider">Biyolojik Rolü</h4><p class="text-gray-300 leading-relaxed">${el.biological}</p></div></div>
-                <div class="space-y-2 text-xs"><h4 class="font-bold text-orange-400 uppercase tracking-wider">Önemli Bileşikleri</h4><div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${compoundsHtml || '<p class="text-gray-500">Müfredat bileşiği yok.</p>'}</div></div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><div class="space-y-1 bg-gray-900/10 p-4 rounded-xl border border-gray-900"><h4 class="font-bold text-amber-400 uppercase tracking-wider">İlginç Bilgiler</h4><p class="text-gray-300">${el.facts[0]}</p></div><div class="space-y-1 bg-indigo-950/10 p-4 rounded-xl border border-indigo-900/20"><h4 class="font-bold text-indigo-400 uppercase tracking-wider">YKS Çalışma Notları</h4><p class="text-gray-300 font-semibold">${el.notes[0]}</p></div></div>
-            `);
-        }
-
-        function searchElement(q) { let val = q.toLowerCase().trim(); $('.element-card').each(function() { $(this).toggle($(this).attr('data-name').includes(val)); }); }
-        function filterCategory(c) { $('.element-card').each(function() { let match = $(this).attr('data-category') === c; $(this).addClass(match?'highlight':'dimmed').removeClass(match?'dimmed':'highlight'); }); }
-        function clearFilter() { $('.element-card').removeClass('highlight dimmed'); }
-
-
-        // --- 3. 3D LABORATUVAR MOTORU (NaCl KRİSTAL + 17 MOLEKÜL) ---
-        function handleMoleculeChange(val) {
-            if(val.startsWith("crystal:")) {
-                // NaCl Kübik İyonik Kristal Örgü birim hücre simülasyonu koordinat çizimi
-                $('#molecule-name').text("NaCl (Kübik Kristal Örgü Yapısı)");
-                viewer.clear();
-                // 3x3x3 boyutunda alternatif Na+ ve Cl- iyon matrisi çiziyoruz
-                for(let x=-1; x<=1; x++) {
-                    for(let y=-1; y<=1; y++) {
-                        for(let z=-1; z<=1; z++) {
-                            let isNa = (x + y + z) % 2 === 0;
-                            viewer.addSphere({
-                                center: {x: x*2.2, y: y*2.2, z: z*2.2},
-                                radius: isNa ? 0.45 : 0.65,
-                                color: isNa ? '#3b82f6' : '#10b981' // Na+ Mavi, Cl- Yeşil küreler
-                            });
-                        }
-                    }
-                }
-                viewer.render(); viewer.zoomTo();
-            } else {
-                let cid = val.replace("cid:", "");
-                let textName = $('#moleculeSelectSelector option:selected').text();
-                $('#molecule-name').text(textName);
-                viewer.clear();
-                $3Dmol.download("cid:" + cid, viewer, { style: { stick: { radius: 0.15 }, sphere: { scale: 0.25 } } }, function() {
-                    viewer.render(); viewer.zoomTo();
-                });
-            }
-        }
-
-
-        // --- 4. 17 AKTİF PARAMETRİK SİMÜLASYON MOTORU ---
-        const simulationsData = [
-            { id: 1, grade: "9. Sınıf", title: "Güvenlik Sembolleri ve Lab Ekipmanları", desc: "Piktogramlar ve asit/baz tahriş risk katsayısı analizi.", label: "Kimyasal Asit Derişimi (Molar):", icon: "fa-biohazard text-amber-500", out1: "Derişim Endeksi", out2: "Çıktı Gözlemi" },
-            { id: 2, grade: "9. Sınıf", title: "Dalton, Thomson, Rutherford Atom Modelleri", desc: "Rutherford Alfa taneciği altın levha çarpma sapma açısı denklemi.", label: "Çekirdek Yükü Yoğunluğu:", icon: "fa-bullseye text-red-400", out1: "Sapma Açısı Derecesi", out2: "Geri Yansıma Oranı" },
-            { id: 3, grade: "9. Sınıf", title: "Periyodik Özelliklerin Değişimi", desc: "Grup ve periyot boyunca atom yarıçapı küçülme katsayısı hesaplama.", label: "Proton Sayısı (Z):", icon: "fa-arrows-alt text-sky-400", out1: "Çekirdek Çekim Gücü", out2: "Yarıçap (pm)" },
-            { id: 4, grade: "9. Sınıf", title: "İyonik Bileşiklerin Kristal Örgü Yapısı", desc: "Elektrostatik çekim gücü (Coulomb) kristal örgü kararlılığı.", label: "İyon Yükü Çarpımı (q1.q2):", icon: "fa-cubes text-teal-400", out1: "Örgü Enerjisi (kJ/mol)", out2: "Erime Noktası Eğilimi" },
-            { id: 5, grade: "9. Sınıf", title: "Kovalent Bağ Oluşumu ve Lewis Yapıları", desc: "Ortaklaşa kullanılan elektron çifti ve elektronegatiflik farkı bağ polarlığı.", label: "Bağ Kovalent Karakteri:", icon: "fa-circle-nodes text-indigo-400", out1: "Dipol Moment Katsayısı", out2: "Bağ Türü Sınıfı" },
-            { id: 6, grade: "9. Sınıf", title: "Zayıf Etkileşimler ve Moleküller Arası Bağlar", desc: "Hidrojen bağları ve van der Waals kuvvetlerinin kaynama noktasına etkisi.", label: "Molekül Kütlesi (MA):", icon: "fa-link text-purple-400", out1: "London Çekim Kuvveti", out2: "Fiziksel Hal Durumu" },
-            { id: 7, grade: "11. Sınıf", title: "Boyle Gaz Yasası (P-V İlişkisi)", desc: "Özel Vektörel Motor. Sıkışan gaz taneciklerinin kinetik hız takibi.", label: "Özel Motor", icon: "fa-compress-arrows-alt text-emerald-400", out1: "", out2: "" },
-            { id: 8, grade: "11. Sınıf", title: "Çözünme Süreci ve Tanecikli Etkileşimler", desc: "Benzer benzeri çözer ilkesi dipol-iyon solvatasyon entalpisi.", label: "Sıcaklık Skalası (°C):", icon: "fa-water text-blue-400", out1: "Çözünürlük (g/100g Su)", out2: "Çözelti Türü" },
-            { id: 9, grade: "11. Sınıf", title: "Kolorimetre ve Derişim Takibi", desc: "Beer-Lambert Yasası: Işık absorbans şiddeti ile konsantrasyon analizi.", label: "Çözelti Konsantrasyonu (M):", icon: "fa-eye text-pink-400", out1: "Absorbans Değeri (A)", out2: "Işık Geçirgenliği (%)" },
-            { id: 10, grade: "11. Sınıf", title: "Kimyasal Tepkimelerde Tepkime Isısı", desc: "Reaktiflerin entalpi değişimi (ΔH) ve kalorimetre bomba sıcaklık delta hesabı.", label: "Yanan Madde Hacmi (mol):", icon: "fa-fire text-orange-500", out1: "Açığa Çıkan Isı (kJ)", out2: "Tepkime Entalpisi Türü" },
-            { id: 11, grade: "11. Sınıf", title: "Tepkime Hızına Etki Eden Faktörler", desc: "Sıcaklık ve katalizörün aktifleşme enerjisi (Ea) eşiğine etkisi.", label: "Katalizör Verimlilik %:", icon: "fa-bolt text-yellow-400", p1: "Ea Enerji Bariyeri", p2: "Etkin Çarpışma Sayısı" },
-            { id: 12, grade: "11. Sınıf", title: "Kimyasal Denge ve Le Chatelier İlkesi", desc: "Sıcaklık artışının minimum enerji ve maksimum düzensizlik eğilimine etkisi.", label: "Sıcaklık Müdahalesi Kademesi:", icon: "fa-balance-scale text-stone-400", out1: "Denge Kayma Yönü", out2: "Kc Denge Sabiti Durumu" },
-            { id: 13, grade: "11. Sınıf", title: "Asit-Baz Titrasyonu ve Nötrleşme Eğrisi", desc: "Özel Logaritmik Motor. Eklenen baza göre anlık pH indikatör renk değişimi.", label: "Özel Motor", icon: "fa-flask text-indigo-500", out1: "", out2: "" },
-            { id: 14, grade: "11. Sınıf", title: "Suyun Otoiyonizasyonu ve pH/pOH", desc: "Endotermik su iyonizasyon sabitinin (Ksu) sıcaklık korelasyonu.", label: "Çözelti Isısı (°C):", icon: "fa-temperature-high text-red-500", out1: "Ksu İyonlaşma Sabiti", out2: "Nötr Noktası pH Skalası" },
-            { id: 15, grade: "11. Sınıf", title: "Çözünürlük Dengesi (KÇÇ)", desc: "Ortak iyon etkisi katsayısının tuzların net çözünürlüğünü azaltma oranı.", label: "Ortak İyon Derişimi (M):", icon: "fa-snowflake text-cyan-400", out1: "Tuz Çözünürlüğü (M)", out2: "Çökelme Başlangıcı" },
-            { id: 16, grade: "12. Sınıf", title: "Redoks Tepkimeleri ve Galvanik Piller", desc: "Nernst Eşitliği: Hücre derişimlerinin elektrokimyasal pil potansiyeline etkisi.", label: "Anot Hücresi Derişimi (M):", icon: "fa-car-battery text-blue-500", out1: "Anlık Pil Gerilimi (E)", out2: "Hücre Reaksiyon İlemesi" },
-            { id: 17, grade: "12. Sınıf", title: "Elektroliz ve Faraday Kanunları", desc: "Faraday Kanunu: Devreden geçen akım miktarı ile katotta biriken kütle hesabı.", label: "Elektroliz Akımı (Amper):", icon: "fa-plug text-amber-400", out1: "Katotta Biriken Madde", out2: "Eşdeğer Kimyasal Kütle" }
-        ];
-
-        function buildSimulationMenu() {
-            const container = $('#sim-menu-container'); container.empty();
-            simulationsData.forEach(sim => {
-                let gradeColor = sim.grade.includes("9") ? "bg-indigo-950 text-indigo-400" : sim.grade.includes("11") ? "bg-emerald-950 text-emerald-400" : "bg-blue-950 text-blue-400";
-                container.append(`<div onclick="selectSimulation(${sim.id})" id="sim-item-${sim.id}" class="sim-item p-2.5 rounded-xl border border-gray-900 bg-gray-900/40 hover:bg-gray-800/60 cursor-pointer transition-all flex justify-between items-center"><h4 class="text-xs font-bold truncate mr-2">${sim.title}</h4><span class="text-[8px] font-black px-1.5 py-0.5 rounded tracking-wide ${gradeColor}">${sim.grade}</span></div>`);
-            });
-        }
-
-        function selectSimulation(id) {
-            currentSelectedSimId = id; $('.sim-item').removeClass('active'); $(`#sim-item-${id}`).addClass('active');
-            $('#engine-titration').addClass('hidden'); $('#engine-gas-law').addClass('hidden'); $('#engine-matrix-lab').addClass('hidden');
-
-            if (id === 13) { $('#engine-titration').removeClass('hidden'); resetTitration(); }
-            else if (id === 7) { $('#engine-gas-law').removeClass('hidden'); updateGasVolume($('#gas-slider').val()); }
-            else {
-                $('#engine-matrix-lab').removeClass('hidden');
-                const sim = simulationsData.find(s => s.id === id);
-                $('#mat-badge').text(sim.grade).attr('class', sim.grade.includes("9")?'bg-indigo-600/20 text-indigo-400 text-[9px] font-bold px-2.5 py-0.5 rounded-full border border-indigo-500/30 uppercase':'bg-emerald-600/20 text-emerald-400 text-[9px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/30 uppercase');
-                $('#mat-title').text(sim.title); $('#mat-desc').text(sim.desc); $('#mat-slider-label').text(sim.label);
-                $('#mat-slider').val(5); runMatrixSimulation(5);
-            }
-        }
-
-        function runMatrixSimulation(val) {
-            const sim = simulationsData.find(s => s.id === currentSelectedSimId); if (!sim) return;
-            let k = parseFloat(val); $('#mat-slider-val').text("Kademe: " + val);
-            
-            // Tamamen aktif parametrik matematiksel veri çıkış hesaplamaları
-            let r1 = "-", r2 = "-";
-            if(sim.id === 1) { r1 = (k * 0.15).toFixed(2) + " M H+"; r2 = k > 7 ? "Yüksek Aşındırıcı Korozif" : "Tahriş Edici Risk Düzeyi"; }
-            else if(sim.id === 2) { r1 = (k * 18.5).toFixed(1) + "° Derece Sapma"; r2 = k > 8 ? "Tam Geri Yansıma Tetiklendi" : "Büyük Kısmı Boşluktan Geçti"; }
-            else if(sim.id === 3) { r1 = (k * 120).toFixed(0) + " N Çekim Kuvveti"; r2 = (250 - (k*14)).toFixed(0) + " pm (Küçüldü)"; }
-            else if(sim.id === 4) { r1 = (k * 350).toFixed(0) + " kJ/mol"; r2 = (400 + (k*85)) + " °C Erime Noktası"; }
-            else if(sim.id === 5) { r1 = (k * 0.24).toFixed(2) + " Debye"; r2 = k > 5 ? "Kuvvetli Polar Kovalent" : "Apolar Karakter Baskın"; }
-            else if(sim.id === 6) { r1 = (k * 45).toFixed(0) + " j/mol London"; r2 = k > 7 ? "Sıvı/Katı Faz Geçişi" : "Uçucu Gaz Fazı"; }
-            else if(sim.id === 8) { r1 = (20 + (k*6.5)).toFixed(1) + " gram Tuz"; r2 = k > 8 ? "Aşırı Doymuş Çökelti" : "Doymamış Çözelti"; }
-            else if(sim.id === 9) { r1 = (k * 0.184).toFixed(3) + " Absorbans"; r2 = (100 - (k*8.5)).toFixed(1) + " % Geçirgenlik"; }
-            else if(sim.id === 10) { r1 = (k * 89.4).toFixed(1) + " kJ Isı Çıkışı"; r2 = "ΔH = Negatif (Ekzotermik)"; }
-            else if(sim.id === 11) { r1 = (45 - (k*3)).toFixed(0) + " kJ Eşik Enerjisi"; r2 = (k * 12.5).toFixed(0) + " kat Hızlı Reaksiyon"; }
-            else if(sim.id === 12) { r1 = k > 5 ? "Ürünler Yönüne (Sağa Kayar)" : "Girenler Yönüne (Sola Kayar)"; r2 = k > 5 ? "Kc Sabiti Büyüdü" : "Kc Dengesi Küçüldü"; }
-            else if(sim.id === 14) { r1 = "10^-" + (14 - (k*0.2)).toFixed(1); r2 = "Nötr pH Noktası = " + (7 - (k*0.1)).toFixed(2); }
-            else if(sim.id === 15) { r1 = "1.4 x 10^-" + (5+k); r2 = "Ortak İyon Çözünürlüğü Düşürdü"; }
-            else if(sim.id === 16) { r1 = (1.10 - (k*0.029)).toFixed(3) + " Volt"; r2 = "Nernst Hücre Dengesi Dengeleniyor"; }
-            else if(sim.id === 17) { r1 = (k * 0.32).toFixed(3) + " gram Ag Metali"; r2 = (k * 0.01) + " Faraday Elektrik Yükü"; }
-
-            $('#mat-res-p1').text(r1); $('#mat-res-p2').text(r2);
-            $('#mat-visual-container').html(`<i class="fas ${sim.icon} text-4xl animate-pulse" style="transform: scale(${0.8 + (k*0.04)}); opacity: ${0.4+(k*0.06)};"></i><p class="text-[11px] font-bold text-gray-300 mt-1">${sim.title}</p>`);
-        }
-
-        // --- SİMÜLASYON YASALARI VE HESAPLAYICILAR ---
-        function runTitration(val) {
-            let vBase = parseFloat(val), vAcid = 50.0, totalVolumeL = (vAcid + vBase) / 1000, ph = 1.0;
-            if (vBase < 50) ph = -Math.log10((0.1 * (50 - vBase)) / (50 + vBase)) + 1;
-            else if (vBase > 50) ph = 14 - (-Math.log10((0.1 * (vBase - 50)) / (50 + vBase)) + 1);
-            else ph = 7.0;
-            ph = Math.max(0, Math.min(14, ph));
-            $('#ph-box').text(ph.toFixed(2)); $('#tit-slider-val').text(vBase.toFixed(1) + ' mL eklendi');
-            $('#lbl-added').text(vBase.toFixed(2) + ' mL');
-            $('#buret-liquid').css('height', (100 - vBase) + '%'); $('#flask-liquid').css('height', (35 + (vBase * 0.5)) + '%');
-            let phBox = $('#ph-box'), phStatus = $('#ph-status'), flaskLiquid = $('#flask-liquid');
-            if (ph < 4) { phBox.attr('class', 'text-3xl font-black text-red-400 font-mono mt-2 bg-red-500/10 py-2 border border-red-500/30 rounded-xl'); phStatus.text("Kuvvetli Asit").css('color', '#f87171'); flaskLiquid.css('background-color', 'rgba(209, 213, 219, 0.2)'); $('#lbl-ind').text("Renksiz (Asidik)"); }
-            else if (ph >= 4 && ph < 7) { phBox.attr('class', 'text-3xl font-black text-orange-400 font-mono mt-2 bg-orange-500/10 py-2 border border-orange-500/30 rounded-xl'); phStatus.text("Zayıf Asit").css('color', '#fb923c'); flaskLiquid.css('background-color', 'rgba(209, 213, 219, 0.2)'); $('#lbl-ind').text("Renksiz (Asidik)"); }
-            else if (ph >= 7 && ph < 8.5) { phBox.attr('class', 'text-3xl font-black text-emerald-400 font-mono mt-2 bg-emerald-500/10 py-2 border border-emerald-500/30 rounded-xl'); phStatus.text("Nötr / Dönüm Noktası").css('color', '#34d399'); flaskLiquid.css('background-color', 'rgba(244, 63, 94, 0.4)'); $('#lbl-ind').text("Hafif Pembe (Dönüm)"); }
-            else { phBox.attr('class', 'text-3xl font-black text-fuchsia-400 font-mono mt-2 bg-fuchsia-500/10 py-2 border border-fuchsia-500/30 rounded-xl'); phStatus.text("Kuvvetli Baz").css('color', '#e879f9'); flaskLiquid.css('background-color', 'rgba(217, 70, 239, 0.7)'); $('#lbl-ind').text("Fuşya / Pembe (Bazik)"); }
-        }
-        function resetTitration() { $('#tit-slider').val(0); runTitration(0); }
-
-        let canvas = document.getElementById('gasCanvas'), ctx = canvas.getContext('2d'), particles = [], currentPistonY = 40;
-        for(let i=0; i<15; i++) particles.push({ x: 20 + Math.random() * 120, y: 70 + Math.random() * 90, vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2, radius: 3 });
-        function updateGasVolume(val) {
-            let volume = parseFloat(val), pressure = 100.0 / volume;
-            $('#gas-slider-val').text(volume.toFixed(1) + ' L'); $('#lbl-vol').text(volume.toFixed(1) + ' L'); $('#lbl-press').text(pressure.toFixed(2) + ' atm'); $('#press-box').html(pressure.toFixed(2) + ' <span class="text-xs">atm</span>');
-            currentPistonY = 160 - (volume * 1.3);
-            particles.forEach(p => { let speed = Math.sqrt(p.vx*p.vx + p.vy*p.vy), target = 1.0 + (pressure * 1.0); if (speed > 0) { p.vx = (p.vx / speed) * target; p.vy = (p.vy / speed) * target; } });
-        }
-        function drawGasSimulation() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#374151'; ctx.fillRect(10, currentPistonY, 140, 8); ctx.strokeStyle = '#4b5563'; ctx.lineWidth = 2; ctx.strokeRect(10, currentPistonY, 140, 170 - currentPistonY);
-            particles.forEach(p => { p.x += p.vx; p.y += p.vy; if(p.x - p.radius < 10 || p.x + p.radius > 150) p.vx *= -1; if(p.y + p.radius > 190) p.vy *= -1; if(p.y - p.radius < currentPistonY + 8) { p.vy *= -1; p.y = currentPistonY + 8 + p.radius; } ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = '#10b981'; ctx.fill(); ctx.closePath(); });
-            requestAnimationFrame(drawGasSimulation);
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('bg-indigo-600', 'text-white'); btn.classList.add('text-gray-400', 'hover:bg-gray-900', 'hover:text-white'); });
-            document.getElementById(tabId).classList.add('active');
-            const activeBtn = document.getElementById('btn-' + tabId); if (activeBtn) activeBtn.classList.add('bg-indigo-600', 'text-white');
-            const titles = { 'dashboard': 'Genel Bakış', 'periodic-table': 'Periyodik Tablo', 'lab': '3D Laboratuvar', 'simulations': 'Sanal Simülasyonlar', 'documents': 'Öğretmen Belgeleri', 'camp': 'YKS Kampı' };
-            document.getElementById('page-title').innerText = titles[tabId];
-            if (!$('#sidebarPanel').contains('-translate-x-full')) toggleSidebar();
-            if (tabId === 'lab' && viewer) { setTimeout(() => { viewer.resize(); }, 150); }
-        }
-
-        $(document).ready(function() {
-            buildPeriodicTable(); updateStudentSystem(); buildSimulationMenu(); selectSimulation(1);
-            viewer = $3Dmol.createViewer($('#molecule-viewer'), { backgroundColor: '#020617' });
-            handleMoleculeChange("crystal:nacl"); // Sayfa açılışında iyonik örgüyü yükle
-            drawGasSimulation();
-        });
+        $(document).ready(function() { updateStudentSystem(); });
     </script>
 </body>
 </html>
