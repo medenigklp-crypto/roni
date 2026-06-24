@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni - Öğretmen Belgeleri</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RONI">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/fluid/512/sun.png">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluid/512/sun.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -17,10 +24,18 @@
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
             <div class="p-5">
                 <div class="flex items-center justify-between mb-8">
+                    
                     <div class="flex items-center space-x-3">
-                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl">Ro</div>
-                        <span class="text-2xl font-black tracking-tight text-indigo-400">RONI</span>
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
+                            <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
+                            <i class="fas fa-sun relative z-10 animate-[spin_20s_linear_infinite]"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 leading-none">RONI</span>
+                            <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
+                        </div>
                     </div>
+                    
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
                 
@@ -65,8 +80,8 @@
             <div class="p-4 md:p-8 max-w-7xl w-full mx-auto">
                 <div class="bg-gray-950 p-6 rounded-xl border border-gray-900 shadow-2xl space-y-6">
                     <div class="border-b border-gray-900 pb-3">
-                        <h3 class="font-extrabold text-base text-white tracking-tight">Müfredat Planları ve İdari Evrak Şablonları</h3>
-                        <p class="text-xs text-gray-500 mt-0.5">MEB Türkiye Yüzyılı Maarif Modeli ile tam uyumlu, indirilebilir boş Word şablon arşiv paneli.</p>
+                        <h3 class="font-extrabold text-base text-white tracking-tight">Kurul Tutanakları ve MEB Yıllık Planlar</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">Türkiye Yüzyılı Maarif Modeli ile %100 uyumlu, indirilebilir boş Word idari evrak şablonları.</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -75,7 +90,7 @@
                                 <i class="far fa-file-word text-blue-500 text-2xl shrink-0"></i>
                                 <div class="truncate">
                                     <h4 class="font-bold text-xs md:text-sm text-gray-200 truncate">9. Sınıf Kimya Maarif Yıllık Planı</h4>
-                                    <p class="text-[11px] text-gray-500 truncate">Haftalık kazanım ve deney dağılımlı Word dökümanı</p>
+                                    <p class="text-[11px] text-gray-500 truncate">Haftalık kazanım ve lab deney takvim şablonu</p>
                                 </div>
                             </div>
                             <button onclick="triggerDownload('9. Sınıf Yıllık Planı')" class="bg-gray-950 hover:bg-gray-800 p-2.5 rounded-lg border border-gray-800 text-indigo-400 text-xs shadow"><i class="fas fa-download"></i></button>
@@ -86,7 +101,7 @@
                                 <i class="far fa-file-word text-blue-500 text-2xl shrink-0"></i>
                                 <div class="truncate">
                                     <h4 class="font-bold text-xs md:text-sm text-gray-200 truncate">Sene Başı Zümre Toplantı Tutanağı</h4>
-                                    <p class="text-[11px] text-gray-500 truncate">Kimya zümre kurul kararları hazır boş evrak şablonu</p>
+                                    <p class="text-[11px] text-gray-500 truncate">Kimya kurulu sene başı hazır boş tutanak evrakı</p>
                                 </div>
                             </div>
                             <button onclick="triggerDownload('Zümre Toplantı Tutanağı')" class="bg-gray-950 hover:bg-gray-800 p-2.5 rounded-lg border border-gray-800 text-indigo-400 text-xs shadow"><i class="fas fa-download"></i></button>
@@ -100,7 +115,7 @@
     <script>
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
         function triggerDownload(name) {
-            $('#toast').text(name + " şablonu Word formatında indirildi.").removeClass('opacity-0').addClass('opacity-100');
+            $('#toast').text(name + " şablonu Word formatında başarıyla indirildi.").removeClass('opacity-0').addClass('opacity-100');
             setTimeout(() => { $('#toast').removeClass('opacity-100').addClass('opacity-0'); }, 2500);
         }
     </script>
