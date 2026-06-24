@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="RONI">
-    <link class="apple-touch-icon" rel="apple-touch-icon" href="https://img.icons8.com/fluid/512/sun.png">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/fluid/512/sun.png">
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluid/512/sun.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -99,7 +99,6 @@
 
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
 
-        // Müfredatta bulunan 17 interaktif konunun eksiksiz listesi
         const simulationsTopics = [
             { id: 1, grade: "9. Sınıf", title: "Güvenlik Sembolleri ve Lab Ekipmanları" },
             { id: 2, grade: "9. Sınıf", title: "Dalton, Thomson, Rutherford Atom Modelleri" },
@@ -144,7 +143,6 @@
             const st = students[idx];
             if (!st.progress) st.progress = {};
 
-            // 9. Sınıf Konu Yapılandırması
             let t9Html = simulationsTopics.filter(t => t.grade.includes("9")).map(t => `
                 <label class="flex items-center space-x-3 p-3 bg-gray-950 rounded-xl border border-gray-900 cursor-pointer hover:bg-gray-900/60 transition">
                     <input type="checkbox" ${st.progress['sim_'+t.id] ? 'checked' : ''} onchange="toggleTopic(${idx}, 'sim_${t.id}')" class="w-4 h-4 accent-indigo-500 rounded">
@@ -152,7 +150,6 @@
                 </label>
             `).join('');
 
-            // 11. ve 12. Sınıf LYS/AYT Grubu
             let tAytHtml = simulationsTopics.filter(t => !t.grade.includes("9")).map(t => `
                 <label class="flex items-center space-x-3 p-3 bg-gray-950 rounded-xl border border-gray-900 cursor-pointer hover:bg-gray-900/60 transition">
                     <input type="checkbox" ${st.progress['sim_'+t.id] ? 'checked' : ''} onchange="toggleTopic(${idx}, 'sim_${t.id}')" class="w-4 h-4 accent-emerald-500 rounded">
