@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni - Kimyanın Dijital Merkezi</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -12,16 +14,27 @@
 
     <div class="flex h-screen overflow-hidden relative">
         
+        <!-- SABİT/MOBİL UYUMLU SIDEBAR MENÜ -->
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
             <div class="p-5">
                 <div class="flex items-center justify-between mb-8">
+                    
+                    <!-- PARLAYAN GÜNEŞ LOGOLU YENİ ALAN -->
                     <div class="flex items-center space-x-3">
-                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl">Ro</div>
-                        <span class="text-2xl font-black tracking-tight text-indigo-400">RONI</span>
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
+                            <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
+                            <i class="fas fa-sun relative z-10 animate-[spin_20s_linear_infinite]"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 leading-none">RONI</span>
+                            <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
+                        </div>
                     </div>
+                    
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
                 
+                <!-- DOSYA BAĞLANTILARI -->
                 <nav class="space-y-1.5">
                     <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
                         <i class="fas fa-chart-pie w-5 text-center"></i> <span>Genel Bakış</span>
@@ -52,6 +65,7 @@
 
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
 
+        <!-- İÇERİK PORTALI -->
         <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-slate-900/20">
             <header class="bg-gray-950/85 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
@@ -61,11 +75,13 @@
             </header>
 
             <div class="p-4 md:p-8 max-w-7xl w-full mx-auto space-y-6">
+                <!-- Slogan Banner -->
                 <div class="bg-gradient-to-r from-indigo-950 via-slate-950 to-indigo-950/30 p-6 rounded-2xl border border-indigo-900/40 shadow-2xl">
                     <h3 class="text-xl md:text-2xl font-black text-white">Roni Dijital Kimya Sistemine Hoş Geldiniz!</h3>
                     <p class="text-indigo-200/80 text-xs md:text-sm mt-2">Bu ana panel üzerinden öğrenci ekleyebilir ve diğer branş sayfalarına hızlıca geçiş yapabilirsiniz.</p>
                 </div>
 
+                <!-- İstatistik Kutuları -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 shadow-xl flex items-center space-x-4">
                         <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400"><i class="fas fa-users text-xl"></i></div>
@@ -83,6 +99,7 @@
                     </div>
                 </div>
 
+                <!-- Dinamik Öğrenci Kayıt Alanı -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 space-y-4 shadow-xl">
                         <h3 class="text-xs font-black text-white uppercase border-b border-gray-900 pb-2"><i class="fas fa-user-plus mr-1.5 text-indigo-400"></i>Öğrenci Ekle</h3>
@@ -91,10 +108,11 @@
                             <button onclick="addNewStudent()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-2.5 rounded-lg transition-all">Kayıt Oluştur</button>
                         </div>
                     </div>
-                    <div class="md:col-span-2 bg-gray-950 p-5 rounded-xl border border-gray-900 space-y-3 shadow-xl">
+                    <div class="md:col-span-2 bg-gray-950 p-5 rounded-xl border border-gray-800 space-y-3 shadow-xl">
                         <h3 class="text-xs font-black text-white uppercase border-b border-gray-900 pb-2"><i class="fas fa-list mr-1.5 text-indigo-400"></i>Mevcut Öğrencileriniz</h3>
                         <div id="studentListContainer" class="text-xs space-y-2 max-h-[220px] overflow-y-auto custom-scrollbar">
-                            </div>
+                            <!-- JS verileri -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -104,6 +122,7 @@
     <script>
         let students = JSON.parse(localStorage.getItem('roni_students')) || [];
 
+        // Mobil menü tetikleyici
         function toggleSidebar() {
             $('#sidebarPanel').toggleClass('-translate-x-full');
             $('#sidebarOverlay').toggleClass('hidden');
