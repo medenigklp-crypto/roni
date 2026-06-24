@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roni - 3D Laboratuvar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://3dmol.org/build/3Dmol-min.js"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #374151; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-[#030712] text-gray-100 font-sans antialiased">
+
+    <div class="flex h-screen overflow-hidden relative">
+        
+        <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
+            <div class="p-5">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl">Ro</div>
+                        <span class="text-2xl font-black tracking-tight text-indigo-400">RONI</span>
+                    </div>
+                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                
+                <nav class="space-y-1.5">
+                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-chart-pie w-5 text-center"></i> <span>Genel Bakış</span>
+                    </a>
+                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span>
+                    </a>
+                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
+                        <i class="fas fa-flask w-5 text-center"></i> <span>3D Laboratuvar</span>
+                    </a>
+                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-laptop-code w-5 text-center"></i> <span>Sanal Simülasyonlar</span>
+                    </a>
+                    <a href="documents.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-folder-open w-5 text-center"></i> <span>Öğretmen Belgeleri</span>
+                    </a>
+                    <a href="camp.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-graduation-cap w-5 text-center"></i> <span>YKS Kampı</span>
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40">
+                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
+                <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
+            </div>
+        </aside>
+
+        <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
+
+        <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-slate-900/20">
+            <header class="bg-gray-950/85 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30">
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">3D Kimya Laboratuvarı</h2>
+                </div>
+            </header>
+
+            <div class="p-4 md:p-8 max-w-7xl w-full mx-auto">
+                <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 min-h-[540px] flex flex-col justify-between shadow-2xl">
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-900 pb-4 gap-4">
+                        <div>
+                            <h3 class="font-bold text-base text-white tracking-tight">Molekül Geometrisi ve Kristal İstif Motoru</h3>
+                            <p class="text-xs text-gray-500 mt-0.5">YKS müfredatında yer alan kovalent ve iyonik örgü yapılarının tamamı aktif edilmiştir.</p>
+                        </div>
+                        <div class="w-full md:w-72">
+                            <select id="moleculeSelector" onchange="handleMoleculeChange(this.value)" class="w-full bg-gray-900 text-xs font-bold rounded-xl border border-gray-800 p-3 text-indigo-400 focus:outline-none focus:border-indigo-500">
+                                <optgroup label="İyonik Kristal Yapılar">
+                                    <option value="crystal:nacl">NaCl (Kübik Birim Hücre Örgüsü)</option>
+                                </optgroup>
+                                <optgroup label="17 Temel Kovalent Molekül (Eksiksiz)">
+                                    <option value="cid:24784">BeH₂ (Berilyum Hidrür)</option>
+                                    <option value="cid:5462312">BH₃ (Bor Trihidrür)</option>
+                                    <option value="cid:291">CH₄ (Metan)</option>
+                                    <option value="cid:222">NH₃ (Amonyak)</option>
+                                    <option value="cid:962">H₂O (Su)</option>
+                                    <option value="cid:14917">HF (Hidrojen Florür)</option>
+                                    <option value="cid:783">H₂ (Hidrojen Gazı)</option>
+                                    <option value="cid:977">O₂ (Oksijen Gazı)</option>
+                                    <option value="cid:947">N₂ (Azot Gazı)</option>
+                                    <option value="cid:768">HCN (Hidrojen Siyanür)</option>
+                                    <option value="cid:280">CO₂ (Karbondioksit)</option>
+                                    <option value="cid:6324">C₂H₆ (Etan)</option>
+                                    <option value="cid:6325">C₂H₄ (Eten / Etilen)</option>
+                                    <option value="cid:6326">C₂H₂ (Etin / Asetilen)</option>
+                                    <option value="cid:241">C₆H₆ (Benzen Halkası)</option>
+                                    <option value="cid:702">C₂H₅OH (Etanol / Etil Alkol)</option>
+                                    <option value="cid:176">CH₃COOH (Asetik Asit / Sirke Asidi)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 w-full bg-[#020617] rounded-xl border border-gray-900 relative mt-4 overflow-hidden" style="min-height: 400px;">
+                        <div id="molecule-viewer" class="w-full h-full absolute inset-0"></div>
+                        <div class="absolute bottom-4 left-4 bg-gray-950/90 backdrop-blur border border-gray-800 px-4 py-2 rounded-xl z-10 shadow-lg">
+                            <span class="text-[10px] text-gray-500 font-mono block">Aktif Yapı Model Çıktısı:</span>
+                            <span id="molecule-name" class="font-black text-indigo-400 text-sm">NaCl (Kübik Birim Hücre Örgüsü)</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let viewer = null;
+
+        function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
+
+        // Molekül ve Kristal Yönetim Motoru
+        function handleMoleculeChange(val, customName = null) {
+            if (!viewer) return;
+            viewer.clear();
+
+            if(val.startsWith("crystal:")) {
+                // NaCl Kübik İyonik Kristal Örgü Matematiksel Dizilim Algoritması
+                let name = customName || "NaCl (Kübik Birim Hücre Örgüsü)";
+                $('#molecule-name').text(name);
+                
+                // 3x3x3 boyutunda elektrostatik Na+ ve Cl- istifleme simülasyonu
+                for(let x=-1; x<=1; x++) {
+                    for(let y=-1; y<=1; y++) {
+                        for(let z=-1; z<=1; z++) {
+                            let isNa = (x + y + z) % 2 === 0;
+                            viewer.addSphere({
+                                center: {x: x*2.3, y: y*2.2, z: z*2.3},
+                                radius: isNa ? 0.48 : 0.68,
+                                color: isNa ? '#3b82f6' : '#10b981' // Na+ Mavi, Cl- Yeşil Küreler
+                            });
+                        }
+                    }
+                }
+                viewer.render(); viewer.zoomTo();
+            } else {
+                // Kovalent Molekülleri PubChem Üzerinden Canlı Koordinat İndirme İşlemi
+                let cid = val.replace("cid:", "");
+                let textName = customName || $('#moleculeSelector option:selected').text();
+                $('#molecule-name').text(textName);
+
+                $3Dmol.download("cid:" + cid, viewer, {
+                    style: {
+                        stick: { radius: 0.16 },
+                        sphere: { scale: 0.26 }
+                    }
+                }, function() {
+                    viewer.render(); viewer.zoomTo();
+                });
+            }
+        }
+
+        $(document).ready(function() {
+            // 3Dmol Görüntüleyici Kurulumu
+            viewer = $3Dmol.createViewer($('#molecule-viewer'), { backgroundColor: '#020617' });
+
+            // PERiYODiK TABLODAN GELEN PARAMETRE KONTROLÜ (Dinamik Entegrasyon)
+            const urlParams = new URLSearchParams(window.location.search);
+            const passedCid = urlParams.get('cid');
+            const passedName = urlParams.get('name');
+
+            if (passedCid) {
+                // Dropdown menüsünde seçimi "Özel Element" durumuna eşitle
+                $('#moleculeSelector').append(`<option value="cid:${passedCid}" selected>${passedName}</option>`);
+                handleMoleculeChange("cid:" + passedCid, passedName);
+            } else {
+                // Parametre yoksa varsayılan olarak iyonik örgüyü yükle
+                handleMoleculeChange("crystal:nacl");
+            }
+        });
+    </script>
+</body>
+</html>
