@@ -16,6 +16,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- JQuery ve 3Dmol.js CDN'leri -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://3dmol.org/build/3Dmol-min.js"></script>
 </head>
@@ -28,7 +29,7 @@
             <div class="p-5">
                 <div class="flex items-center justify-between mb-8">
                     
-                    <!-- PARLAYAN GÜNEŞ LOGOLU YENİ ALAN -->
+                    <!-- PARLAYAN GÜNEŞ LOGOLU BRANDING -->
                     <div class="flex items-center space-x-3">
                         <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
                             <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
@@ -73,6 +74,7 @@
 
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
 
+        <!-- ANA İÇERİK PORTALI -->
         <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-slate-900/20">
             <header class="bg-gray-950/85 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
@@ -83,6 +85,8 @@
 
             <div class="p-4 md:p-8 max-w-7xl w-full mx-auto">
                 <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 min-h-[540px] flex flex-col justify-between shadow-2xl">
+                    
+                    <!-- Seçim Arayüzü -->
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-900 pb-4 gap-4">
                         <div>
                             <h3 class="font-bold text-base text-white tracking-tight">Molekül Geometrisi ve Kristal İstif Motoru</h3>
@@ -116,6 +120,7 @@
                         </div>
                     </div>
 
+                    <!-- 3D Render Sahnesi -->
                     <div class="flex-1 w-full bg-[#020617] rounded-xl border border-gray-900 relative mt-4 overflow-hidden" style="min-height: 400px;">
                         <div id="molecule-viewer" class="w-full h-full absolute inset-0"></div>
                         <div class="absolute bottom-4 left-4 bg-gray-950/90 backdrop-blur border border-gray-800 px-4 py-2 rounded-xl z-10 shadow-lg">
