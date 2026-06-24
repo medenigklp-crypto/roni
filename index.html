@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni - Kimyanın Dijital Merkezi</title>
+    
+    <!-- iPHONE ANA EKRAN İKONU VE TAM EKRAN (PWA) AYARLARI -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RONI">
+    <!-- Ana ekranda görünecek parlayan şık güneş ikonu -->
+    <link rel="apple-touch-icon" href="https://img.icons8.com/fluid/512/sun.png">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluid/512/sun.png">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome CDN -->
@@ -122,7 +131,6 @@
     <script>
         let students = JSON.parse(localStorage.getItem('roni_students')) || [];
 
-        // Mobil menü tetikleyici
         function toggleSidebar() {
             $('#sidebarPanel').toggleClass('-translate-x-full');
             $('#sidebarOverlay').toggleClass('hidden');
