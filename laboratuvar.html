@@ -291,10 +291,28 @@
 
         function closeModal() { $('#equipmentModal').addClass('hidden'); }
 
+        // --- %100 EKSİKSİZ 20 STANDART AMİNO ASİT LİSTESİ ---
         const AMINO = [
-            {sym:'Gly',name:'Glisin',formula:'C₂H₅NO₂',desc:'En basit amino asit omurgasıdır. R grubu sadece tek bir Hidrojen atomudur.'},
-            {sym:'Ala',name:'Alanin',formula:'C₃H₇NO₂',desc:'Metil yan zinciri içerir. Alifatik hidrofobik lise müfredat parametresidir.'},
-            {sym:'Cys',name:'Sistein',formula:'C₃H₇NO₂S',desc:'Kükürt içerir, sülfhidril (-SH) bağ yapısı ile disülfit köprüleri kurar.'}
+            {sym:'Gly',name:'Glisin',formula:'C₂H₅NO₂',desc:'En basit amino asit omurgasıdır. Yan zinciri (R) sadece tek bir Hidrojen atomundan oluşur.'},
+            {sym:'Ala',name:'Alanin',formula:'C₃H₇NO₂',desc:'Metil yan zinciri içerir. Alifatik hidrofobik yapısıyla protein zincirlerinin kararlılığında rol oynar.'},
+            {sym:'Val',name:'Valin',formula:'C₅H₁₁NO₂',desc:'Dallanmış zincirli, hidrofobik temel bir amino asittir. Kas dokusunun onarımında kritik öneme sahiptir.'},
+            {sym:'Leu',name:'Löysin',formula:'C₆H₁₃NO₂',desc:'Kas protein sentezini doğrudan tetikleyen sinyal mekanizmalarını uyarıcı etkisi olan esansiyel moleküldür.'},
+            {sym:'Ile',name:'İzolöysin',formula:'C₆H₁₃NO₂',desc:'Löysinin izomeridir. Hem hidrofobik protein çekirdeklerinde yer alır hem de enerji üretimini destekler.'},
+            {sym:'Pro',name:'Prolin',formula:'C₅H₉NO₂',desc:'Yan zinciri amino grubuyla halka oluşturur. Bu rijit yapı, peptit zincirlerinde sert bükülmelere yol açar.'},
+            {sym:'Phe',name:'Fenilalanin',formula:'C₉H₁₁NO₂',desc:'Yapısında kararlı bir benzen (aromatik) halkası barındırır. Hidrofobik etkileşimlerde önemli bir merkezdir.'},
+            {sym:'Trp',name:'Triptofan',formula:'C₁₁H₁₂N₂O₂',desc:'Çift halkalı indol fonksiyonel grubu içeren, serotonin nörotransmitterinin sentezinde öncül olan en büyük amino asittir.'},
+            {sym:'Met',name:'Metiyonin',formula:'C₅H₁₁NO₂S',desc:'Yapısında kükürt (tiyoether) bulundurur. Protein sentezi mekanizmasında başlangıç (kodon) amino asididir.'},
+            {sym:'Ser',name:'Serin',formula:'C₃H₇NO₃',desc:'Yan zincirinde polar hidroksil (-OH) grubu taşır. Kolayca hidrojen bağı kurabilir ve enzimlerin aktif merkezinde yer alır.'},
+            {sym:'Thr',name:'Treonin',formula:'C₄H₉NO₃',desc:'İki kiral merkeze sahip polar bir amino asittir. Protein yapılarının hidrofilik dış yüzeylerinde konumlanır.'},
+            {sym:'Cys',name:'Sistein',formula:'C₃H₇NO₂S',desc:'Kükürt içerir. Taşımış olduğu sülfhidril (-SH) grupları sayesinde proteinlerin 3D yapısını koruyan disülfit bağlarını kurar.'},
+            {sym:'Tyr',name:'Tirozin',formula:'C₉H₁₁NO₃',desc:'Aromatik bir fenol halkası içerir. Hücre içi sinyal iletim mekanizmalarında fosforillenme reaksiyonlarının ana hedefidir.'},
+            {sym:'Asn',name:'Asparjin',formula:'C₄H₈N₂O₃',desc:'Karboksamit fonksiyonel grubu içeren hidrofilik yapısıyla protein yapılarında kararlı hidrojen bağları oluşturur.'},
+            {sym:'Gln',name:'Glutamin',formula:'C₅H₁₀N₂O₃',desc:'Kanda en bol bulunan amino asittir. Hücreler arası azot taşınması ve amonyak detoksifikasyonunda görev alır.'},
+            {sym:'Asp',name:'Aspartik Asit',formula:'C₄H₇NO₄',desc:'Fizyolojik pH ortamında negatif yüklü olan yan zincir karboksil grubu içerir. Asidik karakterlidir.'},
+            {sym:'Glu',name:'Glutamik Asit',formula:'C₅H₉NO₄',desc:'Metabolizmada amino gruplarının aktarılmasında anahtar rol oynar. Beyinde önemli bir nörotransmitterdir.'},
+            {sym:'Lys',name:'Lizin',formula:'C₆H₁₄N₂O₂',desc:'Yan zincirinin ucunda protonlanarak pozitif yük (+) alabilen primer bir amino grubu barındırır. Bazik özelliktedir.'},
+            {sym:'Arg',name:'Arjinin',formula:'C₆H₁₄N₄O₂',desc:'Güçlü bazik özellik gösteren bir guanidino grubu içerir. Üre döngüsünün ve azot oksit sentezinin merkezindedir.'},
+            {sym:'His',name:'Histidin',formula:'C₆H₉N₃O₂',desc:'Fizyolojik pH değerlerine çok yakın bir pKa değerine sahip imidazol halkası taşır. Enzim katabolizmalarında katalizör görevi görür.'}
         ];
 
         $(document).ready(function() {
