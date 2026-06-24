@@ -11,94 +11,353 @@
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png">
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
-        :root { --bg: #08090f; --sf: #0f1117; --sf2: #161922; --br: #1e2535; --ac: #6366f1; --ac2: #818cf8; }
-        body { background: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
-        .sim-card.active { border-color: var(--ac); background: rgba(99,102,241,0.05); }
+        :root {
+            --bg: #08090f; --sf: #0f1117; --sf2: #161922; --sf3: #1c2030;
+            --br: #1e2535; --br2: #252d40; --ac: #6366f1; --ac2: #818cf8;
+            --gr: #22c55e; --rd: #ef4444; --yw: #f59e0b; --cy: #06b6d4;
+            --tx: #f1f5f9; --tx2: #94a3b8; --tx3: #475569;
+        }
+        body { background: var(--bg); color: var(--tx); font-family: 'Inter', sans-serif; }
+        body::before {
+            content: ''; position: fixed; inset: 0;
+            background-image: radial-gradient(circle at 1px 1px, rgba(99,102,241,.06) 1px, transparent 0);
+            background-size: 28px 28px; pointer-events: none; z-index: 0;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: var(--br2); border-radius: 3px; }
+        .sim-card.active { border-color: var(--ac); background: rgba(99,102,241,0.08); }
+        .ph-scale { height: 16px; border-radius: 100px; background: linear-gradient(90deg,#ef4444,#eab308,#22c55e,#3b82f6,#8b5cf6); position: relative; }
+        .orbital-box { width: 32px; height: 32px; border: 2px solid var(--br2); display: inline-flex; align-items: center; justify-content: center; font-weight: bold; background: var(--sf); font-size: 14px; }
     </style>
 </head>
-<body class="overflow-x-hidden">
+<body class="overflow-x-hidden custom-scrollbar">
 
-    <div class="flex h-screen overflow-hidden relative">
-        <aside class="w-64 bg-gray-950 border-r border-gray-900 hidden md:flex flex-col justify-between">
-            <div class="p-5">
-                <div class="flex items-center space-x-3 mb-8">
-                    <div class="bg-gradient-to-br from-amber-400 to-red-500 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg relative">
-                        <i class="fas fa-sun text-slate-950"></i>
+    <div class="flex h-screen overflow-hidden relative z-10">
+        
+        <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-[100] w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
+            <div class="p-5 overflow-y-auto flex-1 custom-scrollbar">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
+                            <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
+                            <i class="fas fa-sun relative z-10 animate-[spin_20s_linear_infinite]"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 leading-none">RONI</span>
+                            <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
+                        </div>
                     </div>
-                    <span class="text-xl font-black text-white">RONI</span>
+                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
+                
                 <nav class="space-y-1">
-                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400">Ana Sayfa</a>
-                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400">Periyodik Tablo</a>
-                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400">3D Araçlar</a>
-                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold">Simülasyonlar</a>
+                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-chart-pie w-5 text-center"></i> <span>Ana Sayfa</span>
+                    </a>
+                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span>
+                    </a>
+                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-flask w-5 text-center"></i> <span>3D Araçlar</span>
+                    </a>
+                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
+                        <i class="fas fa-laptop-code w-5 text-center"></i> <span>Simülasyonlar</span>
+                    </a>
+                    <a href="atlas.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-graduation-cap w-5 text-center"></i> <span>YÖK Atlas</span>
+                    </a>
                 </nav>
+            </div>
+            
+            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
+                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
+                <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
             </div>
         </aside>
 
-        <main class="flex-1 flex flex-col overflow-y-auto">
-            <div class="p-4 md:p-6 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
-                <div class="lg:col-span-1 bg-[#0f1117] p-4 rounded-xl border border-gray-900 space-y-2">
-                    <button onclick="loadSim(1)" class="w-full text-left p-3 rounded-xl border border-gray-800 bg-gray-900 text-xs font-bold">🧪 Asit-Baz Tanılama Testi</button>
-                    <button onclick="loadSim(13)" class="w-full text-left p-3 rounded-xl border border-gray-800 bg-gray-900 text-xs font-bold mt-2">💧 Hassas Logaritmik Titrasyon</button>
-                </div>
+        <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
 
-                <div class="lg:col-span-2 bg-[#0f1117] p-6 rounded-xl border border-gray-900 min-h-[500px] flex flex-col justify-between">
-                    <h3 id="sTitle" class="text-lg font-black border-b border-gray-800 pb-2">Deney Alanı</h3>
+        <main class="flex-1 flex flex-col overflow-y-auto min-w-0">
+            <header class="bg-[#08090f]/90 backdrop-blur border-b border-gray-900 px-6 py-4 flex justify-between items-center sticky top-0 z-30">
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">🔬 Maarif İnteraktif Deney İstasyonu</h2>
+                </div>
+            </header>
+
+            <div class="p-4 md:p-6 max-w-7xl w-full mx-auto flex-1">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                     
-                    <div id="simDisplay" class="flex-1 flex items-center justify-center py-8">
+                    <div class="lg:col-span-1 bg-[#0f1117] p-4 rounded-xl border border-gray-900 space-y-2 max-h-[640px] overflow-y-auto custom-scrollbar shadow-xl">
+                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2 px-1">Müfredat Üniteleri</span>
+                        <div id="simulationsMenu" class="space-y-2"></div>
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-[#0f1117] p-6 rounded-xl border border-gray-900 shadow-2xl min-h-[540px] flex flex-col justify-between">
+                            
+                            <div class="border-b border-gray-900 pb-3 mb-4 flex justify-between items-start">
+                                <div>
+                                    <span id="simBadge" class="bg-indigo-600/20 text-indigo-400 text-[9px] font-black px-2.5 py-0.5 rounded-full border border-indigo-500/30 uppercase tracking-wider">9. Sınıf</span>
+                                    <h3 id="simTitle" class="font-black text-white text-base md:text-lg mt-1 font-['Space_Grotesk']">Yükleniyor...</h3>
+                                </div>
+                                <div id="simIcon" class="text-3xl">🧪</div>
+                            </div>
+
+                            <div id="simInteractiveZone" class="bg-[#08090f] p-6 rounded-2xl border border-gray-900/60 my-2 flex-1 flex flex-col justify-center">
+                                </div>
+
+                            <div class="bg-[#161922]/50 p-4 rounded-xl border border-gray-800 text-xs mt-4">
+                                <span class="text-[10px] font-bold text-gray-500 uppercase block mb-1.5 tracking-wider"><i class="fas fa-graduation-cap mr-1"></i> Akademik Deney Çıktısı</span>
+                                <p id="academicOutput" class="text-gray-400 leading-relaxed italic"></p>
+                            </div>
                         </div>
+                    </div>
+
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        function loadSim(id) {
-            const display = $('#simDisplay'); display.empty();
-            if(id === 13) {
-                $('#sTitle').text("Asit-Baz Titrasyon Düzeneği");
-                display.html(`
-                    <div class="flex flex-col items-center space-y-4 w-full max-w-sm">
-                        <div class="w-6 h-36 bg-slate-800 border-2 border-slate-600 relative rounded-b">
-                            <div id="bFluid" class="w-full bg-blue-500/40 absolute bottom-0" style="height:100%"></div>
+        function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
+
+        const CORE_SIMS = [
+            { id: 1, grade: "9. Sınıf", cat: "Asit-Base", title: "Maddelerin Asidik/Bazik İndikatör Testi", icon: "🧪", desc: "Günlük hayattaki maddelerin pH kırılımlarını indikatör renk değişimiyle tayin etme." },
+            { id: 2, grade: "9. Sınıf", cat: "Reaksiyon Kimyası", title: "Metallerin Asit ve Bazlarla Tepkimesi", icon: "⚗️", desc: "Aktif, yarı soy ve amfoter metallerin tüp içi reaksiyonları ve gaz balon hacim analizi." },
+            { id: 6, grade: "9. Sınıf", cat: "Kuantum Modeli", title: "Elektronların Orbitallere Yerleşme Kuralları", icon: "🌀", desc: "Aufbau, Hund ve Pauli ilkelerine göre kuantum orbital kutularının elektron spin dolumu." },
+            { id: 7, grade: "11. Sınıf", cat: "Gaz Yasaları", title: "Boyle Gaz Yasası Düzeneneği (P-V)", icon: "💨", desc: "Kinetik piston sıkıştırma oranına göre birim yüzeye yapılan çarpışma ve manometre basıncı." },
+            { id: 13, grade: "11. Sınıf", cat: "Analitik Kimya", title: "Hassas Asit-Baz Titrasyon Düzeneneği", icon: "💧", desc: "Büret vana akış hızına bağlı olarak erlenmayerdeki indikatörün dönüm noktası logaritmik pH takibi." }
+        ];
+
+        function renderMenu() {
+            const menu = $('#simulationsMenu'); menu.empty();
+            CORE_SIMS.forEach(sim => {
+                let clr = sim.grade.includes("9") ? "bg-indigo-950 text-indigo-400 border border-indigo-900/30" : "bg-emerald-950 text-emerald-400 border border-emerald-900/30";
+                menu.append(`
+                    <div onclick="launchSim(${sim.id})" id="sim-card-${sim.id}" class="sim-card p-3 rounded-xl border border-gray-900 bg-[#161922]/40 hover:bg-[#161922] cursor-pointer transition-all flex justify-between items-center group">
+                        <div class="truncate mr-2">
+                            <h4 class="text-xs font-bold text-gray-300 group-hover:text-indigo-400 transition-colors truncate">${sim.title}</h4>
+                            <span class="text-[9px] text-gray-500 font-mono block mt-0.5">${sim.cat}</span>
                         </div>
-                        <div class="w-8 h-2 bg-indigo-600 rounded"></div>
-                        <div class="w-20 h-20 bg-slate-800 border-2 border-slate-600 rounded-b-2xl relative overflow-hidden flex flex-col justify-end">
-                            <div id="eFluid" class="w-full bg-red-500/20 transition-all duration-300" style="height:30%"></div>
-                        </div>
-                        <input type="range" min="0" max="50" value="0" oninput="runTit(this.value)" class="w-full accent-indigo-500">
-                        <div class="text-sm font-mono">pH: <span id="phVal" class="font-bold text-red-400">1.00</span></div>
+                        <span class="text-[8px] font-black px-1.5 py-0.5 rounded tracking-wide ${clr} shrink-0">${sim.grade}</span>
                     </div>
                 `);
-            } else {
-                $('#sTitle').text("Asit-Baz Tanılama Testi");
-                display.html(`
-                    <div class="text-center space-y-4">
-                        <div class="flex gap-4 justify-center">
-                            <button onclick="checkPH(2.5, 'Limon')" class="bg-red-500/20 p-3 rounded-xl border border-red-500/40 text-xs font-bold">Limon Suyu</button>
-                            <button onclick="checkPH(7.0, 'Saf Su')" class="bg-emerald-500/20 p-3 rounded-xl border border-emerald-500/40 text-xs font-bold">Saf Su</button>
-                            <button onclick="checkPH(11.5, 'Amonyak')" class="bg-purple-500/20 p-3 rounded-xl border border-purple-500/40 text-xs font-bold">Çamaşır Suyu</button>
+            });
+        }
+
+        function launchSim(id) {
+            $('.sim-card').removeClass('active'); $(`#sim-card-${id}`).addClass('active');
+            const sim = CORE_SIMS.find(s => s.id === id); if(!sim) return;
+
+            $('#simBadge').text(sim.grade).attr('class', sim.grade.includes("9") ? 'bg-indigo-600/20 text-indigo-400 text-[9px] font-black px-2.5 py-0.5 rounded-full border border-indigo-500/30 uppercase tracking-wider' : 'bg-emerald-600/20 text-emerald-400 text-[9px] font-black px-2.5 py-0.5 rounded-full border border-emerald-500/30 uppercase tracking-wider');
+            $('#simTitle').text(sim.title); $('#simIcon').text(sim.icon);
+            
+            const zone = $('#simInteractiveZone'); zone.empty();
+
+            if (id === 1) {
+                // 1. ASİT BAZ İNDİKATÖRÜ
+                zone.html(`
+                    <div class="space-y-4 w-full">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block">Test Edilecek Çözelti:</label>
+                        <select onchange="runSim1(this.value)" class="w-full bg-[#161922] p-2.5 text-xs font-bold rounded-xl border border-gray-800 text-indigo-400 focus:outline-none">
+                            <option value="2.0:Mide Asidi / HCl">Mide Asidi / Limon Suyu (pH ≈ 2.0)</option>
+                            <option value="7.0:Saf Su" selected>Saf Su / Nötr Tuz Çözeltisi (pH = 7.0)</option>
+                            <option value="13.5:Çamaşır Suyu / NaOH">Çamaşır Suyu / Amonyak (pH ≈ 13.5)</option>
+                        </select>
+                        <div class="text-center py-4 bg-[#0f1117] rounded-xl border border-gray-900">
+                            <span class="text-[9px] text-gray-500 uppercase block font-mono">Turnusol Kağıdı Renk Tepkisi</span>
+                            <div id="litmusPaper" class="w-32 h-6 mx-auto my-2 rounded border border-gray-800 transition-all duration-300" style="background: #e2e8f0;"></div>
+                            <div id="phDisplay" class="text-3xl font-black font-mono">7.00</div>
                         </div>
-                        <div class="text-2xl font-black id-ph">pH: 7.00</div>
+                        <div class="ph-scale"><div id="phPointer" class="absolute top-0 w-1.5 h-5 bg-white border border-gray-900 rounded shadow transition-all" style="left:50%"></div></div>
                     </div>
                 `);
+                runSim1("7.0:Saf Su");
+            }
+            else if (id === 2) {
+                // 2. METAL REAKSİYONLARI VE BALON DÜZENEĞİ
+                zone.html(`
+                    <div class="space-y-4 w-full">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Metal Segmenti:</label>
+                                <select id="sim2Metal" onchange="runSim2()" class="w-full bg-[#161922] p-2 rounded-lg border border-gray-800 text-xs text-gray-300 focus:outline-none font-bold">
+                                    <option value="Mg">Magnezyum (Aktif Metal)</option>
+                                    <option value="Cu">Bakır (Yarı Soy Metal)</option>
+                                    <option value="Al">Alüminyum (Amfoter Metal)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Reaktif Asit/Baz:</label>
+                                <select id="sim2Acid" onchange="runSim2()" class="w-full bg-[#161922] p-2 rounded-lg border border-gray-800 text-xs text-gray-300 focus:outline-none font-bold">
+                                    <option value="HCl">HCl Çözeltisi (Kuvvetli Asit)</option>
+                                    <option value="NaOH">NaOH Çözeltisi (Kuvvetli Baz)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-center p-4 bg-[#0f1117] rounded-xl border border-gray-900 min-h-[180px]">
+                            <div id="gasBalloon" class="w-8 h-8 bg-indigo-500/20 border border-indigo-500/40 rounded-full transition-all duration-500 flex items-center justify-center text-[10px] font-bold font-mono"></div>
+                            <div class="w-8 h-24 bg-slate-800 border-2 border-slate-600 rounded-b-xl relative overflow-hidden flex flex-col justify-end">
+                                <div class="w-full bg-blue-500/20 h-10 absolute bottom-0"></div>
+                                <div id="metalPieces" class="w-4 h-2 bg-gray-500 mx-auto mb-1 rounded-sm z-10"></div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+                runSim2();
+            }
+            else if (id === 6) {
+                // 6. AUFBAU ORBİTAL KUTULARI
+                zone.html(`
+                    <div class="space-y-4 w-full">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block">Atom Numarası (Proton Sayısı):</label>
+                        <input type="range" min="1" max="10" value="7" oninput="runSim6(this.value)" class="w-full accent-indigo-500 cursor-pointer">
+                        <div class="text-center font-mono text-xs font-bold text-indigo-400" id="sim6AtomLabel">Azot (Z = 7)</div>
+                        
+                        <div class="flex justify-center gap-4 py-4 bg-[#0f1117] rounded-xl border border-gray-900">
+                            <div class="text-center">
+                                <div class="orbital-box" id="box-1s"></div>
+                                <div class="text-[9px] text-gray-500 font-mono mt-1">1s</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="orbital-box" id="box-2s"></div>
+                                <div class="text-[9px] text-gray-500 font-mono mt-1">2s</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="flex gap-1">
+                                    <div class="orbital-box" id="box-2p1"></div>
+                                    <div class="orbital-box" id="box-2p2"></div>
+                                    <div class="orbital-box" id="box-2p3"></div>
+                                </div>
+                                <div class="text-[9px] text-gray-500 font-mono mt-1">2p</div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+                runSim6(7);
+            }
+            else if (id === 7) {
+                // 7. BOYLE KİNETİK GAZ PİSTONU
+                zone.html(`
+                    <div class="space-y-4 w-full">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block">Piston Hacim Sürgüsü (V, Litre):</label>
+                        <input type="range" min="20" max="100" value="100" oninput="runSim7(this.value)" class="w-full accent-emerald-500 cursor-pointer">
+                        
+                        <div class="grid grid-cols-3 gap-4 items-center">
+                            <div class="col-span-2 bg-[#0f1117] border-2 border-gray-800 h-32 rounded relative flex flex-col justify-end">
+                                <div id="pistonHead" class="w-full h-3 bg-gray-600 border-b border-gray-400 absolute top-0 transition-all duration-200"></div>
+                                <div class="w-full bg-emerald-500/5 h-full" id="gasVolumeHeight"></div>
+                            </div>
+                            <div class="bg-[#161922] p-4 rounded-xl border border-gray-800 text-center">
+                                <span class="text-[9px] text-gray-500 block font-mono">MANOMETRE</span>
+                                <div id="sim7PBox" class="text-xl font-black text-amber-500 font-['Space_Grotesk']">1.00 <span class="text-xs">atm</span></div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+                runSim7(100);
+            }
+            else if (id === 13) {
+                // 13. TİTRASYON DÜZENEĞİ
+                zone.html(`
+                    <div class="space-y-4 w-full">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block">Büret Vana Debisi (Eklenen NaOH / mL):</label>
+                        <input type="range" min="0" max="100" value="0" step="0.5" oninput="runSim13(this.value)" class="w-full accent-indigo-500 cursor-pointer">
+                        
+                        <div class="grid grid-cols-2 gap-4 items-center bg-[#0f1117] p-4 rounded-xl border border-gray-900">
+                            <div class="flex flex-col items-center">
+                                <div class="w-4 h-24 bg-slate-800 border border-slate-600 relative rounded-b">
+                                    <div id="bLevel" class="w-full bg-blue-400/30 absolute bottom-0" style="height: 100%;"></div>
+                                </div>
+                                <div class="w-6 h-1.5 bg-indigo-600 my-0.5 rounded"></div>
+                                <div id="erlenFlask" class="w-14 h-14 bg-slate-800 border-2 border-slate-600 rounded-b-xl relative overflow-hidden flex flex-col justify-end transition-all">
+                                    <div id="eLevel" class="w-full bg-gray-300/10" style="height: 25%;"></div>
+                                </div>
+                            </div>
+                            <div class="text-center space-y-2">
+                                <div><span class="text-[9px] text-gray-500 block">LOGARİTMİK pH</span><span id="phBox" class="text-2xl font-black text-red-500 font-mono">1.00</span></div>
+                                <div><span class="text-[9px] text-gray-500 block">FENOLFTALEİN</span><span id="indLabel" class="text-[10px] font-bold text-gray-500">Renksiz</span></div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+                runSim13(0);
             }
         }
-        function runTit(v) {
-            let ph = 1 + (v * 0.24); if(v >= 25) ph = 7; if(v > 26) ph = 12.5;
-            $('#phVal').text(ph.toFixed(2)); $('#bFluid').css('height', (100 - (v*2)) + '%');
-            $('#eFluid').css('height', (30 + (v*1)) + '%');
-            if(ph >= 7) $('#eFluid').attr('class', 'w-full bg-fuchsia-500/40');
+
+        // --- MATEMATİKSEL KİMYA DENEY ALGORİTMALARI ---
+        function runSim1(val) {
+            let pts = val.split(':'); let ph = parseFloat(pts[0]);
+            $('#phDisplay').text(ph.toFixed(2)); $('#phPointer').css('left', (ph/14*100)+'%');
+            let paper = $('#litmusPaper'), out = $('#academicOutput');
+            if(ph < 7) { paper.css('background', '#ef4444'); out.text(`${pts[1]} çözeltisi asidiktir. Mavi turnusol kağıdını kırmızıya dönüştürür. [H⁺] > [OH⁻] bağıntısı geçerlidir.`); }
+            else if(ph === 7) { paper.css('background', '#e2e8f0'); out.text(`${pts[1]} nötrdür. Turnusol kağıdında renk değişimi gözlenmez. Saf su otoiyonizasyon dengesindedir.`); }
+            else { paper.css('background', '#3b82f6'); out.text(`${pts[1]} çözeltisi baziktir. Kırmızı turnusol kağıdını maviye dönüştürür. [OH⁻] > [H⁺] kuralı etkindir.`); }
         }
-        function checkPH(p, name) { $('.id-ph').text(`${name} pH Değeri: ${p.toFixed(2)}`); }
-        $(document).ready(function() { loadSim(13); });
+
+        function runSim2() {
+            let m = $('#sim2Metal').val(), a = $('#sim2Acid').val();
+            let b = $('#gasBalloon'), out = $('#academicOutput');
+            if(m === "Mg" && a === "HCl") { b.css('transform', 'scale(2.2)').text("H₂ 💨").css('background','rgba(99,102,241,0.3)'); out.html("<strong>Mg + 2HCl → MgCl₂ + H₂</strong><br>Aktif metaller kuvvetli asitlerle reaksiyona girerek Hidrojen gazı açığa çıkarır. Reaksiyon ekzotermiktir."); }
+            else if(m === "Al" && a === "NaOH") { b.css('transform', 'scale(2.0)').text("H₂ 💨").css('background','rgba(34,197,94,0.3)'); out.html("<strong>2Al + 6NaOH → 2Na₃AlO₃ + 3H₂</strong><br>Alüminyum amfoter bir metaldir; kuvvetli asitlerle tepkime verdiği gibi kuvvetli bazlarla da tepkime vererek H₂ gazı üretir."); }
+            else if(m === "Cu" && a === "HCl") { b.css('transform', 'scale(1.0)').text("").css('background','none'); out.html("<strong>Tepkime Gerçekleşmez ❌</strong><br>Bakır (Cu) yarı soy bir metaldir. Oksijensiz kuvvetli asitlerle (HCl gibi) hiçbir şekilde reaksiyona girmez. Gaz çıkışı gözlenmez."); }
+            else { b.css('transform', 'scale(1.0)').text("").css('background','none'); out.text("Müfredat reaksiyon kombinasyon analizi hazırlanıyor."); }
+        }
+
+        function runSim6(val) {
+            let z = parseInt(val);
+            const names = ["", "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne"];
+            const fullNames = ["", "Hidrojen", "Helyum", "Lityum", "Berilyum", "Bor", "Karbon", "Azot", "Oksijen", "Flor", "Neon"];
+            $('#sim6AtomLabel').text(`${fullNames[z]} (Z = ${z})`);
+
+            let electrons = [0,0,0,0,0]; // 1s, 2s, 2p1, 2p2, 2p3
+            for(let i=1; i<=z; i++) {
+                if(i===1) electrons[0] = 1; else if(i===2) electrons[0] = 2;
+                else if(i===3) electrons[1] = 1; else if(i===4) electrons[1] = 2;
+                else if(i===5) electrons[2] = 1; else if(i===6) electrons[3] = 1; else if(i===7) electrons[4] = 1; // Hund Kuralı: tek tek yerleşim
+                else if(i===8) electrons[2] = 2; else if(i===9) electrons[3] = 2; else if(i===10) electrons[4] = 2;
+            }
+
+            const symbols = ["", "↑", "↑↓"];
+            $('#box-1s').text(symbols[electrons[0]]); $('#box-2s').text(symbols[electrons[1]]);
+            $('#box-2p1').text(symbols[electrons[2]]); $('#box-2p2').text(symbols[electrons[3]]); $('#box-2p3').text(symbols[electrons[4]]);
+
+            let out = $('#academicOutput');
+            if(z === 7) out.html("<strong>Hund Kuralı İspatı:</strong> Azot (Z=7) elementinin 2p orbitallerindeki 3 elektron, eş enerjili kutulara önce aynı spinle tek tek yerleşir. Küresel simetri kararlılığı gösterir.");
+            else out.html("<strong>Aufbau İlkesi İspatı:</strong> Elektronlar temel halde en düşük enerjili orbitalden (1s) başlayarak üst kabuklara doğru sıralı bir istif takip eder.");
+        }
+
+        function runSim7(val) {
+            let v = parseFloat(val); let p = 100.0 / v;
+            $('#pistonHead').css('top', (100 - v) + 'px');
+            $('#sim7PBox').html(`${p.toFixed(2)} <span class="text-xs">atm</span>`);
+            $('#academicOutput').html(`<strong>Boyle Yasası (P . V = k):</strong> Sabit sıcaklıkta gaz hacmi sıkıştırılarak yarıya indirildiğinde ($V \downarrow$), birim hacimdeki tanecik sayısı ve çarpışma frekansı iki katına çıkar, manometre basıncı ($P \uparrow$) iki kat büyür.`);
+        }
+
+        function runSim13(val) {
+            let v = parseFloat(val); let ph = 1.0;
+            if (v < 50) ph = -Math.log10((0.1 * (50 - v)) / (50 + v)) + 1;
+            else if (v > 50) ph = 14 - (-Math.log10((0.1 * (v - 50)) / (50 + v)) + 1);
+            else ph = 7.0;
+
+            $('#phBox').text(ph.toFixed(2)); $('#bLevel').css('height', (100 - v) + '%'); $('#eLevel').css('height', (25 + (v*0.5)) + '%');
+            
+            let box = $('#phBox'), lbl = $('#indLabel'), erlen = $('#erlenFlask');
+            if(ph < 5) { box.attr('class', 'text-2xl font-black text-red-500 font-mono'); lbl.text("Renksiz (Asidik)").css('color','#94a3b8'); erlen.css('border-color', '#475569'); }
+            else if(ph < 9) { box.attr('class', 'text-2xl font-black text-emerald-400 font-mono'); lbl.text("Açık Pembe (Nötr)").css('color','var(--gr)'); erlen.css('border-color', 'var(--gr)'); }
+            else { box.attr('class', 'text-2xl font-black text-fuchsia-400 font-mono'); lbl.text("Belirgin Pembe (Bazik)").css('color','#f472b6'); erlen.css('border-color', '#f472b6'); }
+
+            $('#academicOutput').html(`<strong>Nötrleşme Analizi:</strong> Tam dönüm noktasında (Hacim = 50 mL iken) $n_{H^+} = n_{OH^-}$ eşitliği sağlanır ve pH aniden 7 seviyesine fırlar. Fenolftalein indikatörü bu noktada pembeleşir.`);
+        }
+
+        $(document).ready(function() { renderMenu(); launchSim(13); });
     </script>
 </body>
 </html>
