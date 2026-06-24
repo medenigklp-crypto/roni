@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimya Laboratuvarı Etkileşimli Modül</title>
+    <style>
+        :root {
+            --primary: #2b4c7e;
+            --secondary: #4a6984;
+            --success: #2e7d32;
+            --danger: #c62828;
+            --warning: #f9a825;
+            --info: #ef6c00;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --border: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: var(--dark);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+
+        /* Sekme Sistemi */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: -2px;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Arama Arayüzü */
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* Malzeme Kartları */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .item-card {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 15px;
+            background: var(--light);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .item-card h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .item-card p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.3;
+        }
+
+        /* Piktogram Düzeni */
+        .picto-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .picto-row {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--light);
+        }
+
+        .picto-icon-placeholder {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--danger);
+            transform: rotate(45deg);
+            margin-right: 25px;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: white;
+        }
+
+        .picto-icon-placeholder span {
+            transform: rotate(-45deg);
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--danger);
+        }
+
+        .picto-info h3 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        /* Matris Sorgulayıcı */
+        .matrix-box {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .select-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .select-group select {
+            flex: 1;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .btn-check {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-check:hover {
+            background-color: var(--secondary);
+        }
+
+        .result-display {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        .status-success { background-color: #e8f5e9; color: var(--success); border: 1px solid var(--success); }
+        .status-danger { background-color: #ffebee; color: var(--danger); border: 1px solid var(--danger); }
+        .status-warning { background-color: #fffde7; color: var(--info); border: 1px solid var(--warning); }
+        .status-info { background-color: #fff3e0; color: var(--info); border: 1px solid var(--info); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Roni Kimya Eğitim Paneli</h1>
+        <p>1. Tema: Etkileşim ve Laboratuvar Uygulamaları Modülü</p>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('malzemeler')">Laboratuvar Malzemeleri</button>
+        <button class="tab-btn" onclick="switchTab('piktogramlar')">Güvenlik İşaretleri</button>
+        <button class="tab-btn" onclick="switchTab('matris')">Depolama Matris Sorgulama</button>
+    </div>
+
+    <div id="malzemeler" class="tab-content active">
+        <input type="text" id="materialSearch" class="search-box" placeholder="Malzeme adı veya kullanım amacı arayın..." onkeyup="filterMaterials()">
+        <div class="grid-layout" id="materialsGrid">
+            </div>
+    </div>
+
+    <div id="piktogramlar" class="tab-content">
+        <div class="picto-list" id="pictoList">
+            </div>
+    </div>
+
+    <div id="matris" class="tab-content">
+        <div class="matrix-box">
+            <p style="margin-bottom: 20px; color: var(--secondary);">Depolamak istediğiniz iki farklı kimyasalın piktogram türünü seçerek uyumluluğunu kontrol edin.</p>
+            <div class="select-group">
+                <select id="chem1"></select>
+                <select id="chem2"></select>
+            </div>
+            <button class="btn-check" onclick="checkStorageCompatibility()">Uyumluluğu Kontrol Et</button>
+            <div id="matrixResult" class="result-display"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Veri Setleri
+    const malzemelerVerisi = [
+        { ad: "Beherglas", tanim: "Sıvı maddelerin karıştırılması, saklanması ve ısıtılması amacıyla kullanılan cam malzemedir." },
+        { ad: "Erlenmayer", tanim: "Titrasyon, çözelti hazırlama, saklama ve çözme vb. işlemlerde kullanılan konik yapılı cam malzemedir." },
+        { ad: "Cam Balon", tanim: "Çözelti hazırlama, saklama, ısıtma ve kaynatma amacıyla kullanılan gövdesi küre şeklinde cam malzemedir." },
+        { ad: "Balon Joje", tanim: "Boyun kısmında ölçü çizgisi bulunan, derişimi belli çözeltilerin hazırlanması ve saklanmasında kullanılan hassas cam malzemedir." },
+        { ad: "Ayırma Hunisi", tanim: "Heterojen sıvı-sıvı karışımların (örneğin zeytinyağı-su) yoğunluk farkıyla ayrılmasında kullanılır." },
+        { ad: "Dereceli Silindir (Mezür)", tanim: "Sıvıların hacmini ölçmek için kullanılan üzerinde mililitre çizgileri bulunan cam veya plastik malzemedir." },
+        { ad: "Soğutucu", tanim: "Isıtmayla buharlaşan çözücünün gaz fazından sıvı faza döndürülerek geri kazanılmasını sağlayan cam düzenektir." },
+        { ad: "Huni", tanim: "Süzme işleminde ve sıvıların dar ağızlı kaplara boşaltılmasında kullanılan laboratuvar aracıdır." },
+        { ad: "Cam Boru", tanim: "Tepkime ortamları arasındaki gaz veya sıvı bağlantısını kurmada kullanılan U veya düz şekilli borulardır." },
+        { ad: "Büret", tanim: "Titrasyon işleminde derişimi bilinmeyen maddelerin hacmini hassas olarak ölçmeye yarayan musluklu cam borudur." },
+        { ad: "Pipet", tanim: "Üzerinde mL cinsinden bölmeler bulunan, sıvıların çok hassas ölçülmesinde ve aktarılmasında kullanılan cam çubuktur." },
+        { ad: "Termometre", tanim: "Sıcaklık ölçmek için kullanılan dereceli cam malzemedir." },
+        { ad: "Baget", tanim: "Maddeleri karıştırmak için kullanılan çubuk şeklindeki cam malzemedir." },
+        { ad: "Deney Tüpü", tanim: "Maddelerin karıştırılması, ısıtılması, soğutulması vb. amaçlarla kullanılan küçük silindirik cam malzemedir." },
+        { ad: "Havan", tanim: "Katı maddeleri ezmek, porselen veya camdan yapılmış toz hâline getirmek amacıyla kullanılan araçtır." },
+        { ad: "Kroze", tanim: "Yüksek sıcaklıkta ısıtma ve yakma işlemlerinde kullanılan porselen veya metal laboratuvar malzemesidir." },
+        { ad: "Damlalık", tanim: "Küçük hacimlerdeki sıvıları damla damla aktarmak için kullanılan plastik veya cam malzemedir." },
+        { ad: "Spatül", tanim: "Toz hâlindeki ya da küçük parçalı katı kimyasalları almak için kullanılan kaşık benzeri araçtır." },
+        { ad: "Piset (Yıkama Şişesi)", tanim: "Genellikle saf su, bazı durumlarda da yıkama çözeltisi püskürtmek için kullanılan plastik şişedir." },
+        { ad: "Puar (Üç Ağızlı)", tanim: "Pipetlerin arkasına takılarak sıvı veya çözeltilerin emilerek çekilmesinde kullanılan plastik/kauçuk malzemedir." }
+    ];
+
+    const piktogramVerisi = {
+        yanici: { ad: "Yanıcı, Parlayıcı", kod: "b", tanim: "Alevlenme noktası sıfır derecenin altı, kaynama noktası en fazla 35 derece olan sıvılardır. Ateş, kıvılcım ve ısıdan uzak tutulmalıdır." },
+        patlayici: { ad: "Patlayıcı", kod: "b-p", tanim: "Kıvılcım, ısınma, alev, vurma, çarpma ve sürtünmeye maruz kaldığında patlayabilir. Koruyucu giysiyle çalışılmalıdır." },
+        zehirli: { ad: "Zehirli (Toksik)", kod: "z", tanim: "Ağız, deri ve solunum yolu ile zehirlenmelere yol açar. Vücut ile temas ettirilmemelidir. Kanser riski taşır." },
+        oksitleyici: { ad: "Oksitleyici", kod: "o", tanim: "Havasız ortamda bile alev alabilir veya yanabilir. Yanıcı maddelerle karıştırıldığında patlayabilir. Temas önlenmelidir." },
+        gaz: { ad: "Basınçlı Gaz", kod: "g", tanim: "Basınç altında gaz içerir. Çıkan gaz soğuk olabilir ve ısıtıldığında patlayabilir. Deri ve göze temas ettirilmemelidir." },
+        tahris: { ad: "Tahriş Edici", kod: "t", tanim: "Deriye ve göze zarar verebilir. Buharı solunmamalı ve vücutla temas ettirilmemelidir. Ozon tabakasına zarar verebilir." },
+        saglik: { ad: "Sağlık Etkisi", kod: "se", tanim: "İnsan sağlığına kısa veya uzun dönemli mutajenik, kanserojen hasarlar verebilir. Solunmamalıdır." },
+        korozif: { ad: "Korozif (Aşındırıcı)", kod: "k", tanim: "Canlı dokuyu tahrip eden ya da demiri aşındıran/paslandıran maddelerdir. Metallerden uzak tutulmalıdır." },
+        cevre: { ad: "Çevreye Zararlı (Ekotoksik)", kod: "c", tanim: "Suya ve doğadaki canlılara zarar verir. Doğaya doğrudan dökülmemeli ve salınmamalıdır." }
+    };
+
+    // MEB Kitabı Sayfa 28 Depolama Matrisi İlişkileri Tablosu
+    // G = Birlikte depolanabilir, X = Birlikte depolanamaz, S = Özel önlemlerle birlikte depolanabilir, T = Su ile temas ettiğinde tehlikeli (Özel durum)
+    const matrisMantigi = {
+        yanici: { yanici: "G", patlayici: "X", zehirli: "X", oksitleyici: "X", gaz: "X", tahris: "S", saglik: "S", korozif: "X", cevre: "X" },
+        patlayici: { yanici: "X", patlayici: "G", zehirli: "X", oksitleyici: "X", gaz: "X", tahris: "X", saglik: "X", korozif: "X", cevre: "X" },
+        zehirli: { yanici: "X", patlayici: "X", zehirli: "G", oksitleyici: "X", gaz: "X", tahris: "G", saglik: "G", korozif: "X", cevre: "X" },
+        oksitleyici: { yanici: "X", patlayici: "X", zehirli: "X", oksitleyici: "G", gaz: "X", tahris: "X", saglik: "X", korozif: "X", cevre: "X" },
+        gaz: { yanici: "X", patlayici: "X", zehirli: "X", oksitleyici: "X", gaz: "G", tahris: "S", saglik: "S", korozif: "X", cevre: "X" },
+        tahris: { yanici: "S", patlayici: "X", zehirli: "G", oksitleyici: "X", gaz: "S", tahris: "G", saglik: "G", korozif: "G", cevre: "X" },
+        saglik: { yanici: "S", patlayici: "X", zehirli: "G", oksitleyici: "X", gaz: "S", tahris: "G", saglik: "G", korozif: "G", cevre: "X" },
+        korozif: { yanici: "X", patlayici: "X", zehirli: "X", oksitleyici: "X", gaz: "X", tahris: "G", saglik: "G", korozif: "G", cevre: "X" },
+        cevre: { yanici: "X", patlayici: "X", zehirli: "X", oksitleyici: "X", gaz: "X", tahris: "X", saglik: "X", korozif: "X", cevre: "G" }
+    };
+
+    // Başlangıç Kurulumları
+    function init() {
+        // Malzemeleri Yükle
+        const grid = document.getElementById('materialsGrid');
+        grid.innerHTML = malzemelerVerisi.map(m => `
+            <div class="item-card">
+                <h3>${m.ad}</h3>
+                <p>${m.tanim}</p>
+            </div>
+        `).join('');
+
+        // Piktogramları Yükle
+        const list = document.getElementById('pictoList');
+        list.innerHTML = Object.keys(piktogramVerisi).map(key => `
+            <div class="picto-row">
+                <div class="picto-icon-placeholder"><span>${piktogramVerisi[key].kod.toUpperCase()}</span></div>
+                <div class="picto-info">
+                    <h3>${piktogramVerisi[key].ad}</h3>
+                    <p>${piktogramVerisi[key].tanim}</p>
+                </div>
+            </div>
+        `).join('');
+
+        // Seçim Kutularını Doldur
+        const s1 = document.getElementById('chem1');
+        const s2 = document.getElementById('chem2');
+        const options = Object.keys(piktogramVerisi).map(key => `<option value="${key}">${piktogramVerisi[key].ad}</option>`).join('');
+        s1.innerHTML = options;
+        s2.innerHTML = options;
+    }
+
+    // Sekme Değiştirici
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // Malzeme Filtreleme (Real-time Search)
+    function filterMaterials() {
+        const query = document.getElementById('materialSearch').value.toLowerCase();
+        const cards = document.getElementById('materialsGrid').getElementsByClassName('item-card');
+        
+        for (let card of cards) {
+            const txt = card.innerText.toLowerCase();
+            card.style.display = txt.includes(query) ? "" : "none";
+        }
+    }
+
+    // Matris Hesaplama Mantığı
+    function checkStorageCompatibility() {
+        const c1 = document.getElementById('chem1').value;
+        const c2 = document.getElementById('chem2').value;
+        const sonucAlani = document.getElementById('matrixResult');
+        
+        const kod = matrisMantigi[c1][c2] || "X";
+        sonucAlani.style.display = "block";
+        sonucAlani.className = "result-display ";
+
+        if (kod === "G") {
+            sonucAlani.innerText = "✔ Birlikte Depolanabilir: Kimyasal olarak yan yana durmalarında herhangi bir risk yoktur.";
+            sonucAlani.classList.add('status-success');
+        } else if (kod === "X") {
+            sonucAlani.innerText = "❌ Birlikte Depolanamaz! Bir araya geldiklerinde şiddetli reaksiyon veya patlama riski taşır.";
+            sonucAlani.classList.add('status-danger');
+        } else if (kod === "S") {
+            sonucAlani.innerText = "⚠ Özel Önlemler Alınarak Birlikte Depolanabilir: Sızdırmaz ek kaplar veya bariyerler kullanılmalıdır.";
+            sonucAlani.classList.add('status-warning');
+        } else {
+            sonucAlani.innerText = "🛢 Özel Şartlar: Su ile temas ettiğinde alevlenen veya gaz çıkaran maddelerle depolanamaz.";
+            sonucAlani.classList.add('status-info');
+        }
+    }
+
+    window.onload = init;
+</script>
+</body>
+</html>
