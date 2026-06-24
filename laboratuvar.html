@@ -8,8 +8,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="RONI">
-    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png?v=6">
-    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png?v=6">
+    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png?v=7">
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png?v=7">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,12 +20,9 @@
 
     <style>
         :root {
-            --bg: #08090f; --sf: #0f1117; --sf2: #161922; --sf3: #1c2030;
-            --br: #1e2535; --br2: #252d40; --ac: #6366f1; --ac2: #818cf8;
-            --gr: #22c55e; --rd: #ef4444; --yw: #f59e0b; --cy: #06b6d4;
-            --tx: #f1f5f9; --tx2: #94a3b8; --tx3: #475569;
+            --bg: #08090f; --sf: #0f1117; --sf2: #161922; --br: #1e2535; --br2: #252d40; --ac: #6366f1; --ac2: #818cf8;
         }
-        body { background: var(--bg); color: var(--tx); font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
         body::before {
             content: ''; position: fixed; inset: 0;
             background-image: radial-gradient(circle at 1px 1px, rgba(99,102,241,.06) 1px, transparent 0);
@@ -48,10 +45,7 @@
                         <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg relative">
                             <i class="fas fa-sun animate-[spin_20s_linear_infinite]"></i>
                         </div>
-                        <div class="flex flex-col">
-                            <span class="text-xl font-black tracking-wider text-white leading-none">RONI</span>
-                            <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
-                        </div>
+                        <span class="text-xl font-black text-white">RONI</span>
                     </div>
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
@@ -74,8 +68,7 @@
                     </a>
                 </nav>
             </div>
-            
-            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
+            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40">
                 <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
                 <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
             </div>
@@ -92,90 +85,91 @@
             </header>
 
             <div class="p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6 flex-1">
-                
                 <div class="flex bg-[#0f1117] p-1 rounded-xl border border-gray-900">
-                    <button onclick="switchSubTab(0)" class="tab-btn active flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all">🔬 17 Adet 3D Molekül Motoru</button>
-                    <button onclick="switchSubTab(1)" class="tab-btn flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all text-gray-500 hover:text-gray-300">🧬 20 Amino Asit Kataloğu</button>
-                    <button onclick="switchSubTab(2)" class="tab-btn flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all text-gray-500 hover:text-gray-300">🧪 12 Lab Ekipmanı</button>
+                    <button onclick="switchSubTab(0)" class="tab-btn active flex-1 text-center py-2.5 text-xs font-bold rounded-lg">🔬 3D Molekül Laboratuvarı</button>
+                    <button onclick="switchSubTab(1)" class="tab-btn flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-gray-500">🧬 20 Amino Asit</button>
+                    <button onclick="switchSubTab(2)" class="tab-btn flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-gray-500">🧪 12 Lab Aracı</button>
                 </div>
 
                 <div id="subTabPanels">
-                    
                     <div class="sub-panel space-y-4">
-                        
                         <div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900 flex flex-col sm:flex-row gap-3 items-center shadow-lg">
-                            <div class="relative flex-1 w-full">
-                                <span class="absolute left-3 top-2.5 text-gray-500 text-xs">⌨️</span>
-                                <input type="text" id="customMolInput" placeholder="Dilediğin molekülün adını yaz (Örn: aspirin, kafein, aseton, glukoz)..." class="w-full bg-[#161922] text-xs font-bold rounded-xl pl-9 pr-4 py-3 border border-gray-800 focus:outline-none focus:border-indigo-500 text-gray-200">
-                            </div>
-                            <button onclick="searchCustomMolecule()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-3 rounded-xl transition-all shadow-md shrink-0">Yapay Zeka Çizimi Başlat</button>
+                            <input type="text" id="customMolInput" placeholder="Müfredat dışı molekül çiz (Örn: aspirin, caffeine, glucose)..." class="w-full bg-[#161922] text-xs font-bold rounded-xl p-3 border border-gray-800 text-white focus:outline-none">
+                            <button onclick="searchCustomMolecule()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-3 rounded-xl shrink-0">Dışarıdan Çiz</button>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div class="md:col-span-1 bg-[#0f1117] p-4 rounded-xl border border-gray-900 space-y-4">
                                 <div>
-                                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Müfredat Örnek Listesi (Eksiksiz 17):</label>
+                                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Müfredat Örnek Listesi:</label>
                                     <select id="molSelector" onchange="handleMoleculeChange(this.value)" class="w-full bg-[#161922] p-2.5 text-xs font-bold rounded-xl border border-gray-800 text-indigo-400 focus:outline-none">
-                                        <optgroup label="İyonik Kristal Yapılar">
-                                            <option value="crystal:nacl">NaCl (İyonik Kristal Örgüsü)</option>
-                                        </optgroup>
-                                        <optgroup label="Eksiksiz 17 Kovalent Molekül">
-                                            <option value="cid:291">CH₄ (Metan - Düzgün Dörtyüzlü)</option>
-                                            <option value="cid:24784">BeH₂ (Berilyum Hidrür - Doğrusal)</option>
-                                            <option value="cid:5462312">BH₃ (Bor Trihidrür - Üçgen Düzlem)</option>
-                                            <option value="cid:783">H₂ (Hidrojen Gazı)</option>
-                                            <option value="cid:977">O₂ (Oksijen Gazı)</option>
-                                            <option value="cid:947">N₂ (Azot Gazı)</option>
-                                            <option value="cid:962">H₂O (Su - Kırık Doğru)</option>
-                                            <option value="cid:280">CO₂ (Karbondioksit)</option>
-                                            <option value="cid:222">NH₃ (Amonyak)</option>
-                                            <option value="cid:14917">HF (Hidrojen Florür)</option>
-                                            <option value="cid:768">HCN (Hidrojen Siyanür)</option>
-                                            <option value="cid:6324">C₂H₆ (Etan)</option>
-                                            <option value="cid:6325">C₂H₄ (Eten / Etilen)</option>
-                                            <option value="cid:6326">C₂H₂ (Etin / Asetilen)</option>
-                                            <option value="cid:241">C₆H₆ (Benzen Halkası)</option>
-                                            <option value="cid:702">C₂H₅OH (Etanol / Etil Alkol)</option>
-                                            <option value="cid:176">CH₃COOH (Asetik Asit)</option>
-                                        </optgroup>
+                                        <option value="crystal:nacl">NaCl (İyonik Kristal Örgüsü)</option>
+                                        <option value="local:CH4">CH₄ (Metan - Düzgün Dörtyüzlü)</option>
+                                        <option value="local:BeH2">BeH₂ (Berilyum Hidrür - Doğrusal)</option>
+                                        <option value="local:BH3">BH₃ (Bor Trihidrür - Üçgen Düzlem)</option>
+                                        <option value="local:H2">H₂ (Hidrojen Gazı)</option>
+                                        <option value="local:O2">O₂ (Oksijen Gazı)</option>
+                                        <option value="local:N2">N₂ (Azot Gazı)</option>
+                                        <option value="local:H2O">H₂O (Su - Kırık Doğru)</option>
+                                        <option value="local:CO2">CO₂ (Karbondioksit - Doğrusal)</option>
+                                        <option value="local:NH3">NH₃ (Amonyak - Üçgen Piramit)</option>
+                                        <option value="local:HF">HF (Hidrojen Florür)</option>
+                                        <option value="local:HCN">HCN (Hidrojen Siyanür)</option>
+                                        <option value="local:C2H6">C₂H₆ (Etan)</option>
+                                        <option value="local:C2H4">C₂H₄ (Eten / Etilen)</option>
+                                        <option value="local:C2H2">C₂H₂ (Etin / Asetilen)</option>
+                                        <option value="local:C6H6">C₆H₆ (Benzen Halkası)</option>
+                                        <option value="local:C2H5OH">C₂H₅OH (Etanol / Etil Alkol)</option>
+                                        <option value="local:CH3COOH">CH₃COOH (Asetik Asit)</option>
                                     </select>
                                 </div>
-                                <div class="grid grid-cols-3 gap-2" id="styleGroup">
-                                    <button onclick="setRenderStyle('ball', this)" class="style-btn active bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800 transition-all">Top-Çubuk</button>
-                                    <button onclick="setRenderStyle('space', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800 transition-all">Uzay Dolgu</button>
-                                    <button onclick="setRenderStyle('line', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800 transition-all">Tel Kafes</button>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button onclick="setRenderStyle('ball', this)" class="style-btn active bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800">Top-Çubuk</button>
+                                    <button onclick="setRenderStyle('space', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800">Uzay Dolgu</button>
+                                    <button onclick="setRenderStyle('line', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800">Tel Kafes</button>
                                 </div>
                             </div>
-                            
-                            <div class="md:col-span-2 bg-[#020617] rounded-xl border border-gray-900 relative min-h-[460px] flex flex-col justify-between overflow-hidden">
+                            <div class="md:col-span-2 bg-[#020617] rounded-xl border border-gray-900 relative min-h-[440px]">
                                 <div id="molecule-viewer" class="w-full h-full absolute inset-0"></div>
-                                <div class="absolute bottom-14 left-4 bg-gray-950/90 px-3 py-1 rounded-full text-xs font-bold text-white shadow-md z-10">
-                                    <span id="mol3d-label">NaCl (Kristal Örgü)</span>
+                                <div class="absolute bottom-4 left-4 right-4 bg-gray-950/90 p-3 rounded-xl z-10 text-xs border border-gray-800">
+                                    <span id="mol3d-label" class="font-bold text-white block mb-0.5 text-sm">NaCl (Kristal Örgü)</span>
+                                    <p id="mol3d-info" class="text-gray-400"></p>
                                 </div>
-                                <div id="mol3d-info" class="absolute bottom-3 left-4 right-4 bg-gray-950/90 p-2.5 rounded-xl text-[11px] text-gray-400 leading-relaxed border border-gray-900/40 z-10"></div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="sub-panel hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="amino-grid"></div>
-
-                    <div class="sub-panel hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="lab-grid"></div>
+                    <div class="sub-panel hidden grid grid-cols-1 md:grid-cols-3 gap-4" id="amino-grid"></div>
+                    <div class="sub-panel hidden grid grid-cols-1 md:grid-cols-2 gap-4" id="lab-grid"></div>
                 </div>
-
             </div>
         </main>
     </div>
 
     <script>
         let viewer = null; let currentStyle = 'ball';
-
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
-        
-        function switchSubTab(idx) {
-            $('.tab-btn').removeClass('active bg-indigo-600 text-white').addClass('text-gray-500 hover:text-gray-300');
-            $('.tab-btn').eq(idx).addClass('active bg-indigo-600 text-white').removeClass('text-gray-500');
-            $('.sub-panel').addClass('hidden').eq(idx).removeClass('hidden');
-        }
+        function switchSubTab(idx) { $('.tab-btn').removeClass('active bg-indigo-600 text-white').addClass('text-gray-500'); $('.tab-btn').eq(idx).addClass('active bg-indigo-600 text-white'); $('.sub-panel').addClass('hidden').eq(idx).removeClass('hidden'); }
+
+        // --- %100 KUSURSUZ MÜFREDAT GEOMETRİ MATRİSLERİ (Ağdan Bağımsız) ---
+        const LOCAL_MODELS = {
+            "CH4": "5\nMethane\nC 0.0000 0.0000 0.0000\nH 0.6351 0.6351 0.6351\nH -0.6351 -0.6351 0.6351\nH -0.6351 0.6351 -0.6351\nH 0.6351 -0.6351 -0.6351",
+            "BeH2": "3\nBeH2\nBe 0.0000 0.0000 0.0000\nH 0.0000 0.0000 1.3300\nH 0.0000 0.0000 -1.3300",
+            "BH3": "4\nBH3\nB 0.0000 0.0000 0.0000\nH 0.0000 1.1900 0.0000\nH 1.0306 -0.5950 0.0000\nH -1.0306 -0.5950 0.0000",
+            "H2": "2\nH2\nH 0.0000 0.0000 0.3700\nH 0.0000 0.0000 -0.3700",
+            "O2": "2\nO2\nO 0.0000 0.0000 0.6050\nO 0.0000 0.0000 -0.6050",
+            "N2": "2\nN2\nN 0.0000 0.0000 0.5500\nN 0.0000 0.0000 -0.5500",
+            "H2O": "3\nWater\nO 0.0000 0.0000 0.1173\nH 0.0000 0.7572 -0.4692\nH 0.0000 -0.7572 -0.4692",
+            "CO2": "3\nCO2\nC 0.0000 0.0000 0.0000\nO 0.0000 0.0000 1.1600\nO 0.0000 0.0000 -1.1600",
+            "NH3": "4\nAmmonia\nN 0.0000 0.0000 0.1120\nH 0.0000 0.9380 -0.2610\nH 0.8120 -0.4690 -0.2610\nH -0.8120 -0.4690 -0.2610",
+            "HF": "2\nHF\nH 0.0000 0.0000 -0.9170\nF 0.0000 0.0000 0.0000",
+            "HCN": "3\nHCN\nH 0.0000 0.0000 -1.0660\nC 0.0000 0.0000 0.0000\nN 0.0000 0.0000 1.1530",
+            "C2H6": "8\nEthane\nC 0.0000 0.0000 0.7600\nC 0.0000 0.0000 -0.7600\nH 0.0000 1.0200 1.1200\nH 0.8830 -0.5100 1.1200\nH -0.8830 -0.5100 1.1200\nH 0.0000 -1.0200 -1.1200\nH -0.8830 0.5100 -1.1200\nH 0.8830 0.5100 -1.1200",
+            "C2H4": "6\nEthylene\nC 0.0000 0.0000 0.6700\nC 0.0000 0.0000 -0.6700\nH 0.0000 0.9300 1.2300\nH 0.0000 -0.9300 1.2300\nH 0.0000 -0.9300 -1.2300\nH 0.0000 0.9300 -1.2300",
+            "C2H2": "4\nAcetylene\nC 0.0000 0.0000 0.6000\nC 0.0000 0.0000 -0.6000\nH 0.0000 0.0000 1.6600\nH 0.0000 0.0000 -1.6600",
+            "C6H6": "12\nBenzene\nC 0.0000 1.3970 0.0000\nC 1.2100 0.6990 0.0000\nC 1.2100 -0.6990 0.0000\nC 0.0000 -1.3970 0.0000\nC -1.2100 -0.6990 0.0000\nC -1.2100 0.6990 0.0000\nH 0.0000 2.4810 0.0000\nH 2.1490 1.2410 0.0000\nH 2.1490 -1.2410 0.0000\nH 0.0000 -2.4810 0.0000\nH -2.1490 -1.2410 0.0000\nH -2.1490 1.2410 0.0000",
+            "C2H5OH": "9\nEthanol\nC -1.2249 -0.2301 0.0000\nC 0.1068 0.4905 0.0000\nO 1.1718 -0.4284 0.0000\nH -1.2725 -0.8711 0.8844\nH -1.2725 -0.8711 -0.8844\nH -2.0460 0.4930 0.0000\nH 0.1837 1.1278 0.8870\nH 0.1837 1.1278 -0.8870\nH 2.0163 0.0381 0.0000",
+            "CH3COOH": "8\nAcetic Acid\nC -1.3941 -0.1012 0.0000\nC 0.0903 0.1251 0.0000\nO 0.6653 1.1895 0.0000\nO 0.7716 -1.0267 0.0000\nH -1.6817 -1.1553 0.0000\nH -1.8465 0.3735 0.8814\nH -1.8465 0.3735 -0.8814\nH 1.7241 -0.8524 0.0000"
+        };
 
         function generateNaClXYZ() {
             return `27\nNaCl\nNa 0 0 0\nCl 3 0 0\nNa 6 0 0\nCl 0 3 0\nNa 3 3 0\nCl 6 3 0\nNa 0 6 0\nCl 3 6 0\nNa 6 6 0\nCl 0 0 3\nNa 3 0 3\nCl 6 0 3\nNa 0 3 3\nCl 3 3 3\nNa 6 3 3\nCl 0 6 3\nNa 3 6 3\nCl 6 6 3\nNa 0 0 6\nCl 3 0 6\nNa 6 0 6\nCl 0 3 6\nNa 3 3 6\nCl 6 3 6\nNa 0 6 6\nCl 3 6 6\nNa 6 6 6`;
@@ -183,38 +177,34 @@
 
         function handleMoleculeChange(val) {
             if (!viewer) return; viewer.clear();
-            
+            let label = $('#molSelector option:selected').text();
+            $('#mol3d-label').text(label);
+
             if (val === "crystal:nacl") {
-                $('#mol3d-label').text("NaCl (Kübik Birim Hücre Örgüsü)");
-                $('#mol3d-info').html("<strong>Kristal Örgü:</strong> Katyonlar mor ($Na^+$), anyonlar yeşil ($Cl^-$). Tel kafeste örgü çizgileri belirir. İyonik bileşikler molekül oluşturmaz.");
-                
+                $('#mol3d-info').html("<strong>İyonik Kristal Yapısı:</strong> Katyonlar gri ($Na^+$), Anyonlar yeşil ($Cl^-$). Bağ bilgisi içermez, elektrostatik istif örgüsüdür.");
                 viewer.addModel(generateNaClXYZ(), "xyz");
                 viewer.addBonds([{start:0, end:1},{start:1, end:2},{start:3, end:4},{start:4, end:5},{start:6, end:7},{start:7, end:8},
                                  {start:0, end:3},{start:1, end:4},{start:2, end:5},{start:3, end:6},{start:4, end:7},{start:5, end:8},
                                  {start:9, end:10},{start:10, end:11},{start:12, end:13},{start:13, end:14},{start:14, end:15},
                                  {start:18, end:19},{start:19, end:20},{start:21, end:22},{start:22, end:23},{start:24, end:25}]);
                 applyRenderStyle();
-            } else {
-                let cid = val.replace("cid:", "");
-                let textName = $('#molSelector option:selected').text();
-                $('#mol3d-label').text(textName);
-                $('#mol3d-info').html("<strong>Kovalent Bağ Geometrisi:</strong> Elektron ortaklaşması ile kurulan kararlı kovalent molekül yapısı.");
-                
-                $3Dmol.download("cid:" + cid, viewer, {}, function() {
-                    applyRenderStyle();
-                });
+            } else if (val.startsWith("local:")) {
+                let key = val.replace("local:", "");
+                $('#mol3d-info').html("<strong>Müfredat Geometrisi:</strong> ÖSYM kazanımlarına tam uyumlu, yerel bellekten yüklenen kararlı kovalent molekül yapısı.");
+                viewer.addModel(LOCAL_MODELS[key], "xyz");
+                applyRenderStyle();
             }
         }
 
         function searchCustomMolecule() {
             let name = $('#customMolInput').val().trim().toLowerCase(); if(!name) return;
             viewer.clear(); $('#mol3d-label').text(name.toUpperCase());
-            $('#mol3d-info').html("<i class='fas fa-spinner fa-spin mr-1'></i> Veritabanından çiziliyor...");
+            $('#mol3d-info').html("<i class='fas fa-spinner fa-spin mr-1'></i> Küresel veritabanından çiziliyor...");
             $3Dmol.download("name:" + name, viewer, {}, function() {
                 applyRenderStyle();
-                $('#mol3d-info').html(`<strong>${name.toUpperCase()} Çizildi!</strong> CPK renk standardına göre atomlar renklendirildi.`);
+                $('#mol3d-info').html(`<strong>${name.toUpperCase()} Çizildi!</strong> CPK standartlarında atom renklendirmesi uygulandı.`);
             }, function() {
-                $('#mol3d-info').html("❌ Molekül bulunamadı. Lütfen İngilizce adını deneyin (Örn: caffeine, aspirin, glucose).");
+                $('#mol3d-info').html("❌ Molekül bulunamadı. Lütfen İngilizce yazmayı deneyin (Örn: aspirin, caffeine, glucose).");
             });
         }
 
@@ -226,81 +216,64 @@
         
         function applyRenderStyle() {
             if (!viewer) return; let config = {};
-            if (currentStyle === 'ball') config = { stick: { radius: 0.15 }, sphere: { scale: 0.25 } };
+            if (currentStyle === 'ball') config = { stick: { radius: 0.15 }, sphere: { scale: 0.28 } };
             else if (currentStyle === 'space') config = { sphere: { scale: 0.8 } };
             else if (currentStyle === 'line') config = { line: { linewidth: 3 }, stick: { radius: 0.05 } };
             viewer.setStyle({}, config); viewer.render(); viewer.zoomTo();
         }
 
+        // --- EKSİKSİZ 20 AMİNO ASİT HAVUZU ---
         const AMINO = [
-            {sym:'Gly',name:'Glisin',formula:'C₂H₅NO₂',polar:'Apolar',desc:'En basit amino asit. Yan zinciri (R) sadece bir Hidrojen atomudur.'},
-            {sym:'Ala',name:'Alanin',formula:'C₃H₇NO₂',polar:'Apolar',desc:'Metil yan zinciri içerir. Alifatik hidrofobik yapıdadır.'},
-            {sym:'Val',name:'Valin',formula:'C₅H₁₁NO₂',polar:'Apolar',desc:'Dallı zincirli esansiyel bir amino asittir.'},
-            {sym:'Leu',name:'Lösin',formula:'C₆H₁₃NO₂',polar:'Apolar',desc:'Protein sentezini uyaran dallı zincirli esansiyel molekül.'},
-            {sym:'Ile',name:'İzolösin',formula:'C₆H₁₃NO₂',polar:'Apolar',desc:'Lösin izomeridir. Kas dokularının onarımında görev alır.'},
-            {sym:'Ser',name:'Serin',formula:'C₃H₇NO₃',polar:'Polar',desc:'Yan zincirinde hidroksil (-OH) grubu taşır.'},
-            {sym:'Thr',name:'Treonin',formula:'C₄H₉NO₃',polar:'Polar',desc:'Hidroksil grubu taşıyan esansiyel amino asit.'},
-            {sym:'Cys',name:'Sistein',formula:'C₃H₇NO₂S',polar:'Polar',desc:'Tiyol (-SH) grubu içerir. Disülfit bağları kurarak protein yapısını korur.'},
-            {sym:'Met',name:'Metionin',formula:'C₅H₁₁NO₂S',polar:'Apolar',desc:'Kükürt içeren ilk başlatıcı (initiation) amino asididir.'},
-            {sym:'Phe',name:'Fenilalanin',formula:'C₉H₁₁NO₂',polar:'Apolar',desc:'Aromatik fenil halkası içerir. Esansiyel yapılıdır.'},
-            {sym:'Tyr',name:'Tirozin',formula:'C₉H₁₁NO₃',polar:'Polar',desc:'Fenil halkasına bağlı hidroksil taşır. Dopamin öncülüdür.'},
-            {sym:'Trp',name:'Triptofan',formula:'C₁₁H₁₂N₂O₂',polar:'Apolar',desc:'İndol halkalı çift halkaya sahip en büyük amino asittir.'},
-            {sym:'Asp',name:'Aspartik Asit',formula:'C₄H₇NO₄',polar:'Asidik',desc:'Karboksil grubu taşır. Negatif yüklüdür.'},
-            {sym:'Glu',name:'Glutamik Asit',formula:'C₅H₉NO₄',polar:'Asidik',desc:'Beyinde nörotransmitter işlevi gören asidik yapı.'},
-            {sym:'Lys',name:'Lizin',formula:'C₆H₁₄N₂O₂',polar:'Bazik',desc:'Yan zincirinde amino grubu taşır. Pozitif yüklüdür.'},
-            {sym:'Arg',name:'Arjinin',formula:'C₆H₁₄N₄O₂',polar:'Bazik',desc:'Guanidinyum grubu içeren en bazik amino asit.'},
-            {sym:'His',name:'Histidin',formula:'C₆H₉N₃O₂',polar:'Bazik',desc:'İmidazol halkası içerir. Fizyolojik pH tamponudur.'},
-            {sym:'Asn',name:'Asparagin',formula:'C₄H₈N₂O₃',polar:'Polar',desc:'Karboksamid yan zinciri taşır. Yüksüzdür.'},
-            {sym:'Gln',name:'Glutamin',formula:'C₅H₁₀N₂O₃',polar:'Polar',desc:'Kanda en bol bulunan serbest amino asit formu.'},
-            {sym:'Pro',name:'Prolin',formula:'C₅H₉NO₂',polar:'Apolar',desc:'Halkalı yapı, protein zincir bükülmelerine yol açar.'}
+            {sym:'Gly',name:'Glisin',formula:'C₂H₅NO₂',desc:'En basit amino asit. Yan zinciri sadece tek bir Hidrojen atomudur.'},
+            {sym:'Ala',name:'Alanin',formula:'C₃H₇NO₂',desc:'Metil yan zinciri içerir. Alifatik hidrofobik gruptadır.'},
+            {sym:'Val',name:'Valin',formula:'C₅H₁₁NO₂',desc:'Dallı zincirli, kas dokusu koruyucu esansiyel amino asit.'},
+            {sym:'Leu',name:'Lösin',formula:'C₆H₁₃NO₂',desc:'Protein sentezi tetikleyici esansiyel hidrofobik zincir.'},
+            {sym:'Ile',name:'İzolösin',formula:'C₆H₁₃NO₂',desc:'Lösin izomeri, hemoglobin sentez parametresi.'},
+            {sym:'Ser',name:'Serin',formula:'C₃H₇NO₃',desc:'Yan zincirinde polar reaktif Hidroksil (-OH) grubu taşır.'},
+            {sym:'Thr',name:'Treonin',formula:'C₄H₉NO₃',desc:'Hidroksil taşıyan esansiyel polar amino asit.'},
+            {sym:'Cys',name:'Sistein',formula:'C₃H₇NO₂S',desc:'Tiyol (-SH) grubu ile disülfit köprüleri kurarak protein katlar.'},
+            {sym:'Met',name:'Metionin',formula:'C₅H₁₁NO₂S',desc:'Kükürtlü, protein sentez zincirini başlatan ilk amino asit.'},
+            {sym:'Phe',name:'Fenilalanin',formula:'C₉H₁₁NO₂',desc:'Aromatik fenil halkalı hidrofobik esansiyel yapı.'},
+            {sym:'Tyr',name:'Tirozin',formula:'C₉H₁₁NO₃',polar:'Polar',desc:'Fenil halkasında hidroksil taşır. Hormon öncülüdür.'},
+            {sym:'Trp',name:'Triptofan',formula:'C₁₁H₁₂N₂O₂',desc:'İndol halkalı en büyük aromatik amino asit omurgası.'},
+            {sym:'Asp',name:'Aspartik Asit',formula:'C₄H₇NO₄',desc:'Negatif yüklü, asidik yan zincirli amino asit.'},
+            {sym:'Glu',name:'Glutamik Asit',formula:'C₅H₉NO₄',desc:'Beyin nörotransmitteri asidik protein yapı taşı.'},
+            {sym:'Lys',name:'Lizin',formula:'C₆H₁十四N₂O₂',desc:'Pozitif yüklü bazik yan zincirli esansiyel eleman.'},
+            {sym:'Arg',name:'Arjinin',formula:'C₆H₁₄N₄O₂',desc:'Guanidinyum grubu içeren en bazik amino asit türü.'},
+            {sym:'His',name:'Histidin',formula:'C₆H₉N₃O₂',desc:'İmidazol halkalı, fizyolojik pH tamponu bazik yapı.'},
+            {sym:'Asn',name:'Asparagin',formula:'C₄H₈N₂O₃',desc:'Karboksamid yan zincirli polar yüksüz amino asit.'},
+            {sym:'Gln',name:'Glutamin',formula:'C₅H₁₀N₂O₃',desc:'Kanda ve kas dokusunda en bol bulunan yüksüz polar amino asit.'},
+            {sym:'Pro',name:'Prolin',formula:'C₅H₉NO₂',desc:'İkincil amin içeren tek halkasal amino asit, protein büker.'}
         ];
 
+        // --- EKSİKSİZ 12 LABORATUVAR EKİPMANI ---
         const LABS = [
-            {name:'Erlenmayer',icon:'⚗️',use:'Çözelti karıştırma, titrasyon düzenekleri ve saklama amaçlı cam kap.'},
-            {name:'Büret',icon:'🧪',use:'Titrasyon analizlerinde sıvı hacmini hassas damlatmak için musluklu boru.'},
-            {name:'Beherglas',icon:'🫙',use:'Çözelti hazırlama, ısıtma ve sıvı aktarma kapları.'},
-            {name:'Balon Joje',icon:'🧪',use:'Belirli hacimde hassas molar çözelti hazırlama balonu.'},
-            {name:'Baget',icon:'🥢',use:'Kimyasal karışımları homojen hale getirmek için kullanılan cam çubuk.'},
-            {name:'Damıtma Balonu',icon:'⚗️',use:'Kaynama noktası farkıyla sıvı bileşenleri ayırma düzeneği balonu.'},
-            {name:'Deney Tüpü',icon:'🧪',use:'Küçük ölçekli nitel reaksiyon test tüpü.'},
-            {name:'Huni',icon:'🔽',use:'Sıvı aktarma ve süzme kağıdı yerleştirme aracı.'},
-            {name:'Pipet',icon:'💉',use:'Sıvı hacimlerini mililitre düzeyinde çok hassas transfer etme aracı.'},
-            {name:'Erlen Balonu',icon:'🫗',use:'Gaz üretim ve toplama reaksiyonlarında kullanılan yan borulu kap.'},
-            {name:'Kronometre',icon:'⏱️',use:'Kimyasal reaksiyon hız takibi ve zaman ölçümü.'},
-            {name:'Terazi',icon:'⚖️',use:'Kimyasal maddelerin kütle ölçümü analitik terazisi.'}
+            {name:'Erlenmayer',icon:'⚗️',use:'Çözelti karıştırma, titrasyon prosesleri ve saklama kabı.'},
+            {name:'Büret',icon:'🧪',use:'Titrasyonlarda sıvı hacmini hassas damlatmak için kullanılan musluklu tüp.'},
+            {name:'Beherglas',icon:'🫙',use:'Çözelti hazırlama, sıvı aktarma ve yüksek ısıda ısıtma kabı.'},
+            {name:'Balon Joje',icon:'🧪',use:'Belirli bir hacimde hassas ve standart çözelti hazırlama balonu.'},
+            {name:'Baget',icon:'🥢',use:'Kimyasal karışımları cam çubuk yardımıyla karıştırma aracı.'},
+            {name:'Damıtma Balonu',icon:'⚗️',use:'Kaynama noktası farkı ile sıvıları bileşenlerine ayırma düzeneği.'},
+            {name:'Deney Tüpü',icon:'🧪',use:'Küçük ölçekli nitel reaksiyon gözlem tüpü.'},
+            {name:'Huni',icon:'🔽',use:'Sıvı transferleri ve süzme kağıdı yerleştirme aparatı.'},
+            {name:'Pipet',icon:'💉',use:'Sıvı hacimlerini milimetrik ve çok yüksek hassasiyetle transfer etme çubuğu.'},
+            {name:'Mezür (Dereceli Silindir)',icon:'🧪',use:'Sıvıların hacmini kabaca ölçmek için kullanılan dereceli kap.'},
+            {name:'Spatül',icon:'🥄',use:'Katı kimyasal tozları şişesinden almak için kullanılan metal/plastik kaşık.'},
+            {name:'Ayırma Hunisi',icon:'⚗️',use:'Heterojen sıvı-sıvı (Örn: zeytinyağı-su) karışımlarını yoğunluk farkıyla ayıran musluklu huni.'}
         ];
-
-        function initDataLists() {
-            const ag = $('#amino-grid'); ag.empty();
-            AMINO.forEach(aa => {
-                ag.append(`
-                    <div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900 shadow-md">
-                        <div class="text-2xl font-black text-indigo-400 font-['Space_Grotesk']">${aa.sym}</div>
-                        <div class="text-xs font-bold text-gray-200 mt-1">${aa.name} (${aa.formula})</div>
-                        <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">${aa.desc}</p>
-                        <span class="inline-block bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded text-[9px] font-bold mt-2 border border-indigo-500/20">${aa.polar}</span>
-                    </div>
-                `);
-            });
-
-            const lg = $('#lab-grid'); lg.empty();
-            LABS.forEach(l => {
-                lg.append(`
-                    <div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900 shadow-md flex items-start space-x-3">
-                        <div class="text-3xl p-2 bg-gray-900 rounded-xl border border-gray-800">${l.icon}</div>
-                        <div>
-                            <div class="text-xs font-black text-gray-200">${l.name}</div>
-                            <div class="text-[11px] text-gray-400 mt-1 leading-relaxed">${l.use}</div>
-                        </div>
-                    </div>
-                `);
-            });
-        }
 
         $(document).ready(function() {
             viewer = $3Dmol.createViewer($('#molecule-viewer'), { backgroundColor: '#020617' });
+            
+            // Listeleri basıyoruz
+            AMINO.forEach(aa => {
+                $('#amino-grid').append(`<div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900 shadow-md"><div class="text-2xl font-black text-indigo-400 font-['Space_Grotesk']">${aa.sym}</div><div class="text-xs font-bold text-gray-200 mt-1">${aa.name} (${aa.formula})</div><p class="text-[11px] text-gray-500 mt-1 leading-relaxed">${aa.desc}</p></div>`);
+            });
+            LABS.forEach(l => {
+                $('#lab-grid').append(`<div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900 shadow-md flex items-start space-x-3"><div class="text-3xl p-2 bg-gray-900 rounded-xl border border-gray-800">${l.icon}</div><div><div class="text-xs font-black text-gray-200">${l.name}</div><div class="text-[11px] text-gray-400 mt-1 leading-relaxed">${l.use}</div></div></div>`);
+            });
+
             handleMoleculeChange("crystal:nacl");
-            initDataLists();
         });
     </script>
 </body>
