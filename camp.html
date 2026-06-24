@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roni - YKS Kampı</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-[#030712] text-gray-100 font-sans antialiased">
+
+    <div class="flex h-screen overflow-hidden relative">
+        
+        <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
+            <div class="p-5">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl">Ro</div>
+                        <span class="text-2xl font-black tracking-tight text-indigo-400">RONI</span>
+                    </div>
+                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                
+                <nav class="space-y-1.5">
+                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-chart-pie w-5 text-center"></i> <span>Genel Bakış</span>
+                    </a>
+                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span>
+                    </a>
+                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-flask w-5 text-center"></i> <span>3D Laboratuvar</span>
+                    </a>
+                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-laptop-code w-5 text-center"></i> <span>Sanal Simülasyonlar</span>
+                    </a>
+                    <a href="documents.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-folder-open w-5 text-center"></i> <span>Öğretmen Belgeleri</span>
+                    </a>
+                    <a href="camp.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
+                        <i class="fas fa-graduation-cap w-5 text-center"></i> <span>YKS Kampı</span>
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
+                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
+                <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
+            </div>
+        </aside>
+
+        <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
+
+        <main class="flex-1 flex flex-col overflow-y-auto min-w-0 bg-slate-900/20">
+            <header class="bg-gray-950/85 backdrop-blur border-b border-gray-900 px-5 md:px-8 py-4 flex justify-between items-center sticky top-0 z-30">
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">YKS Müfredat Kampı Takip Kartı</h2>
+                </div>
+            </header>
+
+            <div class="p-4 md:p-8 max-w-7xl w-full mx-auto">
+                <div class="bg-gray-950 p-5 rounded-xl border border-gray-900 space-y-4 shadow-2xl">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-800 pb-3 gap-3">
+                        <h3 class="font-bold text-sm text-gray-200 uppercase tracking-wider"><i class="fas fa-user-graduate mr-2 text-indigo-400"></i>Bireysel Öğrenci Konu Listesi</h3>
+                        <div>
+                            <select id="campStudentSelector" onchange="loadStudentProgress(this.value)" class="bg-gray-900 text-xs font-bold rounded-lg border border-gray-800 p-2.5 text-indigo-400 focus:outline-none w-56">
+                                </select>
+                        </div>
+                    </div>
+
+                    <div id="campMainContentArea"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let students = JSON.parse(localStorage.getItem('roni_students')) || [];
+
+        function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
+
+        // Müfredattaki tüm resmi TYT ve AYT Kimya üniteleri listesi
+        const tytTopics = [
+            { key: "tyt_1", name: "Kimya Bilimi & Laboratuvar Güvenliği" },
+            { key: "tyt_2", name: "Atom ve Periyodik Sistem" },
+            { key: "tyt_3", name: "Kimyasal Türler Arası Etkileşimler" },
+            { key: "tyt_4", name: "Maddenin Halleri & Gazlara Giriş" },
+            { key: "tyt_5", name: "Kimyanın Temel Kanunları ve Mol Kavramı" },
+            { key: "tyt_6", name: "Karışımlar ve Ayrıştırma Teknikleri" },
+            { key: "tyt_7", name: "Asitler, Bazlar ve Tuzlar Reaksiyonları" }
+        ];
+
+        const aytTopics = [
+            { key: "ayt_1", name: "Modern Atom Teorisi ve Kuantum Sayıları" },
+            { key: "ayt_2", name: "Gazlar (Kinetik Teori ve Gaz Karışımları)" },
+            { key: "ayt_3", name: "Sıvı Çözeltiler ve Koligatif Özellikler" },
+            { key: "ayt_4", name: "Kimyasal Tepkimelerde Enerji ve Entalpi" },
+            { key: "ayt_5", name: "Kimyasal Tepkimelerde Hız ve Ea Bariyeri" },
+            { key: "ayt_6", name: "Kimyasal Denge ve Le Chatelier İlkesi" },
+            { key: "ayt_7", name: "Sulu Çözelti Dengeleri (Asit-Base ve KÇÇ)" },
+            { key: "ayt_8", name: "Kimya ve Elektrik (Redoks, Piller ve Elektroliz)" },
+            { key: "ayt_9", name: "Karbon Kimyasına Giriş ve Hibritleşme" },
+            { id: "ayt_10", key: "ayt_10", name: "Organik Kimya (Fonksiyonel Gruplar)" }
+        ];
+
+        function initCampPage() {
+            const selector = $('#campStudentSelector');
+            selector.empty();
+
+            if (students.length === 0) {
+                selector.append('<option value="">Öğrenci Yok</option>');
+                $('#campMainContentArea').html(`
+                    <div class="text-center py-12 bg-gray-900/20 rounded-xl border border-dashed border-gray-800 p-6">
+                        <i class="fas fa-user-slash text-4xl text-gray-650 mb-3 block"></i>
+                        <p class="text-sm font-semibold text-gray-400">YKS Kamp İlerleme Tablosu Şu An Boş</p>
+                        <p class="text-xs text-gray-500 mt-1">Takibi başlatabilmek için lütfen önce Genel Bakış ana panelinden öğrenci kaydı oluşturun.</p>
+                    </div>
+                `);
+            } else {
+                selector.append('<option value="">--- Bir Öğrenci Seçin ---</option>');
+                students.forEach((st, idx) => {
+                    selector.append(`<option value="${idx}">${st.name}</option>`);
+                });
+                $('#campMainContentArea').html('<p class="text-xs text-gray-500 italic text-center py-8">Kazanım çizelgesini yüklemek için yukarıdan bir öğrenci seçimi yapın.</p>');
+            }
+        }
+
+        function loadStudentProgress(idx) {
+            if (!idx) {
+                initCampPage();
+                return;
+            }
+            const st = students[idx];
+            // Eğer öğrencinin progress alt nesnesi henüz yoksa ilklendir
+            if (!st.progress) st.progress = {};
+
+            let tytHtml = tytTopics.map(t => `
+                <label class="flex items-center space-x-3 p-3 bg-gray-950 rounded-xl border border-gray-900 cursor-pointer hover:bg-gray-900/60 transition">
+                    <input type="checkbox" ${st.progress[t.key] ? 'checked' : ''} onchange="toggleTopic(${idx}, '${t.key}')" class="w-4 h-4 accent-indigo-500 rounded">
+                    <span class="text-xs text-gray-300 font-medium">${t.name}</span>
+                </label>
+            `).join('');
+
+            let aytHtml = aytTopics.map(t => `
+                <label class="flex items-center space-x-3 p-3 bg-gray-950 rounded-xl border border-gray-900 cursor-pointer hover:bg-gray-900/60 transition">
+                    <input type="checkbox" ${st.progress[t.key] ? 'checked' : ''} onchange="toggleTopic(${idx}, '${t.key}')" class="w-4 h-4 accent-emerald-500 rounded">
+                    <span class="text-xs text-gray-300 font-medium">${t.name}</span>
+                </label>
+            `).join('');
+
+            $('#campMainContentArea').html(`
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="space-y-2 bg-gray-900/20 p-4 rounded-xl border border-gray-900">
+                        <h4 class="text-xs font-black text-indigo-400 uppercase tracking-wider mb-3"><i class="fas fa-book-open mr-1.5"></i> TYT Kimya Müfredatı</h4>
+                        <div class="space-y-2">${tytHtml}</div>
+                    </div>
+                    <div class="space-y-2 bg-gray-900/20 p-4 rounded-xl border border-gray-900">
+                        <h4 class="text-xs font-black text-emerald-400 uppercase tracking-wider mb-3"><i class="fas fa-brain mr-1.5"></i> AYT Kimya Müfredatı</h4>
+                        <div class="space-y-2">${aytHtml}</div>
+                    </div>
+                </div>
+            `);
+        }
+
+        function toggleTopic(studentIdx, key) {
+            students[studentIdx].progress[key] = !students[studentIdx].progress[key];
+            localStorage.setItem('roni_students', JSON.stringify(students));
+        }
+
+        $(document).ready(function() { initCampPage(); });
+    </script>
+</body>
+</html>
