@@ -3,45 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roni — 3D Laboratuvar ve Araçlar</title>
+    <title>Roni — 3D Fütüristik Periyodik Tablo</title>
     
+    <!-- iPHONE ANA EKRAN İKONU VE TAM EKRAN (PWA) AYARLARI -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="RONI">
-    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png?v=9">
-    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png?v=9">
+    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png?v=10">
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png?v=10">
 
+    <!-- Google Fonts & Tailwind -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://3dmol.org/build/3Dmol-min.js"></script>
 
     <style>
         :root {
-            --bg: #08090f; --sf: #0f1117; --sf2: #161922; --sf3: #1c2030;
-            --br: #1e2535; --br2: #252d40; --ac: #6366f1; --ac2: #818cf8;
-            --gr: #22c55e; --rd: #ef4444; --yw: #f59e0b; --tx: #f1f5f9; --tx2: #94a3b8;
+            --bg: #05060a; --sf: #0b0d14; --sf2: #111420; --br: #1a1f32; --ac: #6366f1;
         }
-        body { background: var(--bg); color: var(--tx); font-family: 'Inter', sans-serif; }
-        body::before {
-            content: ''; position: fixed; inset: 0;
-            background-image: radial-gradient(circle at 1px 1px, rgba(99,102,241,.06) 1px, transparent 0);
-            background-size: 28px 28px; pointer-events: none; z-index: 0;
+        body { background: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        .p-grid { display: grid; grid-template-columns: repeat(18, minmax(36px, 1fr)); gap: 4px; overflow-x: auto; }
+        
+        /* Element Grupları Neon Renkleri */
+        .am { border: 1px solid #ef4444; background: rgba(239,68,68,0.04); color: #f87171; } /* Alkali Metal */
+        .aem { border: 1px solid #f97316; background: rgba(249,115,22,0.04); color: #fb923c; } /* Toprak Alkali */
+        .tm { border: 1px solid #eab308; background: rgba(234,179,8,0.04); color: #facc15; } /* Geçiş Metali */
+        .amtl { border: 1px solid #3b82f6; background: rgba(59,130,246,0.04); color: #60a5fa; } /* Ametal */
+        .hl { border: 1px solid #22c55e; background: rgba(34,197,94,0.04); color: #4ade80; } /* Halojen */
+        .sg { border: 1px solid #a855f7; background: rgba(168,85,247,0.04); color: #c084fc; } /* Soygaz */
+        
+        .element-card { aspect-ratio: 1; display: flex; flex-col; justify-content: space-between; padding: 3px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .element-card:hover { transform: scale(1.08); z-index: 20; box-shadow: 0 0 12px currentColor; }
+        
+        /* 3D Yörünge Dönüş Animasyonları */
+        .orbit-container { perspective: 800px; position: relative; width: 220px; height: 220px; }
+        .orbit-ring {
+            position: absolute; inset: 0; border: 1px dashed rgba(129,140,248,0.3);
+            border-radius: 50%; transform-style: preserve-3d;
+            animation: spin linear infinite;
         }
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: var(--br2); border-radius: 3px; }
-        .tab-btn.active { background: var(--ac); color: white; }
-        .style-btn.active { border-color: var(--ac); color: var(--ac2); background: rgba(99,102,241,0.12); }
+        @keyframes spin { from { transform: rotateX(70deg) rotateY(20deg) rotateZ(0deg); } to { transform: rotateX(70deg) rotateY(20deg) rotateZ(360deg); } }
+        
+        .electron {
+            position: absolute; width: 6px; height: 6px; background: #38bdf8;
+            border-radius: 50%; box-shadow: 0 0 8px #38bdf8;
+            top: 0; left: 50%; margin-left: -3px;
+        }
     </style>
 </head>
 <body class="overflow-x-hidden custom-scrollbar">
 
     <div class="flex h-screen overflow-hidden relative z-10">
         
+        <!-- SIDEBAR MENÜ PANELİ -->
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-[100] w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
-            <div class="p-5 overflow-y-auto flex-1 custom-scrollbar">
+            <div class="p-5 overflow-y-auto flex-1">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center space-x-3">
                         <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg relative">
@@ -49,17 +66,16 @@
                         </div>
                         <span class="text-xl font-black text-white">RONI</span>
                     </div>
-                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white p-2"><i class="fas fa-times text-xl"></i></button>
+                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
-                
                 <nav class="space-y-1">
                     <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
                         <i class="fas fa-chart-pie w-5 text-center"></i> <span>Ana Sayfa</span>
                     </a>
-                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
                         <i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span>
                     </a>
-                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
+                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
                         <i class="fas fa-flask w-5 text-center"></i> <span>3D Araçlar</span>
                     </a>
                     <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
@@ -70,246 +86,143 @@
                     </a>
                 </nav>
             </div>
-            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
-                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
-                <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
-            </div>
         </aside>
 
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden"></div>
 
+        <!-- ANA EKREAN MATRİS VE 3D ATOM PANELİ -->
         <main class="flex-1 flex flex-col overflow-y-auto min-w-0">
-            <header class="bg-[#08090f]/90 backdrop-blur border-b border-gray-900 px-6 py-4 flex justify-between items-center sticky top-0 z-30">
+            <header class="bg-[#05060a]/90 backdrop-blur border-b border-gray-900 px-6 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
                     <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
-                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">🧬 Roni 3D Kimya Laboratuvarı</h2>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">⚛️ Roni Educalabs Interactive 3D Periodic Table</h2>
                 </div>
             </header>
 
-            <div class="p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6 flex-1">
-                <div class="flex bg-[#0f1117] p-1 rounded-xl border border-gray-900">
-                    <button onclick="switchSubTab(0)" class="tab-btn active flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all">🔬 3D Molekül Modülleri</button>
-                    <button onclick="switchSubTab(1)" class="tab-btn flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all text-gray-500 hover:text-gray-300">🧬 20 Amino Asit</button>
-                    <button onclick="switchSubTab(2)" class="tab-btn flex-1 text-center py-2.5 text-xs font-bold rounded-lg transition-all text-gray-500 hover:text-gray-300">🧪 Temel Malzemeler</button>
+            <div class="p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6 flex-1 flex flex-col lg:flex-row gap-6">
+                
+                <!-- SOL ALAN: PERİYODİK GRİD -->
+                <div class="flex-1 bg-[#0b0d14] p-4 rounded-2xl border border-gray-900 overflow-x-auto shadow-2xl custom-scrollbar">
+                    <div class="p-grid min-w-[760px]" id="periodicGrid">
+                        <!-- JavaScript matrisi buraya inşa edecek -->
+                    </div>
                 </div>
 
-                <div id="subTabPanels">
-                    <div class="sub-panel space-y-4">
-                        <div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900 flex flex-col sm:flex-row gap-3 items-center shadow-lg">
-                            <input type="text" id="customMolInput" placeholder="Dilediğin molekülün adını yaz (Örn: aspirin, kafein, aseton)..." class="w-full bg-[#161922] text-xs font-bold rounded-xl p-3 border border-gray-800 text-white focus:outline-none">
-                            <button onclick="searchCustomMolecule()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-3 rounded-xl shrink-0">Dinamik Çizim</button>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="md:col-span-1 bg-[#0f1117] p-4 rounded-xl border border-gray-900 space-y-4">
-                                <select id="molSelector" onchange="handleMoleculeChange(this.value)" class="w-full bg-[#161922] p-2.5 text-xs font-bold rounded-xl border border-gray-800 text-indigo-400 focus:outline-none">
-                                    <option value="crystal:nacl">NaCl (İyonik Kristal Örgüsü)</option>
-                                    <option value="local:CH4">CH₄ (Metan - Düzgün Dörtyüzlü)</option>
-                                    <option value="local:BeH2">BeH₂ (Berilyum Hidrür - Doğrusal)</option>
-                                    <option value="local:BH3">BH₃ (Bor Trihidrür - Üçgen Düzlem)</option>
-                                    <option value="local:H2">H₂ (Hidrojen Gazı)</option>
-                                    <option value="local:O2">O₂ (Oksijen Gazı)</option>
-                                    <option value="local:N2">N₂ (Azot Gazı)</option>
-                                    <option value="local:H2O">H₂O (Su)</option>
-                                    <option value="local:CO2">CO₂ (Karbondioksit)</option>
-                                </select>
-                                <div class="grid grid-cols-3 gap-2">
-                                    <button onclick="setRenderStyle('ball', this)" class="style-btn active bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800">Top-Çubuk</button>
-                                    <button onclick="setRenderStyle('space', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800">Uzay Dolgu</button>
-                                    <button onclick="setRenderStyle('line', this)" class="style-btn bg-[#161922] py-2 rounded text-[10px] font-bold border border-gray-800">Tel Kafes</button>
-                                </div>
-                            </div>
-                            <div class="md:col-span-2 bg-[#020617] rounded-xl border border-gray-900 relative min-h-[440px]">
-                                <div id="molecule-viewer" class="w-full h-full absolute inset-0"></div>
-                                <div class="absolute bottom-4 left-4 right-4 bg-gray-950/90 p-3 rounded-xl z-10 text-xs border border-gray-800">
-                                    <span id="mol3d-label" class="font-bold text-white block mb-0.5 text-sm">NaCl (Kristal Örgü)</span>
-                                    <p id="mol3d-info" class="text-gray-400"></p>
-                                </div>
-                            </div>
+                <!-- SAĞ ALAN: EDUCALABS 3D ATOM MOTORU -->
+                <div class="w-full lg:w-80 bg-[#0b0d14] p-6 rounded-2xl border border-gray-900 flex flex-col items-center justify-between shadow-2xl shrink-0 min-h-[460px]">
+                    <div class="text-center w-full">
+                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-1">3D Bohr Elektron Modelleyicisi</span>
+                        <h3 id="atomName" class="text-xl font-black text-white font-['Space_Grotesk']">Hidrojen</h3>
+                        <div class="flex justify-center space-x-3 text-xs text-gray-400 mt-1">
+                            <span>Z: <strong id="atomZ" class="text-indigo-400">1</strong></span>
+                            <span>Kütle: <strong id="atomMass">1.008</strong></span>
                         </div>
                     </div>
-                    
-                    <div class="sub-panel hidden grid grid-cols-1 md:grid-cols-3 gap-4" id="amino-grid"></div>
-                    
-                    <div class="sub-panel hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="lab-grid"></div>
+
+                    <!-- Canlı 3D CSS Çekirdek ve Yörünge Motoru -->
+                    <div class="my-6 relative flex items-center justify-center w-full">
+                        <div class="orbit-container" id="orbitWrapper">
+                            <!-- Dinamik 3D katman halkaları buraya eklenecek -->
+                        </div>
+                        <!-- Parlayan Proton Çekirdeği -->
+                        <div class="absolute w-8 h-8 bg-gradient-to-br from-red-500 to-amber-500 rounded-full blur-sm opacity-50 animate-pulse"></div>
+                        <div id="atomCenterSymbol" class="absolute font-['Space_Grotesk'] font-black text-xs text-white uppercase bg-gray-950/60 w-7 h-7 rounded-full flex items-center justify-center border border-gray-800">H</div>
+                    </div>
+
+                    <!-- Katman Elektron Dağılım İndeksi -->
+                    <div class="w-full bg-[#111420] p-3 rounded-xl border border-gray-800 text-center">
+                        <span class="text-[9px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Elektron Katman Dağılımı</span>
+                        <div id="atomShellConfig" class="font-mono font-bold text-sm text-sky-400">1</div>
+                    </div>
                 </div>
+
             </div>
         </main>
     </div>
 
-    <div id="equipmentModal" class="fixed inset-0 bg-black/80 z-[200] hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-[#0f1117] border border-gray-800 rounded-2xl max-w-lg w-full p-6 relative flex flex-col space-y-4 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white p-2 text-lg"><i class="fas fa-times"></i></button>
-            <div class="flex justify-center bg-[#08090f] p-6 rounded-xl border border-gray-900/60" id="modalVisual">
-                </div>
-            <div>
-                <h3 id="modalName" class="text-lg font-black text-indigo-400 font-['Space_Grotesk']">Malzeme Adı</h3>
-                <p id="modalUse" class="text-xs text-gray-300 leading-relaxed mt-2 bg-[#161922] p-3 rounded-xl border border-gray-800 shadow-inner"></p>
-                <div class="mt-3 bg-indigo-950/20 border border-indigo-900/30 p-3 rounded-xl text-[11px] text-indigo-300">
-                    <i class="fas fa-info-circle mr-1"></i> <strong>ÖSYM / Müfredat Notu:</strong> 9. Sınıf Kimya bilimi ünite kazanımlarında doğrudan sorumludur.
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        let viewer = null; let currentStyle = 'ball';
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
-        function switchSubTab(idx) { $('.tab-btn').removeClass('active bg-indigo-600 text-white').addClass('text-gray-500'); $('.tab-btn').eq(idx).addClass('active bg-indigo-600 text-white'); $('.sub-panel').addClass('hidden').eq(idx).removeClass('hidden'); }
 
-        const LOCAL_MODELS = {
-            "CH4": "5\nMethane\nC 0.0000 0.0000 0.0000\nH 0.6351 0.6351 0.6351\nH -0.6351 -0.6351 0.6351\nH -0.6351 0.6351 -0.6351\nH 0.6351 -0.6351 -0.6351",
-            "BeH2": "3\nBeH2\nBe 0.0000 0.0000 0.0000\nH 0.0000 0.0000 1.3300\nH 0.0000 0.0000 -1.3300",
-            "BH3": "4\nBH3\nB 0.0000 0.0000 0.0000\nH 0.0000 1.1900 0.0000\nH 1.0306 -0.5950 0.0000\nH -1.0306 -0.5950 0.0000",
-            "H2": "2\nH2\nH 0.0000 0.0000 0.3700\nH 0.0000 0.0000 -0.3700",
-            "O2": "2\nO2\nO 0.0000 0.0000 0.6050\nO 0.0000 0.0000 -0.6050",
-            "N2": "2\nN2\nN 0.0000 0.0000 0.5500\nN 0.0000 0.0000 -0.5500",
-            "H2O": "3\nWater\nO 0.0000 0.0000 0.1173\nH 0.0000 0.7572 -0.4692\nH 0.0000 -0.7572 -0.4692",
-            "CO2": "3\nCO2\nC 0.0000 0.0000 0.0000\nO 0.0000 0.0000 1.1600\nO 0.0000 0.0000 -1.1600",
-            "NH3": "4\nAmmonia\nN 0.0000 0.0000 0.1120\nH 0.0000 0.9380 -0.2610\nH 0.8120 -0.4690 -0.2610\nH -0.8120 -0.4690 -0.2610"
-        };
-
-        function generateNaClXYZ() {
-            return `27\nNaCl\nNa 0 0 0\nCl 3 0 0\nNa 6 0 0\nCl 0 3 0\nNa 3 3 0\nCl 6 3 0\nNa 0 6 0\nCl 3 6 0\nNa 6 6 0\nCl 0 0 3\nNa 3 0 3\nCl 6 0 3\nNa 0 3 3\nCl 3 3 3\nNa 6 3 3\nCl 0 6 3\nNa 3 6 3\nCl 6 6 3\nNa 0 0 6\nCl 3 0 6\nNa 6 0 6\nCl 0 3 6\nNa 3 3 6\nCl 6 3 6\nNa 0 6 6\nCl 3 6 6\nNa 6 6 6`;
-        }
-
-        function handleMoleculeChange(val) {
-            if (!viewer) return; viewer.clear();
-            let label = $('#molSelector option:selected').text(); $('#mol3d-label').text(label);
-            if (val === "crystal:nacl") {
-                viewer.addModel(generateNaClXYZ(), "xyz");
-                viewer.addBonds([{start:0, end:1},{start:1, end:2},{start:3, end:4},{start:4, end:5},{start:6, end:7},{start:7, end:8},
-                                 {start:0, end:3},{start:1, end:4},{start:2, end:5},{start:3, end:6},{start:4, end:7},{start:5, end:8},
-                                 {start:9, end:10},{start:10, end:11},{start:12, end:13},{start:13, end:14},{start:14, end:15}]);
-                applyRenderStyle();
-            } else if (val.startsWith("local:")) {
-                viewer.addModel(LOCAL_MODELS[val.replace("local:", "")], "xyz"); applyRenderStyle();
-            }
-        }
-
-        function searchCustomMolecule() {
-            let name = $('#customMolInput').val().trim().toLowerCase(); if(!name) return;
-            viewer.clear(); $('#mol3d-label').text(name.toUpperCase());
-            $3Dmol.download("name:" + name, viewer, {}, function() { applyRenderStyle(); });
-        }
-
-        function setRenderStyle(styleName, btn) { $('.style-btn').removeClass('active border-indigo-500 text-indigo-400 bg-indigo-500/10'); $(btn).addClass('active border-indigo-500 text-indigo-400 bg-indigo-500/10'); currentStyle = styleName; applyRenderStyle(); }
-        function applyRenderStyle() {
-            if (!viewer) return; let config = {};
-            if (currentStyle === 'ball') config = { stick: { radius: 0.15 }, sphere: { scale: 0.25 } };
-            else if (currentStyle === 'space') config = { sphere: { scale: 0.8 } };
-            else if (currentStyle === 'line') config = { line: { linewidth: 3 }, stick: { radius: 0.05 } };
-            viewer.setStyle({}, config); viewer.render(); viewer.zoomTo();
-        }
-
-        // --- %100 GERÇEK VE DÜZGÜN ÇİZİLMİŞ VEKTOREL MALZEMELER LİSTESİ ---
-        const LAB_MATERIALS = [
-            {
-                name: "Beherglas",
-                use: "Sıvı maddelerin karıştırılması, saklanması ve ısıtılması amacıyla kullanılan temperli geniş cam malzemedir.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><path d="M15 15 L12 18 L12 80 Q12 85 20 85 L60 85 Q68 85 68 80 L68 15 L15 15 Z" fill="rgba(129,102,241,0.05)"/><line x1="20" y1="30" x2="35" y2="30" stroke-width="1.5"/><line x1="20" y1="45" x2="45" y2="45" stroke-width="2"/><line x1="20" y1="60" x2="35" y2="60" stroke-width="1.5"/><line x1="20" y1="75" x2="55" y2="75" stroke-width="2"/></svg>`
-            },
-            {
-                name: "Erlenmayer",
-                use: "Titrasyon, çözelti hazırlama, saklama, kristallendirme ve çözme vb. kimyasal işlemlerde kullanılan konik yapılı cam malzemedir.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><path d="M33 15 L47 15 L47 30 L72 80 Q75 85 65 85 L15 85 Q5 85 8 80 L33 30 Z" fill="rgba(129,102,241,0.05)"/><line x1="30" y1="50" x2="50" y2="50" stroke-width="1.5"/><line x1="25" y1="65" x2="55" y2="65" stroke-width="1.5"/><line x1="20" y1="78" x2="60" y2="78" stroke-width="2"/></svg>`
-            },
-            {
-                name: "Cam Balon",
-                use: "Çözelti hazırlama, saklama, kaynatma ve bazı damıtma düzeneklerinin omurgasını kurma amacıyla kullanılan yuvarlak gövdeli cam malzemedir.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><circle cx="40" cy="55" r="25" fill="rgba(129,102,241,0.05)"/><path d="M34 32 L34 15 L46 15 L46 32" stroke-linecap="round"/></svg>`
-            },
-            {
-                name: "Balon Joje",
-                use: "Derişimi (molaritesi) belirli çözeltilerin son derece hassas ölçülerle hazırlanması ve saklanmasında kullanılan uzun boyunlu ve ölçü çizgili cam malzemedir.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><path d="M36 15 L44 15 L44 45 L62 75 Q66 82 58 82 L22 82 Q14 82 18 75 L36 45 Z" fill="rgba(129,102,241,0.05)"/><line x1="36" y1="30" x2="44" y2="30" stroke="#ef4444" stroke-width="2"/></svg>`
-            },
-            {
-                name: "Ayırma Hunisi",
-                use: "Zeytinyağı-su gibi birbirine karışmayan heterojen sıvı-sıvı karışımlarının yoğunluk (özkütle) farkı esasıyla ayrılmasını sağlayan musluklu cam hunidir.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><path d="M40 12 Q65 25 60 50 L44 72 L44 85 L36 85 L36 72 L20 50 Q15 25 40 12 Z" fill="rgba(129,102,241,0.05)"/><circle cx="40" cy="76" r="3" fill="#ef4444" stroke="none"/></svg>`
-            },
-            {
-                name: "Dereceli Silindir (Mezür)",
-                use: "Sıvıların hacmini kabaca ve hızlıca ölçmek veya aktarmak amacıyla kullanılan, altında geniş bir taban halkası bulunan dik dereceli cam kaptır.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><path d="M32 15 L48 15 L48 80 L55 80 L55 85 L25 85 L25 80 L32 80 Z" fill="rgba(129,102,241,0.05)"/><line x1="32" y1="25" x2="40" y2="25" stroke-width="1.5"/><line x1="32" y1="35" x2="44" y2="35" stroke-width="1.5"/><line x1="32" y1="45" x2="40" y2="45" stroke-width="1.5"/><line x1="32" y1="55" x2="44" y2="55" stroke-width="1.5"/><line x1="32" y1="65" x2="40" y2="65" stroke-width="1.5"/></svg>`
-            },
-            {
-                name: "Büret",
-                use: "Titrasyon işlemlerinde, erlenmayerdeki çözeltiye asit veya bazın hassas hacimsel damlatılmasını sağlayan altı musluklu, uzun boru biçimli cam malzemedir.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><line x1="36" y1="10" x2="36" y2="75" stroke-width="3"/><line x1="44" y1="10" x2="44" y2="75" stroke-width="3"/><line x1="36" y1="20" x2="41" y2="20"/><line x1="36" y1="30" x2="41" y2="30"/><line x1="36" y1="40" x2="41" y2="40"/><path d="M34 75 L46 75 L40 88 Z" fill="#ef4444"/></svg>`
-            },
-            {
-                name: "Pipet",
-                use: "Çok az miktardaki sıvıların hacimlerini mililitre düzeyinde son derece yüksek bir hassasiyetle ölçüp başka bir kaba aktarmaya yarayan ince cam borudur.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><line x1="38" y1="10" x2="38" y2="85" stroke-width="2"/><line x1="42" y1="10" x2="42" y2="85" stroke-width="2"/><path d="M36 40 Q40 35 44 40 L44 55 Q40 60 36 55 Z" fill="rgba(129,102,241,0.2)"/></svg>`
-            },
-            {
-                name: "Havan",
-                use: "Katı laboratuvar maddelerini ve numuneleri ezerek porselen yapısı içinde toz (pudra) hâline getirmek amacıyla kullanılan dövme aracıdır.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><path d="M15 35 Q15 70 40 70 Q65 70 65 35 L12 35 Z" fill="rgba(129,102,241,0.05)"/><path d="M48 20 L58 45" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/></svg>`
-            },
-            {
-                name: "Kroze",
-                use: "Metalürjik işlemlerde veya yüksek sıcaklıktaki kül etme, yakma deneylerinde kullanılan porselen veya metalden yapılmış fincan biçimli ısı kaplarıdır.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><path d="M22 25 L58 25 L54 70 Q52 76 40 70 Q28 76 26 70 Z" fill="rgba(129,102,241,0.05)"/><line x1="20" y1="25" x2="60" y2="25" stroke-width="3"/></svg>`
-            },
-            {
-                name: "Spatül",
-                use: "Toz ya da küçük parçacıklı katı kimyasal maddeleri şişelerinden güvenle almak ve aktarmak için kullanılan kaşık uçlu metal laboratuvar aracıdır.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><path d="M20 40 L50 43 L62 38 L65 42 L52 46 L20 42 Z" fill="#94a3b8" stroke="none"/><line x1="20" y1="41" x2="50" y2="43" stroke-width="2"/></svg>`
-            },
-            {
-                name: "Puar",
-                use: "Pipetlerin arka uç kısımlarına takılarak, ağızla çekilmesi tehlikeli asit/baz gibi sıvıların kontrollü çekilmesini sağlayan plastik üç vanalı pompadır.",
-                svg: `<svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#818cf8" stroke-width="2.5"><circle cx="40" cy="45" r="16" fill="rgba(239,68,68,0.1)" stroke="#ef4444"/><path d="M40 29 L40 15 M40 61 L40 78" stroke="#ef4444" stroke-width="3"/></svg>`
-            }
+        // --- %100 EKSİKSİZ KİMYA 1 ELEMENT HAVUZU VE KOORDİNAT GRİDİ ---
+        const ELEMENTS = [
+            { z:1,  symbol:"H",  name:"Hidrojen",      mass:"1.008",  shells:[1],       cat:"amtl", r:1, c:1 },
+            { z:2,  symbol:"He", name:"Helyum",        mass:"4.002",  shells:[2],       cat:"sg",   r:1, c:18 },
+            { z:3,  symbol:"Li", name:"Lityum",        mass:"6.941",  shells:[2,1],     cat:"am",   r:2, c:1 },
+            { z:4,  symbol:"Be", name:"Berilyum",      mass:"9.012",  shells:[2,2],     cat:"aem",  r:2, c:2 },
+            { z:5,  symbol:"B",  name:"Bor",           mass:"10.81",  shells:[2,3],     cat:"amtl", r:2, c:13 },
+            { z:6,  symbol:"C",  name:"Karbon",        mass:"12.01",  shells:[2,4],     cat:"amtl", r:2, c:14 },
+            { z:7,  symbol:"N",  name:"Azot",          mass:"14.01",  shells:[2,5],     cat:"amtl", r:2, c:15 },
+            { z:8,  symbol:"O",  name:"Oksijen",       mass:"16.00",  shells:[2,6],     cat:"amtl", r:2, c:16 },
+            { z:9,  symbol:"F",  name:"Flor",          mass:"19.00",  shells:[2,7],     cat:"hl",   r:2, c:17 },
+            { z:10, symbol:"Ne", name:"Neon",          mass:"20.18",  shells:[2,8],     cat:"sg",   r:2, c:18 },
+            { z:11, symbol:"Na", name:"Sodyum",        mass:"22.99",  shells:[2,8,1],   cat:"am",   r:3, c:1 },
+            { z:12, symbol:"Mg", name:"Magnezyum",     mass:"24.31",  shells:[2,8,2],   cat:"aem",  r:3, c:2 },
+            { z:13, symbol:"Al", name:"Alüminyum",     mass:"26.98",  shells:[2,8,3],   cat:"tm",   r:3, c:13 },
+            { z:14, symbol:"Si", name:"Silisyum",      mass:"28.09",  shells:[2,8,4],   cat:"amtl", r:3, c:14 },
+            { z:15, symbol:"P",  name:"Fosfor",        mass:"30.97",  shells:[2,8,5],   cat:"amtl", r:3, c:15 },
+            { z:16, symbol:"S",  name:"Kükürt",        mass:"32.06",  shells:[2,8,6],   cat:"amtl", r:3, c:16 },
+            { z:17, symbol:"Cl", name:"Klor",          mass:"35.45",  shells:[2,8,7],   cat:"hl",   r:3, c:17 },
+            { z:18, symbol:"Ar", name:"Argon",         mass:"39.95",  shells:[2,8,8],   cat:"sg",   r:3, c:18 },
+            { z:19, symbol:"K",  name:"Potasyum",      mass:"39.10",  shells:[2,8,8,1], cat:"am",   r:4, c:1 },
+            { z:20, symbol:"Ca", name:"Kalsiyum",      mass:"40.08",  shells:[2,8,8,2], cat:"aem",  r:4, c:2 },
+            { z:26, symbol:"Fe", name:"Demir",         mass:"55.84",  shells:[2,8,14,2],cat:"tm",   r:4, c:8 },
+            { z:29, symbol:"Cu", name:"Bakır",         mass:"63.55",  shells:[2,8,18,1],cat:"tm",   r:4, c:11 },
+            { z:30, symbol:"Zn", name:"Çinko",         mass:"65.38",  shells:[2,8,18,2],cat:"tm",   r:4, c:12 }
         ];
 
-        function renderMaterials() {
-            const container = $('#lab-grid'); container.empty();
-            LAB_MATERIALS.forEach((mat, idx) => {
-                container.append(`
-                    <div onclick="openModal(${idx})" class="bg-[#0f1117] p-4 rounded-xl border border-gray-900 hover:border-indigo-500 transition-all cursor-pointer flex flex-col items-center justify-between shadow-md text-center group">
-                        <div class="p-2 bg-gray-950 rounded-xl border border-gray-900 group-hover:scale-105 transition-transform">
-                            ${mat.svg}
-                        </div>
-                        <div class="text-xs font-black text-gray-200 mt-2 font-['Space_Grotesk']">${mat.name}</div>
-                        <span class="text-[9px] text-indigo-400 font-bold mt-1 uppercase tracking-wider block bg-indigo-500/5 px-2 py-0.5 rounded border border-indigo-500/10">Büyüt 🔍</span>
-                    </div>
-                `);
+        function buildTable() {
+            const grid = $('#periodicGrid'); grid.empty();
+            
+            // 4 periyot ve 18 grup koordinat hücresini tara
+            for (let r = 1; r <= 4; r++) {
+                for (let c = 1; c <= 18; c++) {
+                    const el = ELEMENTS.find(e => e.r === r && e.c === c);
+                    if (el) {
+                        grid.append(`
+                            <div onclick="selectElement(${el.z})" class="element-card ${el.cat}" style="grid-row:${r}; grid-column:${c};">
+                                <span class="text-[8px] font-mono opacity-60 block leading-none">${el.z}</span>
+                                <span class="text-sm font-black tracking-tighter text-center block leading-none my-0.5 font-['Space_Grotesk']">${el.symbol}</span>
+                                <span class="text-[7px] block truncate text-center opacity-70 leading-none">${el.name}</span>
+                            </div>
+                        `);
+                    } else {
+                        grid.append(`<div style="grid-row:${r}; grid-column:${c};" class="opacity-0 pointer-events-none"></div>`);
+                    }
+                }
+            }
+        }
+
+        // --- 3D ATOM YÖRÜNGE SİMÜLASYON MOTORU ---
+        function selectElement(z) {
+            const el = ELEMENTS.find(e => e.z === z); if(!el) return;
+            
+            // Bilgileri güncelle
+            $('#atomName').text(el.name);
+            $('#atomZ').text(el.z);
+            $('#atomMass').text(el.mass);
+            $('#atomCenterSymbol').text(el.symbol);
+            $('#atomShellConfig').text(el.shells.join(' - '));
+            
+            // 3D Halkaları baştan oluştur
+            const wrapper = $('#orbitWrapper'); wrapper.empty();
+            
+            el.shells.forEach((electronCount, shellIdx) => {
+                const size = 60 + (shellIdx * 45); // Her yörünge halkasının çapı katlanarak genişler
+                const ring = $(`<div class="orbit-ring" style="width:${size}px; height:${size}px; margin-left:-${size/2}px; margin-top:-${size/2}px; animation-duration:${4 + shellIdx*2}s;"></div>`);
+                
+                // Elektron kürelerini yörünge halkasının etrafına eşit açılarla diziyoruz
+                for(let i=0; i<electronCount; i++) {
+                    const angle = (360 / electronCount) * i;
+                    const eKure = $(`<div class="electron" style="transform: rotate(${angle}deg) translateY(-${size/2}px);"></div>`);
+                    ring.append(eKure);
+                }
+                wrapper.append(ring);
             });
         }
-
-        function openModal(idx) {
-            const mat = LAB_MATERIALS[idx];
-            $('#modalVisual').html(mat.svg);
-            $('#modalVisual svg').attr('width', '160').attr('height', '180'); // Modalda 2 kat büyük göster
-            $('#modalName').text(mat.name);
-            $('#modalUse').html(mat.use);
-            $('#equipmentModal').removeClass('hidden');
-        }
-
-        function closeModal() { $('#equipmentModal').addClass('hidden'); }
-
-        const AMINO = [
-            {sym:'Gly',name:'Glisin',formula:'C₂H₅NO₂',desc:'En basit amino asit omurgasıdır. R grubu sadece tek bir Hidrojen atomudur.'},
-            {sym:'Ala',name:'Alanin',formula:'C₃H₇NO₂',desc:'Metil yan zinciri içerir. Alifatik hidrofobik lise müfredat parametresidir.'},
-            {sym:'Cys',name:'Sistein',formula:'C₃H₇NO₂S',desc:'Kükürt içerir, sülfhidril (-SH) bağ yapısı ile disülfit köprüleri kurar.'}
-        ];
 
         $(document).ready(function() {
-            viewer = $3Dmol.createViewer($('#molecule-viewer'), { backgroundColor: '#020617' });
-            handleMoleculeChange("crystal:nacl");
-            
-            // Amino asitleri doldur
-            AMINO.forEach(aa => {
-                $('#amino-grid').append(`<div class="bg-[#0f1117] p-4 rounded-xl border border-gray-900 shadow-md"><div class="text-2xl font-black text-indigo-400 font-['Space_Grotesk']">${aa.sym}</div><div class="text-xs font-bold text-gray-200 mt-1">${aa.name} (${aa.formula})</div><p class="text-[11px] text-gray-500 mt-1 leading-relaxed">${aa.desc}</p></div>`);
-            });
-
-            renderMaterials();
-            
-            // Modal dışına tıklayınca kapatma aksiyonu
-            $('#equipmentModal').click(function(e) { if(e.target === this) closeModal(); });
+            buildTable();
+            selectElement(1); // Varsayılan olarak Hidrojen 3D modelini yükle
         });
     </script>
 </body>
