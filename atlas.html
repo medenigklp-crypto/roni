@@ -3,183 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roni — YÖK Atlas Tercih Robotu</title>
-    
+    <title>Roni — YÖK Atlas</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="RONI">
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png">
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/2600.png">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <style>
-        :root {
-            --bg: #08090f; --sf: #0f1117; --sf2: #161922; --sf3: #1c2030;
-            --br: #1e2535; --br2: #252d40; --ac: #6366f1; --ac2: #818cf8;
-            --gr: #22c55e; --rd: #ef4444; --yw: #f59e0b; --cy: #06b6d4;
-            --tx: #f1f5f9; --tx2: #94a3b8; --tx3: #475569;
-        }
-        body { background: var(--bg); color: var(--tx); font-family: 'Inter', sans-serif; }
-        body::before {
-            content: ''; position: fixed; inset: 0;
-            background-image: radial-gradient(circle at 1px 1px, rgba(99,102,241,.06) 1px, transparent 0);
-            background-size: 28px 28px; pointer-events: none; z-index: 0;
-        }
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: var(--br2); border-radius: 3px; }
-        .brow { display: grid; grid-template-columns: 1.2fr 1.2fr 60px 80px 80px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--br); font-size: 12px; gap: 5px; }
-        .brow.hdr { background: var(--sf2); font-size: 10px; font-weight: 700; color: var(--tx3); text-transform: uppercase; letter-spacing: .8px; }
-        .bpc { font-weight: 700; color: var(--ac2); text-align: right; }
-        .ob.sel2 { background: rgba(99,102,241,.15); border-color: var(--ac); color: var(--ac2); }
-        @media(max-width: 640px) {
-            .brow { grid-template-columns: 1fr 1fr 75px; }
-            .hide-mobile { display: none; }
-        }
+        :root { --bg: #08090f; --sf: #0f1117; --sf2: #161922; --ac: #6366f1; }
+        body { background: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        .brow { display: grid; grid-template-columns: 1.5fr 1.5fr 80px 80px; align-items: center; padding: 12px; border-bottom: 1px solid #1e2535; font-size: 13px; }
+        .brow.hdr { background: var(--sf2); font-weight: bold; color: #475569; }
     </style>
 </head>
-<body class="overflow-x-hidden custom-scrollbar">
-
-    <div class="flex h-screen overflow-hidden relative z-10">
-        <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
-            <div class="p-5 overflow-y-auto flex-1 custom-scrollbar">
-                <div class="flex items-center justify-between mb-8">
-                    <div class="flex items-center space-x-3">
-                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
-                            <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
-                            <i class="fas fa-sun relative z-10 animate-[spin_20s_linear_infinite]"></i>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 leading-none">RONI</span>
-                            <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
-                        </div>
-                    </div>
-                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
-                </div>
-                <nav class="space-y-1">
-                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
-                        <i class="fas fa-chart-pie w-5 text-center"></i> <span>Ana Sayfa</span>
-                    </a>
-                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
-                        <i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span>
-                    </a>
-                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
-                        <i class="fas fa-flask w-5 text-center"></i> <span>3D Araçlar</span>
-                    </a>
-                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
-                        <i class="fas fa-laptop-code w-5 text-center"></i> <span>Simülasyonlar</span>
-                    </a>
-                    <a href="atlas.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
-                        <i class="fas fa-graduation-cap w-5 text-center"></i> <span>YÖK Atlas</span>
-                    </a>
-                </nav>
-            </div>
-            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
-                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
-                <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
-            </div>
-        </aside>
-
-        <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
-
-        <main class="flex-1 flex flex-col overflow-y-auto min-w-0">
-            <header class="bg-[#08090f]/90 backdrop-blur border-b border-gray-900 px-6 py-4 flex justify-between items-center sticky top-0 z-30">
-                <div class="flex items-center space-x-3">
-                    <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
-                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">🎓 YÖK Atlas Taban Puan Robotu</h2>
-                </div>
-            </header>
-
-            <div class="p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6 flex-1">
-                <div class="bg-[#0f1117] p-5 rounded-2xl border border-gray-900 shadow-xl space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Bölüm veya Üniversite Arama:</label>
-                            <input type="text" id="atlas-search" oninput="filterAtlas()" placeholder="Örn: Dicle, Tıp, Kimya Mühendisliği..." class="w-full bg-[#161922] text-xs rounded-xl p-3 border border-gray-800 focus:outline-none focus:border-indigo-500 text-gray-200">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">YKS Puan Türü Filtresi:</label>
-                            <div class="flex gap-1" id="atlas-type-g">
-                                <button class="ob sel2 flex-1 text-center py-2 text-xs font-bold rounded-lg border border-gray-800 bg-[#161922]" data-v="SAY" onclick="so3d(this,'atlas-type-g');filterAtlas()">SAY</button>
-                                <button class="ob flex-1 text-center py-2 text-xs font-bold rounded-lg border border-gray-800 bg-[#161922]" data-v="EA" onclick="so3d(this,'atlas-type-g');filterAtlas()">EA</button>
-                                <button class="ob flex-1 text-center py-2 text-xs font-bold rounded-lg border border-gray-800 bg-[#161922]" data-v="SÖZ" onclick="so3d(this,'atlas-type-g');filterAtlas()">SÖZ</button>
-                                <button class="ob flex-1 text-center py-2 text-xs font-bold rounded-lg border border-gray-800 bg-[#161922]" data-v="DİL" onclick="so3d(this,'atlas-type-g');filterAtlas()">DİL</button>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Başarı Sıralaması Sınırı (≤):</label>
-                            <input type="number" id="atlas-rank" oninput="filterAtlas()" placeholder="Maksimum sıralamanız..." class="w-full bg-[#161922] text-xs rounded-xl p-3 border border-gray-800 focus:outline-none text-gray-200">
-                        </div>
-                    </div>
-                </div>
-
-                <div id="atlas-table-wrap" class="bg-[#0f1117] rounded-2xl border border-gray-900 overflow-hidden shadow-2xl">
-                    <div id="atlas-table" class="w-full"></div>
-                </div>
-            </div>
-        </main>
+<body>
+    <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-4">
+        <div class="bg-[#0f1117] p-5 rounded-2xl border border-gray-900">
+            <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Kurum veya Bölüm Filtreleme:</label>
+            <input type="text" id="atlas-search" oninput="filterAtlas()" placeholder="Örn: Dicle, Tıp, Hukuk..." class="w-full bg-[#161922] p-3 rounded-xl border border-gray-800 text-xs text-white focus:outline-none focus:border-indigo-500">
+        </div>
+        <div class="bg-[#0f1117] rounded-2xl border border-gray-900 overflow-hidden shadow-2xl">
+            <div id="atlas-table"></div>
+        </div>
     </div>
-
     <script>
-        function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
-        function so3d(btn, gid) { $('#' + gid + ' .ob').removeClass('sel2 text-indigo-400 border-indigo-500'); $(btn).addClass('sel2 text-indigo-400 border-indigo-500'); }
-
-        // Dicle Üniversitesi ve Ulusal Popüler Bölümler Tam Liste Entegrasyonu
         const ATLAS_DATA = [
-            { uni: 'Dicle Üniversitesi', bolum: 'Tıp Fakültesi', tur: 'SAY', taban2025: 489.15, sira2025: 19800 },
-            { uni: 'Dicle Üniversitesi', bolum: 'Diş Hekimliği Fakültesi', tur: 'SAY', taban2025: 462.40, sira2025: 38200 },
-            { uni: 'Dicle Üniversitesi', bolum: 'Eczacılık Fakültesi', tur: 'SAY', taban2025: 441.10, sira2025: 53500 },
-            { uni: 'Dicle Üniversitesi', bolum: 'Kimya Öğretmenliği', tur: 'SAY', taban2025: 368.50, sira2025: 185000 },
-            { uni: 'Dicle Üniversitesi', bolum: 'Hukuk Fakültesi', tur: 'EA', taban2025: 405.20, sira2025: 46000 },
-            { uni: 'Dicle Üniversitesi', bolum: 'İlköğretim Matematik Öğrt.', tur: 'EA', taban2025: 398.15, sira2025: 56000 },
-            { uni: 'Dicle Üniversitesi', bolum: 'İngiliz Dili ve Edebiyatı', tur: 'DİL', taban2025: 382.40, sira2025: 14200 },
-            { uni: 'İstanbul Üniversitesi', bolum: 'Tıp Fakültesi', tur: 'SAY', taban2025: 512.34, sira2025: 8420 },
-            { uni: 'Hacettepe Üniversitesi', bolum: 'Tıp Fakültesi', tur: 'SAY', taban2025: 508.12, sira2025: 12100 },
-            { uni: 'İTÜ', bolum: 'Bilgisayar Mühendisliği', tur: 'SAY', taban2025: 476.32, sira2025: 28500 },
-            { uni: 'ODTÜ', bolum: 'Bilgisayar Mühendisliği', tur: 'SAY', taban2025: 478.91, sira2025: 25600 },
-            { uni: 'Boğaziçi Üniversitesi', bolum: 'Kimya Mühendisliği', tur: 'SAY', taban2025: 462.18, sira2025: 42000 }
+            { uni: 'Dicle Üniversitesi', bolum: 'Tıp Fakültesi', tur: 'SAY', sira: 19800 },
+            { uni: 'Dicle Üniversitesi', bolum: 'Diş Hekimliği', tur: 'SAY', sira: 38200 },
+            { uni: 'Dicle Üniversitesi', bolum: 'Eczacılık Fakültesi', tur: 'SAY', sira: 53500 },
+            { uni: 'Dicle Üniversitesi', bolum: 'Hukuk Fakültesi', tur: 'EA', sira: 46000 },
+            { uni: 'Dicle Üniversitesi', bolum: 'Kimya Öğretmenliği', tur: 'SAY', sira: 185000 },
+            { uni: 'İstanbul Üniversitesi', bolum: 'Tıp Fakültesi', tur: 'SAY', sira: 8420 },
+            { uni: 'Hacettepe Üniversitesi', bolum: 'Tıp Fakültesi', tur: 'SAY', sira: 12100 }
         ];
-
-        let atlasTypeActive = 'SAY';
-
         function filterAtlas() {
-            const activeBtn = $('#atlas-type-g .sel2');
-            if(activeBtn.length) atlasTypeActive = activeBtn.data('v');
-            const query = $('#atlas-search').val().toLowerCase().trim();
-            const rankLimit = parseInt($('#atlas-rank').val()) || 0;
-
-            const filtered = ATLAS_DATA.filter(d => {
-                if(d.tur !== atlasTypeActive) return false;
-                if(query && !d.uni.toLowerCase().includes(query) && !d.bolum.toLowerCase().includes(query)) return false;
-                if(rankLimit > 0 && d.sira2025 > rankLimit) return false;
-                return true;
-            }).sort((a,b) => b.taban2025 - a.taban2025);
-
+            const q = $('#atlas-search').val().toLowerCase().trim();
             const tbl = $('#atlas-table'); tbl.empty();
-            tbl.append(`
-                <div class="brow hdr bg-[#161922]/80 text-gray-400 font-bold">
-                    <div>Üniversite</div><div>Lisans Programı</div><div class="hide-mobile">Tür</div><div class="text-right">Taban Puan</div><div class="text-right hide-mobile">Sıralama</div>
-                </div>
-            `);
-
-            if(!filtered.length) {
-                tbl.append('<div class="p-6 text-center text-xs text-gray-500 italic">Sonuç bulunamadı.</div>');
-                return;
-            }
-
+            tbl.append(`<div class="brow hdr"><div>Üniversite</div><div>Program</div><div>Tür</div><div class="text-right">Sıralama</div></div>`);
+            const filtered = ATLAS_DATA.filter(d => !q || d.uni.toLowerCase().includes(q) || d.bolum.toLowerCase().includes(q));
             filtered.forEach(d => {
-                tbl.append(`
-                    <div class="brow hover:bg-[#161922]/30">
-                        <div class="font-bold text-gray-200">${d.uni}</div>
-                        <div class="text-gray-400">${d.bolum}</div>
-                        <div class="hide-mobile"><span class="bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded text-[10px]">${d.tur}</span></div>
-                        <div class="bpc text-sm">${d.taban2025.toFixed(2)}</div>
-                        <div class="text-right text-gray-400 font-mono hide-mobile">${d.sira2025.toLocaleString('tr-TR')}</div>
-                    </div>
-                `);
+                tbl.append(`<div class="brow"><div class="font-bold text-gray-200">${d.uni}</div><div class="text-gray-400">${d.bolum}</div><div><span class="bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded text-[10px]">${d.tur}</span></div><div class="text-right text-gray-300 font-mono">${d.sira.toLocaleString('tr-TR')}</div></div>`);
             });
         }
         $(document).ready(function() { filterAtlas(); });
