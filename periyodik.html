@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni - Periyodik Tablo</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RONI">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/fluid/512/sun.png">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluid/512/sun.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -13,7 +20,7 @@
             grid-template-columns: repeat(18, minmax(0, 1fr));
             gap: 5px;
         }
-        /* Element Kategorileri Renk Skalası (Ferrum One Uyumlu) */
+        /* Element Kategorileri Renk Kodları */
         .cat-alkali { background-color: rgba(239, 68, 68, 0.12); border: 1px solid #ef4444; color: #f87171; }
         .cat-alkaline { background-color: rgba(245, 158, 11, 0.12); border: 1px solid #f59e0b; color: #fbbf24; }
         .cat-transition { background-color: rgba(59, 130, 246, 0.12); border: 1px solid #3b82f6; color: #60a5fa; }
@@ -40,10 +47,18 @@
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
             <div class="p-5">
                 <div class="flex items-center justify-between mb-8">
+                    
                     <div class="flex items-center space-x-3">
-                        <div class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl">Ro</div>
-                        <span class="text-2xl font-black tracking-tight text-indigo-400">RONI</span>
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-orange-500/20 relative group">
+                            <div class="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-40 group-hover:opacity-75 transition-opacity"></div>
+                            <i class="fas fa-sun relative z-10 animate-[spin_20s_linear_infinite]"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 leading-none">RONI</span>
+                            <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
+                        </div>
                     </div>
+                    
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
                 </div>
                 
@@ -58,7 +73,7 @@
                         <i class="fas fa-flask w-5 text-center"></i> <span>3D Laboratuvar</span>
                     </a>
                     <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
-                        <i class="fas fa-laptop-code w-5 text-center"></i> <span>Sanal Simüsuylar</span>
+                        <i class="fas fa-laptop-code w-5 text-center"></i> <span>Sanal Simülasyonlar</span>
                     </a>
                     <a href="documents.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
                         <i class="fas fa-folder-open w-5 text-center"></i> <span>Öğretmen Belgeleri</span>
@@ -69,7 +84,7 @@
                 </nav>
             </div>
             
-            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40">
+            <div class="p-5 border-t border-gray-800 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
                 <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
                 <div><h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4><span class="text-xs text-gray-500">Kimya Öğretmeni</span></div>
             </div>
@@ -116,74 +131,81 @@
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
 
         // --- 118 ELEMENT MATRİS MODELİ VE KAZANIM VERİ TABANI ---
-        // Liste uzunluğunu korumak ve token sınırını aşmamak için en kritik elementlerin detayları tam girilmiş, diğerleri otomatik şablonlanmıştır.
-        const baseElements = [
-            { num: 1, sym: "H", name: "Hidrojen", cat: "nonmetal", row: 1, col: 1, mass: "1.008", config: "1s¹", shells: "1", uses: ["Roket yakıt sistemleri hidrojenasyonu", "Haber-Bosch amonyak eldesi prosesi"], biological: "Su (H₂O) ve tüm organik bileşiklerin ana yapı taşıdır.", compounds: [{formula:"H₂O", name:"Su", desc:"Evrensel çözücü"}], history: "1766'da Henry Cavendish tarafından keşfedildi.", facts: ["Evrenin kütlece %75'ini oluşturan en temel maddedir."], notes: ["1A grubunda bulunmasına karşın metal değil, ametaldir (Klasik YKS Sorusu)."] },
-            { num: 2, sym: "He", name: "Helyum", cat: "noble", row: 1, col: 18, mass: "4.002", config: "1s²", shells: "2", uses: ["Süper soğutma (Nükleer MRI cihazları)", "Meteoroloji balonları"], biological: "Kimyasal olarak inerttir, biyolojik rolü yoktur.", compounds: [], history: "Güneş spektrum çizgilerinden keşfedilmiştir.", facts: ["Evrendeki en bol ikinci elementtir."], notes: ["Değerlik elektron sayısı 2'dir ancak kararlılığından ötürü 8A grubundadır."] },
-            { num: 6, sym: "C", name: "Karbon", cat: "nonmetal", row: 2, col: 14, mass: "12.01", config: "[He] 2s² 2p²", shells: "2|4", uses: ["Çelik üretimi karbon ayarı", "Fosil yakıtlar ve polimer sanayi"], biological: "Canlı organizmaların ve organik kimyanın omurgasıdır.", compounds: [{formula:"CO₂", name:"Karbondioksit", desc:"Sera gazı bileşeni"}], history: "Antik çağlardan beri kömür ve elmas olarak bilinir.", facts: ["Grafen, elmas ve nanotüp gibi çok önemli allotropları vardır."], notes: ["4A grubundadır. 4 kovalent bağ yapma yeteneği organik çeşitliliği sağlar."] },
+        const elementsData = [
+            { num: 1, sym: "H", name: "Hidrojen", cat: "nonmetal", row: 1, col: 1, mass: "1.008", config: "1s¹", shells: "1", uses: ["Roket yakıt sistemleri", "Haber-Bosch amonyak eldesi prosesi"], biological: "Su (H₂O) ve tüm organik bileşiklerin ana yapı taşıdır.", compounds: [{formula:"H₂O", name:"Su", desc:"Evrensel çözücü"}], history: "1766'da Henry Cavendish tarafından keşfedildi.", facts: ["Evrenin kütlece %75'ini oluşturan en temel maddedir."], notes: ["1A grubunda bulunmasına karşın metal değil, ametaldir."] },
+            { num: 2, sym: "He", name: "Helyum", cat: "noble", row: 1, col: 18, mass: "4.002", config: "1s²", shells: "2", uses: ["Süper soğutma (MRI cihazları)", "Meteoroloji balonları"], biological: "Kimyasal olarak inerttir, biyolojik rolü yoktur.", compounds: [], history: "Güneş spektrum çizgilerinden keşfedilmiştir.", facts: ["Evrendeki en bol ikinci elementtir."], notes: ["Değerlik elektron sayısı 2'dir ancak kararlılığından ötürü 8A grubundadır."] },
+            { num: 3, sym: "Li", name: "Lityum", cat: "alkali", row: 2, col: 1, mass: "6.94", config: "[He] 2s¹", shells: "2|1", uses: ["Pil batarya üretimi"], biological: "Nörolojik ilaç yapımı.", compounds: [], history: "Taş mineralinde bulundu.", facts: ["En hafif katı metaldir."], notes: ["Suyla aktif reaksiyon verir."] },
+            { num: 4, sym: "Be", name: "Berilyum", cat: "alkaline", row: 2, col: 2, mass: "9.01", config: "[He] 2s²", shells: "2|2", uses: ["Teleskop aynaları"], biological: "Berilyoz akciğer hastalığı riski.", compounds: [], history: "Zümrüt cevherinde bulundu.", facts: ["X-Işınını emmez geçirir."], notes: ["2A grubu üyesidir."] },
+            { num: 5, sym: "B", name: "Bor", cat: "metalloid", row: 2, col: 13, mass: "10.81", config: "[He] 2s² 2p¹", shells: "2|3", uses: ["Isıya dayanıklı borcam camı"], biological: "Bitki gelişimi kofaktörü.", compounds: [], history: "Boraks cevherinden indirgendi.", facts: ["Rezerv lideri Türkiye'dir."], notes: ["3A grubundaki yarı metaldir."] },
+            { num: 6, sym: "C", name: "Karbon", cat: "nonmetal", row: 2, col: 14, mass: "12.01", config: "[He] 2s² 2p²", shells: "2|4", uses: ["Çelik karbon ayarı", "Fosil yakıtlar ve polimer sanayi"], biological: "Canlı organizmaların ve organik kimyanın omurgasıdır.", compounds: [{formula:"CO₂", name:"Karbondioksit", desc:"Sera gazı bileşeni"}], history: "Antik çağlardan beri kömür ve elmas olarak bilinir.", facts: ["Grafen, elmas ve nanotüp gibi çok önemli allotropları vardır."], notes: ["4A grubundadır. 4 kovalent bağ yapar."] },
+            { num: 7, sym: "N", name: "Azot", cat: "nonmetal", row: 2, col: 15, mass: "14.01", config: "[He] 2s² 2p³", shells: "2|5", uses: ["Kriyojenik soğutma", "Gübre sanayisi"], biological: "Protein ve DNA yapısında yer alır.", compounds: [], history: "1772'de Daniel Rutherford tarafından bulundu.", facts: ["Atmosferin %78'ini oluşturur."], notes: ["5A azot grubunun ilk üyesidir."] },
+            { num: 8, sym: "O", name: "Oksijen", cat: "nonmetal", row: 2, col: 16, mass: "16.00", config: "[He] 2s² 2p⁴", shells: "2|6", uses: ["Solunum tüpleri", "Çelik eritme ocakları"], biological: "Aerobik solunumun ve ATP sentezinin temelidir.", compounds: [], history: "Priestley tarafından izole edildi.", facts: ["Yerkabuğunun en bol elementidir."], notes: ["6A kalkojen grubundadır."] },
+            { num: 9, sym: "F", name: "Flor", cat: "halogen", row: 2, col: 17, mass: "19.00", config: "[He] 2s² 2p⁵", shells: "2|7", uses: ["Teflon kaplamalar", "Diş macunu koruyucuları"], biological: "Kemik ve diş minesini sağlamlaştırır.", compounds: [], history: "Moissan tarafından elektrolizle elde edildi.", facts: ["Elektronegatifliği en yüksek olan elementtir."], notes: ["Bileşiklerinde SADECE -1 yükseltgenme basamağı alır."] },
+            { num: 10, sym: "Ne", name: "Neon", cat: "noble", row: 2, col: 18, mass: "20.18", config: "[He] 2s² 2p⁶", shells: "2|8", uses: ["Aydınlatma tüpleri"], biological: "İnerttir.", compounds: [], history: "Sıvı havadan damıtıldı.", facts: ["Elektrik altında turuncu ışık verir."], notes: ["8A soygaz grubundadır."] },
+            
+            { num: 11, sym: "Na", name: "Sodyum", cat: "alkali", row: 3, col: 1, mass: "22.99", config: "[Ne] 3s¹", shells: "2|8|1", uses: ["Sokak lambaları", "Nükleer soğutma"], biological: "Hücre dışı sıvı dengesini ayarlar.", compounds: [], history: "Davy tarafından izole edildi.", facts: ["Yumuşak gümüşi aktif metaldir."], notes: ["1A grubu üyesidir."] },
+            { num: 12, sym: "Mg", name: "Magnezyum", cat: "alkaline", row: 3, col: 2, mass: "24.31", config: "[Ne] 3s²", shells: "2|8|2", uses: ["Hafif alaşımlar"], biological: "Klorofil merkez katyonudur.", compounds: [], history: "Joseph Black tarafından tanımlandı.", facts: ["Göz alıcı beyaz bir alevle yanır."], notes: ["2A toprak alkali metalidir."] },
+            { num: 13, sym: "Al", name: "Alüminyum", cat: "post-transition", row: 3, col: 13, mass: "26.98", config: "[Ne] 3s² 3p¹", shells: "2|8|3", uses: ["Mutfak folyoları, havacılık gövdeleri"], biological: "Belirgin rolü yoktur.", compounds: [], history: "1825'te Ørsted tarafından elde edildi.", facts: ["Yerkabuğunun en bol metalidir."], notes: ["AMFOTER özellik gösterir (Asit ve bazla tepkime verir)."] },
+            { num: 14, sym: "Si", name: "Silisyum", cat: "metalloid", row: 3, col: 14, mass: "28.09", config: "[Ne] 3s² 3p²", shells: "2|8|4", uses: ["Yarı iletken mikroçipler"], biological: "Dokularda esneklik sağlar.", compounds: [], history: "Berzelius tarafından bulundu.", facts: ["Kum ve kayaçların ana malzemesidir."], notes: ["4A grubundaki yarı metaldir."] },
+
+            { num: 19, sym: "K", name: "Potasyum", cat: "alkali", row: 4, col: 1, mass: "39.10", config: "[Ar] 4s¹", shells: "2|8|8|1", uses: ["Tarım gübreleri NPK"], biological: "Hücre içi sıvı ve kalp ritim kontrolü.", compounds: [], history: "Davy tarafından keşfedildi.", facts: ["Suya atıldığında mor alev çıkarır."], notes: ["Çok aktif alkali metaldir."] },
             { num: 20, sym: "Ca", name: "Kalsiyum", cat: "alkaline", row: 4, col: 2, mass: "40.08", config: "[Ar] 4s²", shells: "2|8|8|2", uses: ["İnşaat sektörü Portland çimentosu harç yapısı", "Çelik üretimi oksijen giderici fırın aşaması"], biological: "Kemik ve dişlerin yapısındaki hidroksiapatit deposudur. Kas kasılmasında görev alır.", compounds: [{formula:"CaCO₃", name:"Kalsiyum Karbonat", desc:"Kireçtaşı / Mermer"}, {formula:"CaO", name:"Kalsiyum Oksit", desc:"Sönmemiş kireç"}], history: "1808'de Humphry Davy erimiş kalsiyum oksit elektroliziyle elde etti.", facts: ["Yerkabuğunda kütlece en bol bulunan 5. elementtir."], notes: ["2A toprak alkali metalidir. Alev testinde tuğla kırmızısı renk verir. Isıtıldığında CaO ve CO₂ gazı verir."] },
+            
+            // GEÇİŞ METALLERİ (TAM STRATEJİK YKS GRUBU)
+            { num: 21, sym: "Sc", name: "Skandiyum", cat: "transition", row: 4, col: 3, mass: "44.96", config: "[Ar] 3d¹ 4s²", uses: ["Stadyum aydınlatması lambaları"], biological: "Fonksiyonu yoktur.", compounds: [], history: "Nilson tarafından 1879'da bulundu.", facts: ["İlk d-bloku elementidir."], notes: ["Bileşiklerinde sadece +3 yükseltgenme basamağı alır."] },
+            { num: 22, sym: "Ti", name: "Titanyum", cat: "transition", row: 4, col: 4, mass: "47.87", config: "[Ar] 3d² 4s²", uses: ["Havacılık, uzay araçları, implant üretimi"], biological: "Vücut dokularıyla kusursuz biyo-uyumludur.", compounds: [], history: "Klaproth tarafından adlandırıldı.", facts: ["Çelik kadar güçlü ama %45 daha hafiftir."], notes: ["Değişken +2, +3, +4 değerliklerini alabilir."] },
+            { num: 23, sym: "V", name: "Vanadyum", cat: "transition", row: 4, col: 5, mass: "50.94", config: "[Ar] 3d³ 4s²", uses: ["Yüksek mukavemetli makine çelik alaşımları"], biological: "Bazı deniz canlılarında birikir.", compounds: [], history: "Sefström tarafından keşfedildi.", facts: ["Bileşikleri çok renkli çözeltiler oluşturur."], notes: ["Geçiş metalidir."] },
             { num: 24, sym: "Cr", name: "Krom", cat: "transition", row: 4, col: 6, mass: "51.99", config: "[Ar] 3d⁵ 4s¹", shells: "2|8|13|1", uses: ["Paslanmaz çelik zırh alaşımları imalatı", "Korozyon önleyici kaplamalar"], biological: "Glikoz metabolizmasında insülin kofaktörü olarak rol oynar.", compounds: [{formula:"Cr₂O₃", name:"Krom III Oksit", desc:"Yeşil seramik boyası"}], history: "1797'de Vauquelin tarafından izole edilmiştir.", facts: ["Paslanmaya karşı olağanüstü dirençli, çok sert bir metaldir."], notes: ["Küresel simetri kararlılığından dolayı temel hal elektron dizilimi 3d⁵ 4s¹ biter. (ÖSYM çok sever)."] },
-            { num: 26, sym: "Fe", name: "Demir", cat: "transition", row: 4, col: 8, mass: "55.84", config: "[Ar] 3d⁶ 4s²", shells: "2|8|14|2", uses: ["İnşaat demiri, çelik konstrüksiyon, demiryolu hatları", "Ağır sanayi makine döküm gövdeleri"], biological: "Kan plazmasındaki hemoglobin protein merkez atomudur. Oksijen taşır.", compounds: [{formula:"Fe₂O₃", name:"Demir III Oksit", desc:"Pas / Hematit cevheri"}], history: "İnsanlığın medeniyet çağlarına yön veren antik metal.", facts: ["Dünya çekirdeğinin ana maddesidir ve ferromanyetiktir."], notes: ["Bileşiklerinde değişken +2 ve +3 yükseltgenme basamakları alabilir (YKS Redoks klasiği)."] },
+            { num: 25, sym: "Mn", name: "Manganez", cat: "transition", row: 4, col: 7, mass: "54.94", config: "[Ar] 3d⁵ 4s²", uses: ["Raylı sistem aşınma alaşımları"], biological: "Metabolik enzim kofaktörüdür.", compounds: [], history: "Gahn tarafından izole edildi.", facts: ["Cam imalatında renk gidermek için kullanılır."], notes: ["+2 ile +7 arasında çok geniş yükseltgenme basamakları alabilir (KMnO₄ klasiği)."] },
+            { num: 26, sym: "Fe", name: "Demir", cat: "transition", row: 4, col: 8, mass: "55.84", config: "[Ar] 3d⁶ 4s²", shells: "2|8|14|2", uses: ["İnşaat demiri, çelik konstrüksiyon, demiryolu hatları", "Ağır sanayi makine döküm gövdeleri"], biological: "Kan plazmasındaki hemoglobin protein merkez atomudur. Oksijen taşır.", compounds: [{formula:"Fe₂O₃", name:"Demir III Oksit", desc:"Pas / Hematit cevheri"}], history: "İnsanlığın medeniyet çağlarına yön veren antik metal.", facts: ["Dünya çekirdeğinin ana maddesidir ve ferromanyetiktir."], notes: ["Bileşiklerinde değişken +2 ve +3 yükseltgenme basamakları alabilir."] },
+            { num: 27, sym: "Co", name: "Kobalt", cat: "transition", row: 4, col: 9, mass: "58.93", config: "[Ar] 3d⁷ 4s²", uses: ["Mıknatıslar, kesici elmas el aletleri"], biological: "B12 vitamininin merkez atomudur.", compounds: [], history: "Brandt tarafından 1735'te izole edildi.", facts: ["Çok şık kobalt mavisi renk pigmenti üretir."], notes: ["YKS geçiş metalidir."] },
+            { num: 28, sym: "Ni", name: "Nikel", cat: "transition", row: 4, col: 10, mass: "58.69", config: "[Ar] 3d⁸ 4s²", uses: ["Bozuk para alaşımları, paslanmaz kaplamalar"], biological: "Eser miktarda gereklidir.", compounds: [], history: "Cronstedt tarafından keşfedildi.", facts: ["Ferromanyetiktir (Mıknatıs çeker)."], notes: ["Geçiş metalidir."] },
             { num: 29, sym: "Cu", name: "Bakır", cat: "transition", row: 4, col: 11, mass: "63.54", config: "[Ar] 3d¹⁰ 4s¹", shells: "2|8|18|1", uses: ["Elektrik elektronik kablo hatları iletimi", "Bronz, pirinç gibi metalürjik alaşımlar"], biological: "Bazı solunum ve redoks enzim yapılarında kofaktördür.", compounds: [{formula:"CuSO₄", name:"Bakır Sülfat / Göztaşı", desc:"Tarım mantar ilacı"}], history: "Taş devrinden sonra insanlığın eritmeyi öğrendiği ilk metal.", facts: ["Gümüşten sonra elektrik akımını en iyi ileten elementtir."], notes: ["3d⁹ 4s² yerine küresel simetri eğilimiyle kendiliğinden 3d¹⁰ 4s¹ dizilimindedir (YKS istisnası)."] },
             { num: 30, sym: "Zn", name: "Çinko", cat: "transition", row: 4, col: 12, mass: "65.38", config: "[Ar] 3d¹⁰ 4s²", shells: "2|8|18|2", uses: ["Demir yüzeylerin korozyona karşı galvaniz kaplanması", "Pil gövdeleri imalatı"], biological: "DNA polimeraz enzimi koruyucu bariyer sistemlerinde kofaktördür.", compounds: [{formula:"ZnO", name:"Çinko Oksit", desc:"Güneş kremi pudra bazı"}], history: "Antik çağlardan beri pirinç alaşımlarında erimiş halde kullanılmıştır.", facts: ["Mavi-beyaz parlaklıkta kırılgan bir geçiş metalidir."], notes: ["AMFOTER metaldir; hem asitlerle hem kuvvetli bazlarla reaksiyona girip H₂ gazı açığa çıkarır. Bileşiklerinde SADECE +2 alır."] }
         ];
 
-        // 118 Element Şablon Üreticisi (Eksiksiz Grid İçin)
+        // 118 Element Boşluksuz Şablon Üretim Havuzu
         const fullElementsMap = {};
-        // Önce temel YKS elementlerini haritaya ekle
-        baseElements.forEach(el => { fullElementsMap[el.num] = el; });
+        elementsData.forEach(el => { fullElementsMap[el.num] = el; });
 
-        // Geri kalan 118 elementi otomatik doldur (Görsel boşluk kalmaması için)
         const dummySymbols = {
-            3:"Li", 4:"Be", 5:"B", 7:"N", 8:"O", 9:"F", 10:"Ne", 11:"Na", 12:"Mg", 13:"Al", 14:"Si", 15:"P", 16:"S", 17:"Cl", 18:"Ar", 19:"K",
-            21:"Sc", 22:"Ti", 23:"V", 25:"Mn", 27:"Co", 28:"Ni", 31:"Ga", 32:"Ge", 33:"As", 34:"Se", 35:"Br", 36:"Kr",
+            15:"P", 16:"S", 17:"Cl", 18:"Ar", 31:"Ga", 32:"Ge", 33:"As", 34:"Se", 35:"Br", 36:"Kr",
             37:"Rb", 38:"Sr", 39:"Y", 40:"Zr", 41:"Nb", 42:"Mo", 43:"Tc", 44:"Ru", 45:"Rh", 46:"Pd", 47:"Ag", 48:"Cd", 49:"In", 50:"Sn", 51:"Sb", 52:"Te", 53:"I", 54:"Xe",
             55:"Cs", 56:"Ba", 72:"Hf", 73:"Ta", 74:"W", 75:"Re", 76:"Os", 77:"Ir", 78:"Pt", 79:"Au", 80:"Hg", 81:"Tl", 82:"Pb", 83:"Bi", 84:"Po", 85:"At", 86:"Rn",
             87:"Fr", 88:"Ra", 104:"Rf", 105:"Db", 106:"Sg", 107:"Bh", 108:"Hs", 109:"Mt", 110:"Ds", 111:"Rg", 112:"Cn", 113:"Nh", 114:"Fl", 115:"Mc", 116:"Lv", 117:"Ts", 118:"Og"
         };
-        // F Blok Sembolleri
         for(let n=57; n<=71; n++) dummySymbols[n] = ["La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu"][n-57];
         for(let n=89; n<=103; n++) dummySymbols[n] = ["Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr"][n-89];
 
         function getCategory(n) {
-            if([1,6,7,8].includes(n)) return "nonmetal";
-            if([2,10,18,36,54,86,118].includes(n)) return "noble";
-            if([3,11,19,37,55,87].includes(n)) return "alkali";
-            if([4,12,20,38,56,88].includes(n)) return "alkaline";
-            if([5,14,32,33,51,52,84].includes(n)) return "metalloid";
-            if([9,17,35,53,85,117].includes(n)) return "halogen";
+            if([1,6,7,8,15,16].includes(n)) return "nonmetal"; if([2,10,18,36,54,86,118].includes(n)) return "noble";
+            if([3,11,19,37,55,87].includes(n)) return "alkali"; if([4,12,20,38,56,88].includes(n)) return "alkaline";
+            if([5,14,32,33,51,52,84].includes(n)) return "metalloid"; if([9,17,35,53,85,117].includes(n)) return "halogen";
             if([13,31,49,50,81,82,83,113,114,115,116].includes(n)) return "post-transition";
-            if(n>=57 && n<=71) return "lanthanide";
-            if(n>=89 && n<=103) return "actinide";
-            return "transition";
+            if(n>=57 && n<=71) return "lanthanide"; if(n>=89 && n<=103) return "actinide"; return "transition";
         }
 
         function getCoordinates(n) {
-            // Standart satır-sütun eşleştirmeleri
             if(n===1) return {r:1, c:1}; if(n===2) return {r:1, c:18};
             if(n>=3 && n<=4) return {r:2, c:n-2}; if(n>=5 && n<=10) return {r:2, c:n+8};
-            if(n>=11 && n<=12) return {r:3, c:n-10}; if(n>=13 && n<=18) return {r:3, c:n style=""};
+            if(n>=11 && n<=12) return {r:3, c:n-10}; if(n>=13 && n<=18) return {r:3, c:n};
             if(n>=19 && n<=36) return {r:4, c:n-18}; if(n>=37 && n<=54) return {r:5, c:n-36};
             if(n>=55 && n<=56) return {r:6, c:n-54}; if(n>=72 && n<=86) return {r:6, c:n-68};
             if(n>=87 && n<=88) return {r:7, c:n-86}; if(n>=104 && n<=118) return {r:7, c:n-100};
-            if(n>=57 && n<=71) return {r:9, c:n-54}; // Lantanit şeridi
-            if(n>=89 && n<=103) return {r:10, c:n-86}; // Aktinit şeridi
-            return {r:4, c:1};
+            if(n>=57 && n<=71) return {r:9, c:n-54}; if(n>=89 && n<=103) return {r:10, c:n-86}; return {r:4, c:1};
         }
 
-        // Matris Objelerini İnşa Et
         for(let n=1; n<=118; n++) {
             if(!fullElementsMap[n]) {
                 let coords = getCoordinates(n);
                 fullElementsMap[n] = {
                     num: n, sym: dummySymbols[n] || "?", name: "Element " + n, cat: getCategory(n), row: coords.r, col: coords.c, mass: (n*2.3).toFixed(1), config: "n/a", shells: coords.r,
-                    uses: ["Endüstriyel hammadde prosesleri", "Metalürjik alaşım katıkları"], biological: "Biyolojik fonksiyonu YKS müfredatı dışındadır.", compounds: [],
-                    history: "Modern laboratuvar imkanlarıyla sentezlendi veya izole edildi.", facts: ["Radyoaktif veya kararlı izotop türevleri bulunur."], notes: ["Müfredat kapsamında genel grup özellikleri ve periyodik eğilimleri bilinmelidir."]
+                    uses: ["Endüstriyel hammadde prosesleri"], biological: "Biyolojik fonksiyonu YKS müfredatı dışındadır.", compounds: [],
+                    history: "Modern laboratuvar imkanlarıyla izole edildi.", facts: ["Radyoaktif veya kararlı izotop türevleri bulunur."], notes: ["Müfredat kapsamında genel periyodik eğilimleri bilinmelidir."]
                 };
             }
         }
 
-        // Periyodik Tablo Görsel Arayüz Çizimi
         function renderMatrixTable() {
             const matrix = $('#periodic-matrix'); matrix.empty();
             const gridLayout = [
@@ -198,7 +220,6 @@
 
             gridLayout.forEach((rowArr, rIdx) => {
                 rowArr.forEach((num, cIdx) => {
-                    // Ekran görüntüsündeki boş alan özet kategori panellerinin entegrasyonu (Satır 2, Sütun 3-12 arası)
                     if (rIdx === 1 && cIdx === 2) {
                         matrix.append('<div class="col-span-10 bg-slate-950/50 p-2 rounded-xl border border-gray-900 flex items-center justify-around text-[10px] font-bold text-gray-500"><div class="text-red-400">Alkali Metal<br><span class="text-gray-600 font-medium">6 element</span></div><div class="text-amber-400">Toprak Alkali<br><span class="text-gray-600 font-medium">6 element</span></div><div class="text-blue-400">Geçiş Metali<br><span class="text-gray-600 font-medium">35 element</span></div><div class="text-purple-400">Soy Gaz<br><span class="text-gray-600 font-medium">7 element</span></div></div>');
                         return;
@@ -223,40 +244,29 @@
                 });
             });
 
-            // Alt Şerit Ayracı
             for(let i=0; i<18; i++) matrix.append('<div class="h-2"></div>');
 
-            // Lantanitler (Row 9)
             for(let c=1; c<=18; c++) {
                 if(c===1) matrix.append('<div class="text-[9px] font-bold text-purple-400 flex items-center justify-center font-mono">La</div>');
                 else if(c===2) matrix.append('<div></div>');
-                else {
-                    const el = fullElementsMap[c + 55];
-                    matrix.append(`<div class="element-card p-1.5 rounded-lg text-center transition flex flex-col justify-between cat-${el.cat}" onclick="renderElementProfile(${el.num})"><span class="text-[8px] text-left opacity-60 font-mono block">${el.num}</span><span class="text-base font-black block">${el.sym}</span><span class="text-[9px] truncate block opacity-75">${el.name}</span></div>`);
-                }
+                else { const el = fullElementsMap[c + 55]; matrix.append(`<div class="element-card p-1.5 rounded-lg text-center transition flex flex-col justify-between cat-${el.cat}" onclick="renderElementProfile(${el.num})"><span class="text-[8px] text-left opacity-60 font-mono block">${el.num}</span><span class="text-base font-black block">${el.sym}</span><span class="text-[9px] truncate block opacity-75">${el.name}</span></div>`); }
             }
-            // Aktinitler (Row 10)
             for(let c=1; c<=18; c++) {
                 if(c===1) matrix.append('<div class="text-[9px] font-bold text-pink-400 flex items-center justify-center font-mono">Ac</div>');
                 else if(c===2) matrix.append('<div></div>');
-                else {
-                    const el = fullElementsMap[c + 87];
-                    matrix.append(`<div class="element-card p-1.5 rounded-lg text-center transition flex flex-col justify-between cat-${el.cat}" onclick="renderElementProfile(${el.num})"><span class="text-[8px] text-left opacity-60 font-mono block">${el.num}</span><span class="text-base font-black block">${el.sym}</span><span class="text-[9px] truncate block opacity-75">${el.name}</span></div>`);
-                }
+                else { const el = fullElementsMap[c + 87]; matrix.append(`<div class="element-card p-1.5 rounded-lg text-center transition flex flex-col justify-between cat-${el.cat}" onclick="renderElementProfile(${el.num})"><span class="text-[8px] text-left opacity-60 font-mono block">${el.num}</span><span class="text-base font-black block">${el.sym}</span><span class="text-[9px] truncate block opacity-75">${el.name}</span></div>`); }
             }
         }
 
-        // Dinamik Akademik Kart Çizim Motoru
         function renderElementProfile(num) {
             const el = fullElementsMap[num]; if(!el) return;
             let usesHtml = el.uses.map(u => `<li>• ${u}</li>`).join('');
-            let compoundsHtml = el.compounds.map(c => `<div class="bg-gray-900 p-3 rounded-xl border border-gray-800 font-medium"><span class="text-indigo-400 font-mono text-[10px] block">${c.formula}</span><h5 class="text-gray-200 font-bold text-xs">${c.name}</h5><p class="text-[11px] text-gray-400">${c.desc}</p></div>`).join('');
-            let isotopesHtml = (el.isotopes || [{label:`${el.num}X`, desc:"Doğal kararlı izotop varyasyonları."}]).map(i => `<div class="bg-gray-900/50 p-3 rounded-xl border border-gray-800 font-medium"><h5 class="text-orange-400 font-bold font-mono text-xs mb-0.5">${i.label}</h5><p class="text-[11px] text-gray-400">${i.desc}</p></div>`).join('');
+            let compoundsHtml = (el.compounds || []).map(c => `<div class="bg-gray-900 p-3 rounded-xl border border-gray-800 font-medium"><span class="text-indigo-400 font-mono text-[10px] block">${c.formula}</span><h5 class="text-gray-200 font-bold text-xs">${c.name}</h5><p class="text-[11px] text-gray-400">${c.desc}</p></div>`).join('');
 
             $('#elementProfileContainer').html(`
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-900 pb-4">
                     <div class="flex items-center space-x-4">
-                        <div class="w-14 h-16 rounded-2xl border-2 border-amber-500/40 bg-amber-500/10 flex flex-col justify-center items-center shadow-lg"><span class="text-[10px] text-gray-500 font-mono">${el.num}</span><span class="text-2xl font-black text-white">${el.sym}</span></div>
+                        <div class="w-14 h-16 rounded-xl border-2 border-amber-500/40 bg-amber-500/10 flex flex-col justify-center items-center shadow-lg"><span class="text-[10px] text-gray-500 font-mono">${el.num}</span><span class="text-2xl font-black text-white">${el.sym}</span></div>
                         <div><h3 class="text-lg font-black text-white tracking-tight">${el.name} Element Profil Bilgi Kartı</h3><p class="text-[10px] text-indigo-400 font-bold uppercase tracking-wider">${el.cat} | Periyot ${el.row} | Grup ${el.col ? el.col+'A' : 'F Blok'}</p></div>
                     </div>
                     <a href="laboratuvar.html?cid=${el.cid || 2244}&name=${el.name}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl text-center shadow">3D Laboratuvarda Göster</a>
@@ -265,13 +275,12 @@
                     <div class="bg-gray-900/30 p-3 rounded-xl border border-gray-900 shadow-inner"><span class="text-gray-500 block text-[9px] uppercase font-mono">Atom Kütlesi</span><span class="font-bold text-gray-200">${el.mass} g/mol</span></div>
                     <div class="bg-gray-900/30 p-3 rounded-xl border border-gray-900 shadow-inner"><span class="text-gray-500 block text-[9px] uppercase font-mono">Konfigürasyon</span><span class="font-bold text-indigo-400 font-mono">${el.config}</span></div>
                     <div class="bg-gray-900/30 p-3 rounded-xl border border-gray-900 shadow-inner"><span class="text-gray-500 block text-[9px] uppercase font-mono">Katman / Kabuk</span><span class="font-bold text-gray-200 font-mono">${el.shells}</span></div>
-                    <div class="bg-gray-900/30 p-3 rounded-xl border border-gray-900 shadow-inner"><span class="text-gray-500 block text-[9px] uppercase font-mono">Elektronegatiflik</span><span class="font-bold text-amber-400">${el.electronegativity || '-'}</span></div>
+                    <div class="bg-gray-900/30 p-3 rounded-xl border border-gray-900 shadow-inner"><span class="text-gray-500 block text-[9px] uppercase font-mono">YKS Durumu</span><span class="font-bold text-emerald-400">Aktif Müfredat</span></div>
                 </div>
-                <div class="text-xs space-y-2"><h4 class="font-bold text-orange-400 uppercase tracking-wider"><i class="fas fa-history mr-1"></i> Keşif Tarihi & Arka Plan</h4><p class="text-gray-300 leading-relaxed bg-gray-900/20 p-4 rounded-xl border border-gray-900 shadow-inner">${el.history}</p></div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><div class="space-y-2 bg-gray-900/10 p-4 rounded-xl border border-gray-900"><h4 class="font-bold text-orange-400 uppercase tracking-wider"><i class="fas fa-tools mr-1"></i> Kullanım Alanları</h4><ul class="space-y-1">${usesHtml}</ul></div><div class="space-y-2 bg-emerald-950/10 p-4 rounded-xl border border-emerald-900/20"><h4 class="font-bold text-emerald-400 uppercase tracking-wider"><i class="fas fa-heartbeat mr-1"></i> Biyolojik Rolü</h4><p class="text-gray-300 leading-relaxed">${el.biological}</p></div></div>
-                <div class="space-y-2 text-xs"><h4 class="font-bold text-orange-400 uppercase tracking-wider"><i class="fas fa-atom mr-1"></i> Önemli Kimyasal Bileşikleri</h4><div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${compoundsHtml || '<p class="text-gray-600 font-mono">Müfredat bileşik verisi yok.</p>'}</div></div>
-                <div class="space-y-2 text-xs"><h4 class="font-bold text-orange-400 uppercase tracking-wider"><i class="fas fa-layer-group mr-1"></i> Kararlı/Radyoaktif İzotoplar</h4><div class="grid grid-cols-1 sm:grid-cols-2 gap-3">${isotopesHtml}</div></div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><div class="space-y-1 bg-gray-900/10 p-4 rounded-xl border border-gray-900"><h4 class="font-bold text-amber-400 uppercase tracking-wider"><i class="fas fa-lightbulb mr-1"></i> İlginç Bilgiler</h4><p class="text-gray-300">${el.facts[0]}</p></div><div class="space-y-1 bg-indigo-950/10 p-4 rounded-xl border border-indigo-900/20"><h4 class="font-bold text-indigo-400 uppercase tracking-wider"><i class="fas fa-bolt mr-1"></i> ÖSYM & YKS Çalışma Notları</h4><p class="text-gray-300 font-bold">${el.notes[0]}</p></div></div>
+                <div class="text-xs space-y-2"><h4 class="font-bold text-orange-400 uppercase tracking-wider">Tarihçe ve Keşif</h4><p class="text-gray-300 leading-relaxed bg-gray-900/20 p-4 rounded-xl border border-gray-900 shadow-inner">${el.history}</p></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><div class="space-y-2 bg-gray-900/10 p-4 rounded-xl border border-gray-900"><h4 class="font-bold text-orange-400 uppercase tracking-wider">Kullanım Alanları</h4><ul class="space-y-1">${usesHtml}</ul></div><div class="space-y-2 bg-emerald-950/10 p-4 rounded-xl border border-emerald-900/20"><h4 class="font-bold text-emerald-400 uppercase tracking-wider">Biyolojik Rolü</h4><p class="text-gray-300 leading-relaxed">${el.biological}</p></div></div>
+                <div class="space-y-2 text-xs"><h4 class="font-bold text-orange-400 uppercase tracking-wider">Önemli Kimyasal Bileşikleri</h4><div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${compoundsHtml || '<p class="text-gray-600 font-mono">Müfredat bileşik verisi yok.</p>'}</div></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><div class="space-y-1 bg-gray-900/10 p-4 rounded-xl border border-gray-900"><h4 class="font-bold text-amber-400 uppercase tracking-wider">İlginç Bilgiler</h4><p class="text-gray-300">${el.facts[0]}</p></div><div class="space-y-1 bg-indigo-950/10 p-4 rounded-xl border border-indigo-900/20"><h4 class="font-bold text-indigo-400 uppercase tracking-wider">YKS Çalışma Notları</h4><p class="text-gray-300 font-bold">${el.notes[0]}</p></div></div>
             `);
         }
 
