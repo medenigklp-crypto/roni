@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roni — Kuantum Orbital Laboratuvarı</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        :root { --bg: #05060a; --sf: #0b0d14; --br: #171c2c; }
+        body { background: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        .font-space { font-family: 'Space Grotesk', sans-serif; }
+        
+        /* Kuralların Canlı Durum Işıkları */
+        .status-true { background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.4); color: #10b981; }
+        .status-false { background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.4); color: #ef4444; }
+    </style>
+</head>
+<body class="p-4 md:p-8 min-h-screen flex items-center justify-center">
+
+    <div class="w-full max-w-5xl bg-[#0b0d14] rounded-2xl border border-gray-950 p-6 shadow-2xl space-y-6">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-900 pb-4">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="text-gray-500 hover:text-white transition"><i class="fas fa-arrow-left"></i></a>
+                <h2 class="text-xl font-bold text-white font-space">Atomik Orbital ve Elektron Dizilim Laboratuvarı</h2>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <label class="text-xs font-semibold text-gray-400">Hedef Temel Hal:</label>
+                <select id="element-select" class="bg-[#111420] border border-gray-800 text-xs font-bold rounded-xl px-3 py-2 text-white focus:outline-none focus:border-indigo-500">
+                    <option value="0">-- Kendin Tasarla (Boş) --</option>
+                    <option value="1">₁H (Hidrojen)</option>
+                    <option value="2">₂He (Helyum)</option>
+                    <option value="3">₃Li (Lityum)</option>
+                    <option value="4" selected>₄Be (Berilyum)</option>
+                    <option value="5">₅B (Bor)</option>
+                    <option value="6">₆C (Karbon)</option>
+                    <option value="7">₇N (Azot)</option>
+                    <option value="8">₈O (Oksijen)</option>
+                    <option value="9">₉F (Flor)</option>
+                    <option value="10">₁₀Ne (Neon)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-2 bg-[#111420]/30 border border-gray-900 rounded-xl p-6 relative flex">
+                
+                <div class="w-16 flex flex-col items-center justify-between border-r border-gray-900/60 pr-4 mr-6">
+                    <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest h-12 flex items-center justify-center">Yüksek</span>
+                    <div class="w-1 flex-1 bg-gradient-to-t from-blue-500 via-indigo-500 to-red-500 my-2 rounded relative">
+                        <i class="fas fa-chevron-up absolute -top-1 left-1/2 -translate-x-1/2 text-red-500 text-xs"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest h-12 flex items-center justify-center">Düşük</span>
+                </div>
+
+                <div class="flex-1 space-y-4 flex flex-col justify-end">
+                    
+                    <div class="flex items-center space-x-4 subshell-row" data-subshell="2p" data-max="6">
+                        <span class="w-8 text-xs font-mono font-bold text-gray-500">2p</span>
+                        <div class="flex space-x-2">
+                            <div class="orbital-box w-12 h-12 border-2 border-gray-800 rounded-xl flex items-center justify-center text-lg font-black cursor-pointer hover:border-gray-700 bg-black/20 transition" data-state="0"></div>
+                            <div class="orbital-box w-12 h-12 border-2 border-gray-800 rounded-xl flex items-center justify-center text-lg font-black cursor-pointer hover:border-gray-700 bg-black/20 transition" data-state="0"></div>
+                            <div class="orbital-box w-12 h-12 border-2 border-gray-800 rounded-xl flex items-center justify-center text-lg font-black cursor-pointer hover:border-gray-700 bg-black/20 transition" data-state="0"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4 subshell-row" data-subshell="2s" data-max="2">
+                        <span class="w-8 text-xs font-mono font-bold text-gray-500">2s</span>
+                        <div class="orbital-box w-12 h-12 border-2 border-gray-800 rounded-xl flex items-center justify-center text-lg font-black cursor-pointer hover:border-gray-700 bg-black/20 transition" data-state="0"></div>
+                    </div>
+
+                    <div class="flex items-center space-x-4 subshell-row" data-subshell="1s" data-max="2">
+                        <span class="w-8 text-xs font-mono font-bold text-gray-500">1s</span>
+                        <div class="orbital-box w-12 h-12 border-2 border-gray-800 rounded-xl flex items-center justify-center text-lg font-black cursor-pointer hover:border-gray-700 bg-black/20 transition" data-state="0"></div>
+                    </div>
+
+                    <p class="text-[10px] text-gray-500 pt-2"><i class="fas fa-info-circle mr-1"></i> Kutulara tıklayarak elektron durumunu manuel değiştirebilirsiniz: Boş → (↑) → (↑↓)</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 flex flex-col justify-between">
+                
+                <div class="bg-gray-950/60 border border-gray-900 p-5 rounded-xl space-y-2">
+                    <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Canlı Elektron Konfigürasyonu</span>
+                    <div id="config-output" class="text-xl font-black font-space text-indigo-400 tracking-wide bg-black/40 p-3 rounded-lg border border-gray-900/60 min-h-[52px] flex items-center">
+                        1s² 2s²
+                    </div>
+                </div>
+
+                <div class="bg-[#111420]/40 border border-gray-900 p-5 rounded-xl space-y-3 flex-1 flex flex-col justify-center">
+                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1"><i class="fas fa-shield-alt text-indigo-500 mr-1"></i> Kuantum Uyumluluk Kriterleri</h3>
+                    
+                    <div id="rule-aufbau" class="status-true border text-xs font-bold p-3 rounded-xl flex items-center justify-between transition-all duration-300">
+                        <span>Aufbau İlkesi (Enerji Sırası)</span>
+                        <i class="fas fa-check-circle" id="icon-aufbau"></i>
+                    </div>
+
+                    <div id="rule-pauli" class="status-true border text-xs font-bold p-3 rounded-xl flex items-center justify-between transition-all duration-300">
+                        <span>Pauli İlkesi (Zıt Spin Koşulu)</span>
+                        <i class="fas fa-check-circle" id="icon-pauli"></i>
+                    </div>
+
+                    <div id="rule-hund" class="status-true border text-xs font-bold p-3 rounded-xl flex items-center justify-between transition-all duration-300">
+                        <span>Hund Kuralı (Eş Dağılım)</span>
+                        <i class="fas fa-check-circle" id="icon-hund"></i>
+                    </div>
+                </div>
+
+                <button id="clear-atoms" class="w-full bg-gray-900 hover:bg-gray-800 border border-gray-800 text-xs font-bold text-gray-400 py-3 rounded-xl transition">
+                    <i class="fas fa-undo mr-1"></i> Tüm Orbitalleri Boşalt
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Kuantum Kurallarına Uygun Temel Hal Kimya Veri Tabanı (Z=1'den Z=10'a kadar)
+        const targetElements = {
+            "0": { "1s": [0], "2s": [0], "2p": [0, 0, 0] }, // Tamamen Boş Custom Tasarım
+            "1": { "1s": [1], "2s": [0], "2p": [0, 0, 0] }, // H
+            "2": { "1s": [2], "2s": [0], "2p": [0, 0, 0] }, // He
+            "3": { "1s": [2], "2s": [1], "2p": [0, 0, 0] }, // Li
+            "4": { "1s": [2], "2s": [2], "2p": [0, 0, 0] }, // Be
+            "5": { "1s": [2], "2s": [2], "2p": [1, 0, 0] }, // B
+            "6": { "1s": [2], "2s": [2], "2p": [1, 1, 0] }, // C (Hund Kuralına Uygun Eş Dağılım)
+            "7": { "1s": [2], "2s": [2], "2p": [1, 1, 1] }, // N (Yarı dolu kararlı küresel simetri)
+            "8": { "1s": [2], "2s": [2], "2p": [2, 1, 1] }, // O
+            "9": { "1s": [2], "2s": [2], "2p": [2, 2, 1] }, // F
+            "10": { "1s": [2], "2s": [2], "2p": [2, 2, 2] } // Ne (Tam Dolu Soygaz Kararlılığı)
+        };
+
+        // Kutu Tıklama Olay Döngüsü
+        $('.orbital-box').on('click', function() {
+            let currentState = parseInt($(this).attr('data-state'));
+            let nextState = (currentState + 1) % 3; // 0 -> 1 -> 2 -> 0 Döngüsü
+            
+            // Manuel değişiklik yapıldığı an seçimi custom moduna çekelim
+            $('#element-select').val("0");
+            
+            setBoxState($(this), nextState);
+            analizEt();
+        });
+
+        // Kutunun Görsel Durumunu Ayarlayan Fonksiyon
+        function setBoxState(element, state) {
+            element.attr('data-state', state);
+            element.removeClass('border-emerald-500/40 bg-emerald-500/5 border-indigo-500/40 bg-indigo-500/5');
+            
+            if(state === 1) {
+                element.html('<span class="text-emerald-400 text-xl font-black">↑</span>').addClass('border-emerald-500/40 bg-emerald-500/5');
+            } else if(state === 2) {
+                element.html('<span class="text-indigo-400 text-xl font-black">↑↓</span>').addClass('border-indigo-500/40 bg-indigo-500/5');
+            } else {
+                element.html('');
+            }
+        }
+
+        // Açılır Menü Değiştiğinde Otomatik Doldurma Algoritması
+        $('#element-select').on('change', function() {
+            let z = $(this).val();
+            let config = targetElements[z];
+            
+            $('.subshell-row').each(function() {
+                let subshell = $(this).attr('data-subshell');
+                let subshellStates = config[subshell];
+                
+                $(this).find('.orbital-box').each(function(index) {
+                    let state = subshellStates[index] !== undefined ? subshellStates[index] : 0;
+                    setBoxState($(this), state);
+                });
+            });
+            analizEt();
+        });
+
+        // Kuralları Canlı Denetleyen ve Spektroskopik Metni Yazan Çekirdek Fonksiyon
+        function analizEt() {
+            let counts = { '1s': 0, '2s': 0, '2p': 0 };
+            let states = { '1s': [], '2s': [], '2p': [] };
+
+            $('.subshell-row').each(function() {
+                let subshell = $(this).attr('data-subshell');
+                $(this).find('.orbital-box').each(function() {
+                    let state = parseInt($(this).attr('data-state'));
+                    states[subshell].push(state);
+                    counts[subshell] += (state === 2 ? 2 : (state === 1 ? 1 : 0));
+                });
+            });
+
+            // 1. Spektroskopik Metin Çıktısı Hizalaması
+            let output = [];
+            if(counts['1s'] > 0) output.push(`1s<sup>${counts['1s']}</sup>`);
+            if(counts['2s'] > 0) output.push(`2s<sup>${counts['2s']}</sup>`);
+            if(counts['2p'] > 0) output.push(`2p<sup>${counts['2p']}</sup>`);
+            $('#config-output').html(output.length > 0 ? output.join(' ') : 'Boş Şema');
+
+            // 2. Kuantum Mekaniksel Kural Denetimleri
+            let aufbau = true;
+            let hund = true;
+            let pauli = true; // Arayüz modeli aynı hücreye 3. oku almayarak Pauli'yi korur
+
+            // Aufbau Denetimi: Düşük enerjili alt katman tam dolmadan üst katmana elektron konulmuş mu?
+            if((counts['2s'] > 0 && counts['1s'] < 2) || (counts['2p'] > 0 && counts['2s'] < 2)) {
+                aufbau = false;
+            }
+
+            // Hund Denetimi (2p Dejenere Orbitalleri İçin): Çiftleşmiş elektron varsa, tüm kutular önceden yarı dolmuş olmalıydı
+            let pStates = states['2p'];
+            let hasPair = pStates.includes(2);
+            let hasEmpty = pStates.includes(0);
+            if(hasPair && hasEmpty) {
+                hund = false;
+            }
+
+            // Arayüz Işıklarını Güncelleme
+            updateRuleUI('aufbau', aufbau);
+            updateRuleUI('hund', hund);
+            updateRuleUI('pauli', pauli);
+        }
+
+        function updateRuleUI(rule, isValid) {
+            let el = $('#rule-' + rule);
+            let icon = $('#icon-' + rule);
+            if(isValid) {
+                el.removeClass('status-false').addClass('status-true');
+                icon.removeClass('fa-times-circle').addClass('fa-check-circle');
+            } else {
+                el.removeClass('status-true').addClass('status-false');
+                icon.removeClass('fa-check-circle').addClass('fa-times-circle');
+            }
+        }
+
+        // Sıfırlama Butonu Akışı
+        $('#clear-atoms').on('click', function() {
+            $('#element-select').val("0");
+            $('.orbital-box').each(function() { setBoxState($(this), 0); });
+            analizEt();
+        });
+
+        // Sayfa İlk Açıldığında Varsayılan Olarak Seçili Olan Elementi (₁Be) Tetikle
+        $(document).ready(function() {
+            $('#element-select').trigger('change');
+        });
+    </script>
+</body>
+</html>
