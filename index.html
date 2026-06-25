@@ -1,119 +1,149 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roni – YKS Kimya Platformu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roni — YKS Kimya Platformu</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RONI">
+    
+    <link rel="apple-touch-icon" href="logo.png?v=1.1">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo.png?v=1.1">
+    <link rel="manifest" href="manifest.json">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="RONI">
-
-  <link rel="apple-touch-icon" href="logo.png?v=1.1">
-  <link rel="icon" type="image/png" sizes="192x192" href="logo.png?v=1.1">
-  <link rel="manifest" href="manifest.json">
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <style>
-    :root {
-      --bg: #08090f; 
-      --sf: #0f1117; 
-      --sf2: #161922;
-      --br: #1f2432;
-    }
-    body { 
-      background: var(--bg); 
-      color: #ffffff; 
-      font-family: 'Inter', sans-serif;
-    }
-    body::before {
-      content: ''; 
-      position: fixed; 
-      inset: 0;
-      background-image: radial-gradient(circle at 50% 50%, transparent 0%, var(--bg) 100%);
-      background-size: 28px 28px; 
-      pointer-events: none;
-      z-index: -1;
-    }
-  </style>
+    <style>
+        :root {
+            --bg: #08090f; --sf: #0f1117; --sf2: #161922; --br: #1e2535; --br2: #252d40; --ac: #6366f1; --ac2: #818cf8;
+        }
+        body { background: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        body::before {
+            content: ''; position: fixed; inset: 0;
+            background-image: radial-gradient(circle at 1px 1px, rgba(99,102,241,.06) 1px, transparent 0);
+            background-size: 28px 28px; pointer-events: none; z-index: 0;
+        }
+    </style>
 </head>
 <body class="overflow-x-hidden">
 
-  <div class="flex h-screen overflow-hidden">
-    
-    <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-[#0f1117] border-r border-[#1f2432] transition-transform duration-300 md:translate-x-0">
-      <div class="p-5 overflow-y-auto h-full flex flex-col">
-        <div class="flex items-center space-x-3 mb-8">
-          </div>
+    <div class="flex h-screen overflow-hidden relative z-10">
         
-        </div>
-    </aside>
+        <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
+            <div class="p-5 overflow-y-auto flex-1">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-slate-950 w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-lg relative">
+                            <i class="fas fa-sun animate-[spin_20s_linear_infinite]"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-black tracking-wider text-white leading-none">RONI</span>
+                            <span class="text-[9px] font-bold text-gray-500 tracking-widest mt-0.5 uppercase">Aydınlık Merkezi</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white md:hidden p-2"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                
+                <nav class="space-y-1">
+                    <a href="index.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm">
+                        <i class="fas fa-chart-pie w-5 text-center"></i> <span>Ana Sayfa</span>
+                    </a>
+                    <a href="periyodik.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-table w-5 text-center"></i> <span>Periyodik Tablo</span>
+                    </a>
+                    <a href="laboratuvar.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-flask w-5 text-center"></i> <span>3D Araçlar</span>
+                    </a>
+                    <a href="simulasyon.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-laptop-code w-5 text-center"></i> <span>Simülasyonlar</span>
+                    </a>
+                    <a href="atlas.html" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white font-semibold text-sm transition">
+                        <i class="fas fa-graduation-cap w-5 text-center"></i> <span>YÖK Atlas</span>
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="p-5 border-t border-gray-900 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
+                <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
+                <div>
+                    <h4 class="text-sm font-bold text-gray-200">Medeni Gökalp</h4>
+                    <span class="text-xs text-gray-500">Kimya Öğretmeni</span>
+                </div>
+            </div>
+        </aside>
 
-    <main class="flex-1 flex flex-col overflow-y-auto md:pl-64">
-      
-      <div class="flex justify-between items-center p-4">
-        <span id="pomtm" class="text-sm">25:00</span>
-        <button onclick="pomToggle()" id="pomstbtn" class="text-xs bg-red-600 px-3 py-1 rounded">Başlat</button>
-      </div>
+        <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
 
-    </main>
-  </div>
+        <main class="flex-1 flex flex-col overflow-y-auto min-w-0">
+            <header class="bg-[#08090f]/90 backdrop-blur border-b border-gray-900 px-6 py-4 flex justify-between items-center sticky top-0 z-30">
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-400 hover:text-white md:hidden"><i class="fas fa-bars text-xl"></i></button>
+                    <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">RONI Kimya Yönetim Paneli</h2>
+                </div>
+            </header>
 
-  <script>
-    function toggleSidebar() {
-      $('#sidebarPanel').toggleClass('-translate-x-full');
-    }
+            <div class="p-4 md:p-8 max-w-7xl w-full mx-auto space-y-6 flex-1">
+                <div class="text-center max-w-2xl mx-auto space-y-3 py-4">
+                    <span class="bg-indigo-500/10 text-indigo-400 text-[11px] font-bold px-3 py-1 rounded-full border border-indigo-500/20 uppercase tracking-wider">⚗️ YKS Hazırlık Altyapısı</span>
+                    <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white font-['Space_Grotesk']">Kimya İçin <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Her Şey</span> Tek Yerde.</h1>
+                </div>
 
-    // YKS Geri Sayım Sayacı (2027 Hedefi)
-    function tickCD() {
-      const diff = new Date('2027-06-19T10:00:00') - new Date();
-      if (diff <= 0) return;
-      const g = Math.floor(diff / 86400000);
-      $('#cdg').text(String(g).padStart(2, '0'));
-    }
-    setInterval(tickCD, 1000);
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-[#0f1117] p-5 rounded-2xl border border-gray-900 space-y-4 shadow-xl">
+                        <h3 class="font-bold text-xs uppercase text-indigo-400 tracking-wider font-['Space_Grotesk']"><i class="fas fa-clock mr-2"></i>YKS 2027 Geri Sayım</h3>
+                        <div class="grid grid-cols-4 gap-2 text-center">
+                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cdg" class="text-xl font-black text-white">00</div><div class="text-[9px] text-gray-500 uppercase">Gün</div></div>
+                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cds" class="text-xl font-black text-white">00</div><div class="text-[9px] text-gray-500 uppercase">Saat</div></div>
+                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cdd" class="text-xl font-black text-white">00</div><div class="text-[9px] text-gray-500 uppercase">Dk</div></div>
+                            <div class="bg-[#161922] p-3 rounded-xl"><div id="cdsn" class="text-xl font-black text-white">00</div><div class="text-[9px] text-gray-500 uppercase">Sn</div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-[#0f1117] p-5 rounded-2xl border border-gray-900 flex flex-col justify-between shadow-xl">
+                        <h3 class="font-bold text-xs uppercase text-amber-400 tracking-wider mb-2"><i class="fas fa-brain mr-2"></i>Odaklanma Zamanlayıcısı</h3>
+                        <div class="flex justify-around items-center">
+                            <span id="pomtm" class="text-3xl font-black text-white font-['Space_Grotesk']">25:00</span>
+                            <button onclick="pomToggle()" id="pomstbtn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition-all shadow">Başlat</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
-    // Pomodoro Zamanlayıcı Ayarları
-    let pom = { run: false, rem: 25 * 60 };
-    let pomInterval;
+    <script>
+        function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
+        function tickCD() {
+            const diff = new Date('2027-06-19T10:00:00') - new Date();
+            if(diff <= 0) return;
+            const g = Math.floor(diff/86400000), s = Math.floor((diff%86400000)/3600000), d = Math.floor((diff%3600000)/60000), sn = Math.floor((diff%60000)/1000);
+            $('#cdg').text(String(g).padStart(2,'0')); $('#cds').text(String(s).padStart(2,'0')); $('#cdd').text(String(d).padStart(2,'0')); $('#cdsn').text(String(sn).padStart(2,'0'));
+        }
+        setInterval(tickCD, 1000);
+        let pom = { run: false, rem: 25*60 }; let pomInt = null;
+        function pomToggle() {
+            if(pom.run) { clearInterval(pomInt); pom.run = false; $('#pomstbtn').text('Devam Et'); }
+            else { pom.run = true; $('#pomstbtn').text('Durdur'); pomInt = setInterval(pomTick, 1000); }
+        }
+        function pomTick() {
+            pom.rem--; if(pom.rem <= 0) { clearInterval(pomInt); pom.run = false; pom.rem = 25*60; $('#pomstbtn').text('Başlat'); }
+            const m = Math.floor(pom.rem/60), s = pom.rem%60; $('#pomtm').text(String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'));
+        }
+        $(document).ready(function() { tickCD(); });
+    </script>
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js');
+            });
+        }
+    </script>
 
-    function pomToggle() {
-      if (pom.run) {
-        clearInterval(pomInterval);
-        pom.run = false;
-        $('#pomstbtn').text('Başlat');
-      } else {
-        pom.run = true;
-        $('#pomstbtn').text('Durdur');
-        pomInterval = setInterval(pomTick, 1000);
-      }
-    }
-
-    function pomTick() {
-      pom.rem--;
-      if (pom.rem <= 0) {
-        clearInterval(pomInterval);
-      }
-      const m = Math.floor(pom.rem / 60);
-      const s = pom.rem % 60;
-      $('#pomtm').text(String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'));
-    }
-
-    $(document).ready(function () {
-      tickCD();
-    });
-  </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js');
-      });
-    }
-  </script>
 </body>
 </html>
