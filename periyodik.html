@@ -5,23 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni — İnteraktif Periyodik Tablo</title>
     
-    <!-- Mobil Cihaz ve PWA Uyumluluk Ayarları -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="RONI">
     
-    <!-- Güneş Logosu (Versiyonlu) ve Manifest Bağlantısı -->
     <link rel="apple-touch-icon" href="logo.png?v=1.1">
     <link rel="icon" type="image/png" sizes="192x192" href="logo.png?v=1.1">
     <link rel="manifest" href="manifest.json">
     
-    <!-- Harici Fontlar ve Yazılım Kütüphaneleri -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- Özel CSS ve Dinamik Neon Glow Efektleri -->
     <style>
         :root {
             --bg: #08090f; --sf: #0f1117; --sf2: #161922; --br: #1e2535; --br2: #252d40; --ac: #6366f1; --ac2: #818cf8;
@@ -33,19 +29,21 @@
             background-size: 28px 28px; pointer-events: none; z-index: 0;
         }
         
-        /* Dinamik Işık Parlama Sınıfları */
-        .glow-alkali { border-color: #ef4444 !important; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important; }
-        .glow-toprak-alkali { border-color: #f59e0b !important; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4) !important; }
-        .glow-gecis { border-color: #eab308 !important; box-shadow: 0 0 15px rgba(234, 179, 8, 0.4) !important; }
-        .glow-yari-metal { border-color: #06b6d4 !important; box-shadow: 0 0 15px rgba(6, 182, 212, 0.4) !important; }
-        .glow-toprak-metali { border-color: #10b981 !important; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4) !important; }
+        /* Tüm Gruplar İçin Dinamik Neon Parlama Efektleri */
+        .glow-alkali { border-color: #ef4444 !important; box-shadow: 0 0 15px rgba(239, 68, 68, 0.5) !important; }
+        .glow-toprak-alkali { border-color: #f97316 !important; box-shadow: 0 0 15px rgba(249, 115, 22, 0.5) !important; }
+        .glow-gecis { border-color: #eab308 !important; box-shadow: 0 0 15px rgba(234, 179, 8, 0.5) !important; }
+        .glow-yari-metal { border-color: #06b6d4 !important; box-shadow: 0 0 15px rgba(6, 182, 212, 0.5) !important; }
+        .glow-toprak-metali { border-color: #10b981 !important; box-shadow: 0 0 15px rgba(16, 185, 129, 0.5) !important; }
+        .glow-ametal { border-color: #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5) !important; }
+        .glow-halojen { border-color: #84cc16 !important; box-shadow: 0 0 15px rgba(132, 204, 22, 0.5) !important; }
+        .glow-soygaz { border-color: #a855f7 !important; box-shadow: 0 0 15px rgba(168, 85, 247, 0.5) !important; }
     </style>
 </head>
 <body class="overflow-x-hidden">
 
     <div class="flex h-screen overflow-hidden relative z-10">
         
-        <!-- Sol Menü (Sidebar) Paneli -->
         <aside id="sidebarPanel" class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-950 flex flex-col justify-between border-r border-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen flex-shrink-0">
             <div class="p-5 overflow-y-auto flex-1">
                 <div class="flex items-center justify-between mb-8">
@@ -80,7 +78,6 @@
                 </nav>
             </div>
             
-            <!-- Profil Kartı -->
             <div class="p-5 border-t border-gray-900 flex items-center space-x-3 bg-gray-950/40 flex-shrink-0">
                 <div class="w-10 h-10 bg-indigo-950 rounded-full flex items-center justify-center font-black text-indigo-400">M</div>
                 <div>
@@ -92,7 +89,6 @@
 
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
 
-        <!-- Sağ Taraf: Ana İçerik Alanı -->
         <main class="flex-1 flex flex-col overflow-y-auto min-w-0">
             <header class="bg-[#08090f]/90 backdrop-blur border-b border-gray-900 px-6 py-4 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
@@ -103,24 +99,23 @@
 
             <div class="p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6 flex-1">
                 
-                <!-- Kimyasal Filtre Butonları (Kaydırılabilir Üst Bar) -->
                 <div class="flex items-center space-x-2 overflow-x-auto pb-3 mask-scrollbar">
                     <button onclick="filtrele('hepsi')" class="flex-shrink-0 bg-gray-900 hover:bg-gray-800 text-xs font-bold px-4 py-2.5 rounded-xl border border-gray-800 transition">Hepsini Göster</button>
                     <button onclick="filtrele('alkali')" class="flex-shrink-0 bg-red-950/40 hover:bg-red-900/30 text-red-400 text-xs font-bold px-4 py-2.5 rounded-xl border border-red-900/50 transition flex items-center"><span class="w-2 h-2 rounded-full bg-red-500 mr-2"></span>Alkali Metal</button>
-                    <button onclick="filtrele('toprak-alkali')" class="flex-shrink-0 bg-amber-950/40 hover:bg-amber-900/30 text-amber-400 text-xs font-bold px-4 py-2.5 rounded-xl border border-amber-900/50 transition flex items-center"><span class="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>Toprak Alkali</button>
+                    <button onclick="filtrele('toprak-alkali')" class="flex-shrink-0 bg-orange-950/40 hover:bg-orange-900/30 text-orange-400 text-xs font-bold px-4 py-2.5 rounded-xl border border-orange-900/50 transition flex items-center"><span class="w-2 h-2 rounded-full bg-orange-500 mr-2"></span>Toprak Alkali</button>
                     <button onclick="filtrele('gecis-metali')" class="flex-shrink-0 bg-yellow-950/40 hover:bg-yellow-900/30 text-yellow-400 text-xs font-bold px-4 py-2.5 rounded-xl border border-yellow-900/50 transition flex items-center"><span class="w-2 h-2 rounded-full bg-yellow-500 mr-2"></span>Geçiş Metalleri</button>
                     <button onclick="filtrele('yari-metal')" class="flex-shrink-0 bg-cyan-950/40 hover:bg-cyan-900/30 text-cyan-400 text-xs font-bold px-4 py-2.5 rounded-xl border border-cyan-900/50 transition flex items-center"><span class="w-2 h-2 rounded-full bg-cyan-500 mr-2"></span>Yarı Metaller</button>
                     <button onclick="filtrele('toprak-metali')" class="flex-shrink-0 bg-emerald-950/40 hover:bg-emerald-900/30 text-emerald-400 text-xs font-bold px-4 py-2.5 rounded-xl border border-emerald-900/50 transition flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>Toprak Metalleri</button>
+                    <button onclick="filtrele('ametal')" class="flex-shrink-0 bg-blue-950/40 hover:bg-blue-900/30 text-blue-400 text-xs font-bold px-4 py-2.5 rounded-xl border border-blue-900/50 transition flex items-center"><span class="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>Ametaller</button>
+                    <button onclick="filtrele('halojen')" class="flex-shrink-0 bg-lime-950/40 hover:bg-lime-900/30 text-lime-400 text-xs font-bold px-4 py-2.5 rounded-xl border border-lime-900/50 transition flex items-center"><span class="w-2 h-2 rounded-full bg-lime-500 mr-2"></span>Halojenler</button>
+                    <button onclick="filtrele('soygaz')" class="flex-shrink-0 bg-purple-950/40 hover:bg-purple-900/30 text-purple-400 text-xs font-bold px-4 py-2.5 rounded-xl border border-purple-900/50 transition flex items-center"><span class="w-2 h-2 rounded-full bg-purple-500 mr-2"></span>Soygazlar</button>
                 </div>
 
-                <!-- Periyodik Tablo Matrisi (Mobil Yatay Kaydırma Korumalı) -->
                 <div class="overflow-x-auto bg-[#0f1117] p-4 rounded-2xl border border-gray-900 shadow-2xl">
                     <div id="periodic-table-grid" class="min-w-[1000px]" style="display: grid; grid-template-columns: repeat(18, minmax(0, 1fr)); gap: 6px;">
-                        <!-- Element Kutuları JavaScript ile Milimetrik Olarak Buraya Dolacak -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- Alt Detay Gösterge Alanı (Bohr Elektron Modelleyici) -->
                 <div class="bg-[#0f1117] p-6 rounded-2xl border border-gray-900 shadow-xl max-w-xl mx-auto text-center space-y-2">
                     <span class="text-[10px] font-bold text-indigo-400 tracking-widest uppercase">3D Bohr Elektron Modelleyicisi</span>
                     <h3 id="detail-name" class="text-2xl font-black font-['Space_Grotesk'] text-white">Hidrojen</h3>
@@ -135,9 +130,7 @@
         </main>
     </div>
 
-    <!-- Periyodik Tablo Veri Seti ve Kusursuz Filtreleme Algoritması -->
     <script>
-        // Yan Menü Fonksiyonu
         function toggleSidebar() { $('#sidebarPanel').toggleClass('-translate-x-full'); $('#sidebarOverlay').toggleClass('hidden'); }
 
         // Kimyasal Olarak Doğrulanmış Tam Element Listesi (Grup ve Periyot Matrisli)
@@ -266,47 +259,52 @@
             $('#detail-mass').text(mass);
         }
 
-        // Kimyasal Olarak Kusursuz Çalışan Filtreleme Mekanizması
+        // Yenilenmiş ve Eksiksiz Filtreleme Mekanizması
         function filtrele(kategori) {
-            // Önce tüm sınıfları ve opaklıkları sıfırla
-            $('.element-box').removeClass('opacity-20 glow-alkali glow-toprak-alkali glow-gecis glow-yari-metal glow-toprak-metali');
+            // Önce tüm parlama sınıflarını ve opaklıkları sıfırla
+            $('.element-box').removeClass('opacity-20 glow-alkali glow-toprak-alkali glow-gecis glow-yari-metal glow-toprak-metali glow-ametal glow-halojen glow-soygaz');
 
             if (kategori === 'hepsi') return;
 
-            // Diğer tüm elementlerin opaklığını düşür
+            // Filtrelenen grup dışındakileri karart
             $('.element-box').addClass('opacity-20');
 
             switch(kategori) {
                 case 'alkali':
-                    // 1A Grubu (H hariç)
                     $('[data-cat="alkali"]').removeClass('opacity-20').addClass('glow-alkali');
                     break;
                 case 'toprak-alkali':
-                    // 2A Grubu tam liste
                     $('[data-cat="toprak-alkali"]').removeClass('opacity-20').addClass('glow-toprak-alkali');
                     break;
                 case 'gecis-metali':
-                    // Sadece d-bloğu elementleri parlar
                     $('[data-cat="gecis-metali"]').removeClass('opacity-20').addClass('glow-gecis');
                     break;
                 case 'yari-metal':
-                    // B, Si, Ge, As, Sb, Te tam kadro parlar
                     $('[data-cat="yari-metal"]').removeClass('opacity-20').addClass('glow-yari-metal');
                     break;
                 case 'toprak-metali':
-                    // 3A Grubunun gerçek metalleri (Al, Ga, In, Tl, Nh) parlar
                     $('[data-cat="toprak-metali"]').removeClass('opacity-20').addClass('glow-toprak-metali');
+                    break;
+                case 'ametal':
+                    // Hidrojen, Karbon, Azot, Oksijen, Fosfor, Kükürt, Selenyum
+                    $('[data-cat="ametal"]').removeClass('opacity-20').addClass('glow-ametal');
+                    break;
+                case 'halojen':
+                    // Flor, Klor, Brom, İyot, Astatin, Tennessin
+                    $('[data-cat="halojen"]').removeClass('opacity-20').addClass('glow-halojen');
+                    break;
+                case 'soygaz':
+                    // Helyum, Neon, Argon, Kripton, Ksenon, Radon, Oganesson
+                    $('[data-cat="soygaz"]').removeClass('opacity-20').addClass('glow-soygaz');
                     break;
             }
         }
 
-        // Sayfa Yüklendiğinde Tabloyu Tetikle
         $(document).ready(function() {
             buildTable();
         });
     </script>
 
-    <!-- Service Worker Kayıt Altyapısı -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
